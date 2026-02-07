@@ -1,0 +1,33 @@
+{
+  "id": "playbook-payment",
+  "scope": "billing",
+  "title": "Paiement échoué / transaction refusée",
+  "triggers": [
+    "paiement échoué",
+    "transaction refusée",
+    "payment failed",
+    "carte refusée",
+    "erreur paiement",
+    "403 paiement",
+    "400 paiement"
+  ],
+  "description": "Triage paiement: identifier méthode, message exact, tester autre méthode, puis escalade si incident.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel moyen de paiement utilisez-vous (carte / virement / paiement à la livraison / passerelle) ?"
+    },
+    {
+      "kind": "ask",
+      "question": "Quel est le message d’erreur exact affiché au paiement ?"
+    },
+    {
+      "kind": "solve",
+      "response": "Pour diagnostiquer vite :\n\n✓ Testez avec un montant simple et un autre navigateur (ou navigation privée)\n✓ Testez une autre méthode (ex: paiement à la livraison) pour voir si c’est lié à la passerelle\n✓ Si vous avez un code (400/401/403/500), envoyez-le\n\nDites-moi le message exact + la méthode de paiement et je vous guide."
+    },
+    {
+      "kind": "escalate",
+      "reason": "Paiement échoue de façon systématique sans solution côté client → escalade (vérifier intégration / passerelle / logs)."
+    }
+  ]
+}

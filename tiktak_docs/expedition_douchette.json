@@ -1,0 +1,100 @@
+{
+  "lien": "https://dash.tiktak.space/shipping",
+  "nom": "Expédition / Transport — Scan à la douchette",
+  "description": "Module de préparation d’expédition par scan du code transport (ID transport). Le scan ajoute la commande au lot du jour, incrémente les statistiques (nb scannés, montant total), enregistre l’historique et empêche les doublons. À la fin, on exporte un manifeste et toutes les commandes du lot sont passées au statut « Expédiées ». Les commandes « Annulées » ou déjà « Expédiées » sont refusées au scan.",
+  "actions": [
+    {
+      "id": "ouvrir_focus",
+      "label": "Ouvrir le module & préparer le lecteur",
+      "instructions": [
+        "Accéder à « Expédition / Transport ».",
+        "Cliquer dans le champ « Scannez ou saisissez l’ID transport » pour s’assurer que le focus clavier est actif.",
+        "Vérifier que la douchette envoie un « Enter » (CR/LF) à la fin du code."
+      ],
+      "resultat": "Prêt à scanner en flux continu."
+    },
+    {
+      "id": "scanner_colis",
+      "label": "Scanner un colis",
+      "instructions": [
+        "Présenter le code-barres (ID transport) à la douchette ou saisir l’ID manuellement.",
+        "Attendre le chargement des informations de commande.",
+        "Contrôler le retour visuel/sonore (succès/erreur)."
+      ],
+      "notes": "Le système valide le statut et refuse automatiquement les commandes « Annulées » ou déjà « Expédiées ».",
+      "resultat": "Commande ajoutée au lot, statistiques mises à jour, ligne ajoutée à l’historique."
+    },
+    {
+      "id": "anti_doublon",
+      "label": "Détection des doublons",
+      "instructions": [
+        "Si un même ID est rescanné, le module signale le doublon et n’ajoute pas la commande.",
+        "En cas d’erreur de scan, retirer l’entrée concernée depuis l’historique puis rescanner."
+      ],
+      "resultat": "Aucun doublon dans le lot d’expédition."
+    },
+    {
+      "id": "gestion_erreurs",
+      "label": "Gérer les erreurs de scan",
+      "instructions": [
+        "Pour « Annulée » ou « Déjà expédiée » : corriger le statut côté commande si nécessaire avant de revenir au scan.",
+        "Pour « ID inconnu » : vérifier le transporteur/étiquette et la saisie du code.",
+        "Pour « Transporteur manquant » : compléter le transporteur dans la commande puis rescanner."
+      ],
+      "resultat": "Seulement des commandes valides dans le lot."
+    },
+    {
+      "id": "finaliser_lot",
+      "label": "Finaliser l’expédition",
+      "instructions": [
+        "Contrôler l’historique des scans (quantité & montant total).",
+        "Cliquer « Exporter le manifeste » et choisir le format (PDF/Excel/CSV selon configuration).",
+        "Valider la finalisation pour marquer toutes les commandes du lot en « Expédiées »."
+      ],
+      "notes": "Selon la configuration, l’export peut s’ouvrir dans une nouvelle fenêtre (autoriser les pop-ups).",
+      "resultat": "Manifeste généré, commandes passées en « Expédiées »."
+    },
+    {
+      "id": "reinitialiser_session",
+      "label": "Réinitialiser / nouveau lot",
+      "instructions": [
+        "Vider l’historique si vous démarrez une nouvelle tournée.",
+        "S’assurer que le champ de scan a de nouveau le focus."
+      ],
+      "resultat": "Lot précédent clôturé, nouvelle session prête."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Rien ne se passe au scan.",
+      "cause_probable": "Le champ n’a pas le focus ou la douchette n’envoie pas « Enter ».",
+      "solution": "Cliquer dans le champ puis rescanner ; configurer la douchette pour envoyer CR/LF."
+    },
+    {
+      "symptome": "Commande refusée: Annulée / Déjà expédiée.",
+      "cause_probable": "Statut incompatible avec l’expédition.",
+      "solution": "Mettre la commande dans un statut autorisé (ex. « Prêt à expédier ») puis rescanner."
+    },
+    {
+      "symptome": "Doublon détecté.",
+      "cause_probable": "Même ID transport scanné 2 fois.",
+      "solution": "Ignorer le second scan ou supprimer la ligne en trop depuis l’historique."
+    },
+    {
+      "symptome": "ID inconnu / non trouvé.",
+      "cause_probable": "Mauvaise étiquette, code partiel, transporteur non associé.",
+      "solution": "Vérifier l’étiquette et lier le transporteur dans la commande ; corriger puis rescanner."
+    },
+    {
+      "symptome": "Export du manifeste bloqué.",
+      "cause_probable": "Blocage pop-up navigateur ou format non supporté.",
+      "solution": "Autoriser les pop-ups pour le domaine et réessayer ; choisir un autre format si disponible."
+    },
+    {
+      "symptome": "Montant total du lot incorrect.",
+      "cause_probable": "Produits/remises non à jour, commandes erronées incluses.",
+      "solution": "Vérifier chaque ligne de l’historique, corriger les commandes puis rescanner uniquement les valides."
+    }
+  ]
+}
+

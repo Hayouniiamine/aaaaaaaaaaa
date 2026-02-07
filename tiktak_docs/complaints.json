@@ -1,0 +1,89 @@
+{
+  "lien": "https://dash.tiktak.space/complaints",
+  "nom": "Réclamations (/reclamations) — Gestion des réclamations clients",
+  "description": "Module pour centraliser et suivre les réclamations liées aux commandes. Vue liste avec recherche et filtres (Tous les types, Tous les statuts) et bouton « Nouvelle réclamation ». Colonnes : Référence, Client, Téléphone, Type, Intervention, Statut, Date, Actions. Le formulaire de création permet d’associer une commande, définir le type de réclamation, l’intervention prévue, le responsable, la date de réception et un commentaire.",
+  "actions": [
+    {
+      "id": "creer_reclamation",
+      "label": "Créer une réclamation",
+      "instructions": [
+        "Cliquer sur « Nouvelle réclamation ».",
+        "Dans « Informations de commande », rechercher et sélectionner la commande (par nom, numéro, téléphone).",
+        "Compléter Nom du client, Téléphone et Date de réception si non pré-remplis.",
+        "Dans « Détails de la réclamation » : choisir le **Type de réclamation**, le **Responsable** (Réclamation avec), et le **Type d’intervention**.",
+        "Ajouter un **Commentaire** (détails, pièces/éléments utiles).",
+        "Cliquer sur « Créer la réclamation »."
+      ],
+      "resultat": "Réclamation créée et rattachée à la commande pour suivi."
+    },
+    {
+      "id": "rechercher_filtrer",
+      "label": "Rechercher / Filtrer",
+      "instructions": [
+        "Saisir un nom, numéro ou téléphone dans la barre de recherche.",
+        "Utiliser les menus « Tous les types » et « Tous les statuts » pour réduire les résultats.",
+        "Cliquer sur « Réinitialiser » pour effacer les filtres."
+      ],
+      "resultat": "Liste focalisée sur les réclamations pertinentes."
+    },
+    {
+      "id": "ouvrir_mettre_a_jour",
+      "label": "Ouvrir et mettre à jour une réclamation",
+      "instructions": [
+        "Depuis la ligne, ouvrir la fiche (icône / action « Éditer »).",
+        "Mettre à jour le **Responsable**, le **Type/Intervention**, la **Date**, ou le **Commentaire**.",
+        "Changer le **Statut** (ex. Nouveau → En cours → Résolu/Clos, selon votre configuration).",
+        "Enregistrer."
+      ],
+      "resultat": "Fiche synchronisée avec l’avancement réel."
+    },
+    {
+      "id": "consigner_intervention",
+      "label": "Consigner l’intervention réalisée",
+      "instructions": [
+        "Dans la réclamation, sélectionner l’**Intervention** effectuée (ex. échange, remboursement, prise de contact…).",
+        "Ajouter une note de résolution et, si pertinent, le lien vers la nouvelle commande/avoir.",
+        "Passer la réclamation au statut final approprié."
+      ],
+      "resultat": "Traçabilité complète de la prise en charge."
+    },
+    {
+      "id": "supprimer_reclamation",
+      "label": "Supprimer une réclamation (si autorisé)",
+      "instructions": [
+        "Depuis la ligne de la réclamation, cliquer sur la corbeille.",
+        "Confirmer la suppression."
+      ],
+      "notes": "Action définitive — privilégier la clôture plutôt que la suppression pour conserver l’historique.",
+      "resultat": "Réclamation supprimée de la liste."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Impossible de trouver la commande lors de la création.",
+      "cause_probable": "Mauvais critère de recherche ou commande non existante.",
+      "solution": "Chercher par **numéro de commande** ou **téléphone** exact ; vérifier que la commande est bien créée."
+    },
+    {
+      "symptome": "Statut bloqué / transitions non possibles.",
+      "cause_probable": "Workflow restreint par la configuration des statuts.",
+      "solution": "Adopter la séquence prévue (ex. Nouveau → En cours → Résolu/Clos) ou ajuster la configuration des étapes si nécessaire."
+    },
+    {
+      "symptome": "Réclamation non visible après création.",
+      "cause_probable": "Filtres actifs (type/statut) ou cache de la page.",
+      "solution": "Cliquer sur « Réinitialiser », vérifier les filtres et actualiser la page."
+    },
+    {
+      "symptome": "Responsable non assignable.",
+      "cause_probable": "Utilisateur inactif ou permissions insuffisantes.",
+      "solution": "Activer l’utilisateur dans Équipe et vérifier le rôle/permissions."
+    },
+    {
+      "symptome": "Données incohérentes (mauvais client/téléphone).",
+      "cause_probable": "Commande mal sélectionnée ou champs manuels erronés.",
+      "solution": "Ré-ouvrir la fiche, corriger l’association de commande et les champs, puis enregistrer."
+    }
+  ]
+}
+

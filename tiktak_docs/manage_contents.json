@@ -1,0 +1,92 @@
+{
+  "lien": "https://dash.tiktak.space/content-management",
+  "nom": "Gestion de contenu (/content-management)",
+  "description": "Créez et gérez les pages de votre site (Accueil, Conditions d’utilisation, Politique de confidentialité, Mentions légales, FAQ, Retours & Échanges, Service clientèle, Frais de livraison, À propos, etc.). La liste affiche : Nom, Type (Accueil / Contenu), Statut (publié), URL/slug, Date de création et Actions (éditer, dupliquer s’il y a, supprimer). Un bouton « Nouvelle page » ouvre l’éditeur avec deux onglets : **Général & Contenu** (construction par sections) et **SEO** (Titre, Meta description, Slug, Mots-clés + conseils).",
+  "actions": [
+    {
+      "id": "creer_page",
+      "label": "Créer une nouvelle page",
+      "instructions": [
+        "Cliquer sur « Nouvelle page ».",
+        "Renseigner **Nom de la page** et **Type de page** (généralement « Page de contenu »).",
+        "Dans « Contenu de la page », cliquer « Ajouter une section » puis choisir/paramétrer les blocs souhaités (texte, image, liste, etc.).",
+        "Basculer sur l’onglet **SEO** : définir **Titre SEO** (30–60 caractères), **Meta description** (70–160), **Slug URL** (générer si besoin) et 3+ **Mots-clés**.",
+        "Enregistrer puis activer la page via le switch « Statut » dans la liste."
+      ],
+      "resultat": "Page créée, indexée dans la liste et accessible via son slug."
+    },
+    {
+      "id": "publier_depublier",
+      "label": "Publier / Dépublier une page",
+      "instructions": [
+        "Dans la liste, basculer le switch de la colonne **Statut**.",
+        "Contrôler l’URL pour vérifier le rendu public."
+      ],
+      "resultat": "La page devient visible ou invisible sur le site sans la supprimer."
+    },
+    {
+      "id": "editer_page",
+      "label": "Éditer le contenu et le SEO",
+      "instructions": [
+        "Cliquer sur l’icône **éditer** (crayon) de la ligne.",
+        "Ajouter/ordonner les sections, mettre à jour titres et textes.",
+        "Mettre à jour l’onglet **SEO** (titre, description, slug, mots-clés) jusqu’à obtenir un score satisfaisant.",
+        "Sauvegarder."
+      ],
+      "resultat": "Contenu et SEO mis à jour immédiatement."
+    },
+    {
+      "id": "dupliquer_ou_supprimer",
+      "label": "Dupliquer / Supprimer une page",
+      "instructions": [
+        "Utiliser l’icône **dupliquer** (si disponible) pour créer une copie rapide.",
+        "Utiliser l’icône **corbeille** pour supprimer définitivement (confirmation requise)."
+      ],
+      "notes": "Certaines pages **système** (ex. Accueil) peuvent ne pas être supprimables.",
+      "resultat": "Copie prête à être modifiée ou page retirée définitivement."
+    },
+    {
+      "id": "definir_accueil",
+      "label": "Définir / gérer la page d’Accueil",
+      "instructions": [
+        "La page « Accueil » apparaît comme Type = **Accueil** et n’a pas de slug public spécifique.",
+        "Éditer ses sections pour le hero, les catégories, les promotions, etc.",
+        "La suppression de l’Accueil est bloquée ; publiez/dépubliez ses sections selon le besoin."
+      ],
+      "resultat": "Page d’Accueil opérationnelle et personnalisée."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "La page n’apparaît pas en ligne.",
+      "cause_probable": "Statut désactivé ou slug non défini.",
+      "solution": "Activer le switch **Statut** et définir un **Slug URL** valide, puis enregistrer."
+    },
+    {
+      "symptome": "Score SEO faible (alerte rouge).",
+      "cause_probable": "Titre ou meta description hors longueurs recommandées, pas assez de mots-clés.",
+      "solution": "Respecter les conseils affichés (Titre 30–60, Meta 70–160, 3+ mots-clés) et regénérer si besoin."
+    },
+    {
+      "symptome": "Erreur de navigation (404) après modification du slug.",
+      "cause_probable": "Ancien lien encore utilisé ou cache.",
+      "solution": "Mettre à jour les menus/liens internes, vider le cache navigateur et utiliser le nouveau slug."
+    },
+    {
+      "symptome": "Conflit de slug (URL déjà prise).",
+      "cause_probable": "Deux pages avec le même slug.",
+      "solution": "Donner un slug unique (ex.: /politique-de-retour-2) ou renommer la page existante."
+    },
+    {
+      "symptome": "La page est vide.",
+      "cause_probable": "Aucune section ajoutée dans l’éditeur.",
+      "solution": "Ajouter au moins une **section** puis sauvegarder."
+    },
+    {
+      "symptome": "Suppression refusée.",
+      "cause_probable": "Page système ou liée au menu obligatoire.",
+      "solution": "Dépublier ou dupliquer et remplacer ; certaines pages (ex. Accueil) ne peuvent pas être supprimées."
+    }
+  ]
+}
+

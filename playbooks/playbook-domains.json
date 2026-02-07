@@ -1,0 +1,46 @@
+{
+  "id": "playbook-domains",
+  "scope": "domains",
+  "title": "Domaine non visible / DNS",
+  "triggers": [
+    "mon domaine n'apparait pas",
+    "mon domaine n'apparaît pas",
+    "mon domaine ne marche pas",
+    "mon domaine ne fonctionne pas",
+    "domaine invisible",
+    "site inaccessible",
+    "dns ne marche pas",
+    "propagation dns",
+    "nameservers",
+    "j'ai modifié les dns",
+    "j'ai changé les dns",
+    "après 48h",
+    "apres 48h",
+    "48h",
+    "4 jours",
+    "3 jours"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "condition": "dns_age < 24h",
+      "response": "DNS_RECENT_LT_24H",
+      "actions": ["dns_recent_reassure", "check_dns_propagation"]
+    },
+    {
+      "kind": "solve",
+      "condition": "dns_age >= 24h",
+      "response": "DNS_VERIFY_RECORDS_24H_PLUS",
+      "actions": ["verify_dns_records", "verify_nameservers"]
+    },
+    {
+      "kind": "escalate",
+      "condition": "dns_age >= 72h AND dns_records_confirmed",
+      "reason": "Toujours invisible après +72h malgré DNS OK → investigation côté liaison domaine / routage / compte."
+    },
+    {
+      "kind": "ask",
+      "question": "Vous avez modifié les DNS quand exactement ? (ex: il y a 2h, hier, 48h, 4 jours)"
+    }
+  ]
+}

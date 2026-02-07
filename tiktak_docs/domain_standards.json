@@ -1,0 +1,100 @@
+{
+  "lien": "https://dash.tiktak.space/domains",
+  "nom": "Politique SaaS & responsabilités — Hébergement / Domaine",
+  "description": "TikTak PRO est un **SaaS** : toute la **configuration serveur** (infrastructure, web server, SSL, sécurité, mises à jour, sauvegardes, scaling) est **gérée par TikTak** et **n’est pas accessible au client** (pas de cPanel/SSH, pas de modifications d’IP/pare-feu/règles proxy côté client). Le client gère uniquement : l’**achat ou la liaison du domaine**, les **DNS chez son registraire** et les réglages dans le **dashboard** (catalogue, commandes, paramètres métier).",
+  "actions": [
+    {
+      "id": "ce_que_le_client_peut_faire",
+      "label": "Ce que vous pouvez configurer (côté client)",
+      "instructions": [
+        "Acheter un domaine via TikTak **ou** lier un domaine externe en pointant les DNS.",
+        "Configurer vos paramètres métier dans le dashboard (entreprise, taxes/TVA, transporteurs, équipe, étapes, etc.).",
+        "Activer la liaison du domaine dans TikTak une fois le pointage DNS correct."
+      ],
+      "resultat": "Votre boutique est reliée au bon domaine et vos réglages métier sont appliqués."
+    },
+    {
+      "id": "ce_que_tiktak_gere",
+      "label": "Ce que TikTak PRO gère pour vous (côté serveur)",
+      "instructions": [
+        "Provisionnement/renouvellement **SSL** automatique.",
+        "Haute disponibilité, mises à jour de sécurité, pare-feu/WAF, monitoring.",
+        "Mises à jour de la plateforme, performances, sauvegardes et restauration.",
+        "Réseau/CDN et optimisation d’images (si inclus dans l’offre)."
+      ],
+      "notes": "Ces éléments sont **non configurables** par le client pour garantir la stabilité et la sécurité du service.",
+      "resultat": "Une plateforme maintenue, sécurisée et performante, sans intervention serveur du client."
+    },
+    {
+      "id": "delais_propagation",
+      "label": "Délais et attentes (DNS/SSL)",
+      "instructions": [
+        "Achat de domaine chez TikTak : propagation DNS/SSL **jusqu’à 24h** (souvent 10–60 min).",
+        "Liaison d’un domaine externe : attendre la propagation **avant** d’ouvrir un ticket.",
+        "Indicateur simple : si la **page TikTak** n’apparaît pas, le **DNS est incorrect** ou pas encore propagé."
+      ],
+      "resultat": "Attentes réalistes évitant des tickets prématurés."
+    },
+    {
+      "id": "dns_a_faire_par_le_client",
+      "label": "DNS requis (si domaine externe)",
+      "instructions": [
+        "Créer un **A record** pour **@** (apex) → **102.211.211.10** (TTL 3600 conseillé).",
+        "Créer **A www → 102.211.211.10** (ou **CNAME www → @**).",
+        "Supprimer tout **AAAA (IPv6)** qui pointerait ailleurs pour éviter les erreurs."
+      ],
+      "resultat": "Pointage DNS correct vers TikTak PRO."
+    },
+    {
+      "id": "limites_acces",
+      "label": "Accès/Personnalisations non disponibles (SaaS)",
+      "instructions": [
+        "Pas d’**accès SSH/cPanel** ni d’installation de modules/logiciels serveur personnalisés.",
+        "Pas de changements **d’IP**, de ports, ni de règles Nginx/Apache à la demande.",
+        "Pas de certificats SSL manuels (Let’s Encrypt/gestion auto par TikTak).",
+        "Routage/Reverse-Proxy/WAF gérés par TikTak (non exposés)."
+      ],
+      "notes": "Pour des besoins avancés, contacter le support afin d’évaluer ce qui est compatible avec le cadre SaaS.",
+      "resultat": "Clarification des responsabilités et du périmètre de support."
+    },
+    {
+      "id": "ouvrir_un_ticket_correctement",
+      "label": "Ouvrir un ticket utile (si souci de domaine)",
+      "instructions": [
+        "Indiquer le **nom de domaine** complet (avec et sans www).",
+        "Fournir une **capture des DNS** chez le registraire (A @, A/CNAME www, TTL).",
+        "Préciser la **date/heure** de la dernière modification DNS.",
+        "Indiquer si vous utilisez **Cloudflare/CDN** et l’état du proxy (orange/grey)."
+      ],
+      "resultat": "Diagnostic rapide sans aller-retour."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "« Le site ne marche pas » juste après l’achat chez TikTak.",
+      "cause_probable": "Propagation DNS/SSL en cours (normal en SaaS).",
+      "solution": "Attendre **jusqu’à 24h**. Vérifier plus tard ; inutile d’ouvrir un ticket avant ce délai."
+    },
+    {
+      "symptome": "Le domaine n’affiche pas la page TikTak / votre site.",
+      "cause_probable": "DNS incorrect (mauvaise IP, absence d’entrée www, **AAAA** actif vers une autre IP).",
+      "solution": "Configurer **A @** et **A www** → **102.211.211.10** (ou **CNAME www → @**), supprimer AAAA, TTL 3600, attendre la propagation."
+    },
+    {
+      "symptome": "SSL absent / cadenas rouge.",
+      "cause_probable": "Domaine non encore propagé ou discordance entre @ et www.",
+      "solution": "Aligner @ et www sur la même IP, attendre la propagation ; TikTak émettra le certificat automatiquement."
+    },
+    {
+      "symptome": "Avec Cloudflare : erreurs 525/522 ou boucles.",
+      "cause_probable": "Proxy activé avant pointage/SSL valide.",
+      "solution": "Passer le nuage **gris** (DNS only), attendre validation SSL chez TikTak, puis réactiver si besoin."
+    },
+    {
+      "symptome": "Ancien site encore visible.",
+      "cause_probable": "Cache DNS local/FAI ou TTL élevé.",
+      "solution": "Tester en 4G/outil public (whatsmydns), vider le cache DNS, patienter jusqu’à l’expiration du TTL."
+    }
+  ]
+}
+

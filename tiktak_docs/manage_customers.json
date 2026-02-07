@@ -1,0 +1,93 @@
+{
+  "lien": "https://dash.tiktak.space/customers",
+  "nom": "Clients (/customers) — Gestion des clients",
+  "description": "À chaque commande, TikTak PRO crée automatiquement une fiche client. Le module permet aussi d’ajouter, modifier et supprimer des clients manuellement. Vue liste avec colonnes : Client (nom + #ID), Contact (téléphone), Commandes (compteur et lien), Total dépensé, Statut (Vérifié/Non vérifié), Date de création. Bouton « Nouveau client » pour créer une fiche.",
+  "actions": [
+    {
+      "id": "rechercher_clients",
+      "label": "Rechercher un client",
+      "instructions": [
+        "Utiliser la barre de recherche pour saisir un nom, un numéro ou un identifiant (#ID).",
+        "Cliquer sur un résultat pour ouvrir la fiche détaillée."
+      ],
+      "resultat": "La liste s’affiche filtrée avec le client souhaité."
+    },
+    {
+      "id": "creer_client",
+      "label": "Créer un nouveau client",
+      "instructions": [
+        "Cliquer sur « Nouveau client ».",
+        "Renseigner au minimum : Nom complet et Téléphone.",
+        "Ajouter si besoin : Email, Gouvernorat, Adresse, Notes.",
+        "Enregistrer."
+      ],
+      "resultat": "La fiche client est créée et visible dans la liste."
+    },
+    {
+      "id": "modifier_client",
+      "label": "Modifier une fiche client",
+      "instructions": [
+        "Cliquer sur le nom du client pour ouvrir la fiche.",
+        "Mettre à jour les coordonnées (téléphone, adresse, email…) et/ou le statut « Vérifié ».",
+        "Enregistrer les modifications."
+      ],
+      "resultat": "Informations client à jour sur l’ensemble des modules."
+    },
+    {
+      "id": "voir_commandes_client",
+      "label": "Voir les commandes d’un client",
+      "instructions": [
+        "Cliquer sur le badge « X commandes » sur la ligne du client.",
+        "Consulter l’historique et le détail si nécessaire."
+      ],
+      "resultat": "Historique des commandes du client affiché."
+    },
+    {
+      "id": "verifier_client",
+      "label": "Marquer comme Vérifié / Non vérifié",
+      "instructions": [
+        "Depuis la fiche ou la liste (si action disponible), basculer le statut.",
+        "Sauvegarder."
+      ],
+      "resultat": "Le statut du client est mis à jour."
+    },
+    {
+      "id": "supprimer_client",
+      "label": "Supprimer un client",
+      "instructions": [
+        "Depuis la ligne du client, cliquer sur l’icône corbeille.",
+        "Confirmer la suppression dans la boîte de dialogue."
+      ],
+      "notes": "Action **définitive**. Vérifiez qu’il ne s’agit pas d’un doublon à fusionner et qu’aucune donnée importante n’est perdue.",
+      "resultat": "La fiche client est supprimée de la base."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Doublons de clients (mêmes personnes, numéros différents ou mal saisis).",
+      "cause_probable": "Création automatique à chaque commande avec numéro/nom orthographié différemment.",
+      "solution": "Uniformiser les numéros (format unique), corriger les fiches et supprimer les doublons avérés."
+    },
+    {
+      "symptome": "Suppression accidentelle d’un client.",
+      "cause_probable": "Confirmation acceptée par erreur.",
+      "solution": "La suppression est définitive : recréer la fiche manuellement et rattacher les informations utiles si nécessaire."
+    },
+    {
+      "symptome": "Le compteur « X commandes » ne correspond pas aux attentes.",
+      "cause_probable": "Commandes annulées/retours inclus ou période mal interprétée.",
+      "solution": "Ouvrir l’historique du client pour voir le détail et filtrer par statut si nécessaire."
+    },
+    {
+      "symptome": "Appels/WhatsApp impossibles depuis la fiche.",
+      "cause_probable": "Format de téléphone non normalisé (espaces, indicatif manquant).",
+      "solution": "Nettoyer le numéro (sans espaces, indicatif conforme) puis réessayer."
+    },
+    {
+      "symptome": "Client créé automatiquement avec de mauvaises infos.",
+      "cause_probable": "Données saisies au moment de la commande.",
+      "solution": "Éditer la fiche client pour corriger les champs ; les futures commandes reprendront les informations corrigées."
+    }
+  ]
+}
+

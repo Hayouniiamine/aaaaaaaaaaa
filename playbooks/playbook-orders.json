@@ -1,0 +1,36 @@
+{
+  "id": "playbook-orders",
+  "scope": "orders",
+  "title": "Commande non créée / ne s’enregistre pas",
+  "triggers": [
+    "ma commande ne se crée pas",
+    "commande non créée",
+    "commande n'apparait pas",
+    "erreur création commande",
+    "order not created",
+    "checkout bug"
+  ],
+  "description": "Triage création commande: vérifier confirmation UI, champs obligatoires, paiement, puis escalade si reproductible.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Avez-vous vu un message de confirmation après avoir cliqué sur « Créer la commande » ?"
+    },
+    {
+      "kind": "ask",
+      "question": "Est-ce que le problème arrive pour un client précis ou pour toutes les commandes ?"
+    },
+    {
+      "kind": "ask",
+      "question": "Voyez-vous un message d’erreur (texte exact) ou un code (ex: 400/403/500) ?"
+    },
+    {
+      "kind": "solve",
+      "response": "On va isoler la cause rapidement :\n\n✓ Refaire un test avec une commande simple (1 produit, 1 quantité)\n✓ Vérifier que les champs obligatoires sont remplis (client, produits, total, mode de paiement)\n✓ Si un paiement est impliqué, tester aussi en « paiement à la livraison » pour voir si c’est lié au paiement\n\nCopiez-collez le message d’erreur exact (ou une capture) et dites-moi à quelle étape ça bloque."
+    },
+    {
+      "kind": "escalate",
+      "reason": "Création commande échoue sans message clair ou avec erreur serveur répétable → escalade (logs backend requis)."
+    }
+  ]
+}

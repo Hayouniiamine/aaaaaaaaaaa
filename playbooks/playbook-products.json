@@ -1,0 +1,35 @@
+{
+  "id": "playbook-products",
+  "scope": "products",
+  "title": "Import produits échoué / fichier refusé",
+  "triggers": [
+    "import produits échoué",
+    "import ne marche pas",
+    "produits non importés",
+    "erreur import excel",
+    "import failed",
+    "cannot import products",
+    "fichier excel refusé",
+    "csv refusé",
+    "xlsx refusé"
+  ],
+  "description": "Triage import produits: format, colonnes, taille, SKU doublons, puis escalade.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel format de fichier utilisez-vous ? (Excel .xlsx / CSV)"
+    },
+    {
+      "kind": "ask",
+      "question": "Quel message d'erreur exact voyez-vous lors de l'import ?"
+    },
+    {
+      "kind": "solve",
+      "response": "Points à vérifier (les causes les plus fréquentes) :\n\n✓ Format accepté : .xlsx ou .csv\n✓ Colonnes obligatoires (exemple) : Nom, Prix, SKU, Stock\n✓ Limite : évitez les fichiers trop volumineux (testez d’abord avec 10 produits)\n✓ SKU : chaque SKU doit être unique\n\nSi vous me copiez-collez le message d’erreur + le format du fichier, je vous dis exactement quoi corriger."
+    },
+    {
+      "kind": "escalate",
+      "reason": "Erreur d'import non standard (parsing/format) → escalade (analyse fichier + logs requis)."
+    }
+  ]
+}

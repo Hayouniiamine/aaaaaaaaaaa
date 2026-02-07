@@ -1,0 +1,116 @@
+{
+  "lien": "https://dash.tiktak.space/orders/new",
+  "nom": "Nouvelle commande (/orders/new)",
+  "description": "Formulaire de création manuelle d’une commande. Détection automatique du client via le **téléphone principal** : si le numéro existe, les infos client peuvent être pré-remplies et une alerte signale si le même numéro a déjà passé ≥2 commandes dans la même journée. Sections du formulaire : 1) **Informations Client** (Nom*, Téléphone principal*, Téléphone supplémentaire, Gouvernorat*, Source de la commande*, Adresse complète*, Commentaire). 2) **Informations Commande** (Statut — par défaut En attente, Transporteur* avec frais associés, options Livraison gratuite et Échange). 3) **Produits de la commande** (recherche produit, sélection de déclinaison/variante et quantité). 4) **Résumé** (Sous-total, Frais de livraison, Remise, Total). Panneau latéral : Historique Client et Champs avancés.",
+  "actions": [
+    {
+      "id": "ouvrir_formulaire",
+      "label": "Ouvrir le formulaire",
+      "instructions": [
+        "Depuis /orders, cliquer sur « Nouvelle commande ».",
+        "Le formulaire /orders/new s’ouvre."
+      ],
+      "resultat": "Accès à la page de création de commande."
+    },
+    {
+      "id": "identifier_client",
+      "label": "Identifier le client par téléphone",
+      "instructions": [
+        "Saisir le Téléphone principal.",
+        "Observer la détection automatique : si client existant, ses informations s’affichent ; si le même numéro a >2 commandes/jour, une alerte apparaît."
+      ],
+      "notes": "Le téléphone principal est obligatoire et sert de clé d’unicité opérationnelle.",
+      "resultat": "Client existant reconnu ou création d’un nouveau client."
+    },
+    {
+      "id": "remplir_infos_client",
+      "label": "Renseigner les informations client",
+      "instructions": [
+        "Compléter : Nom du client*, Téléphone supplémentaire (optionnel), Gouvernorat*, Source de la commande*, Adresse complète*, Commentaire (optionnel)."
+      ],
+      "resultat": "Bloc « Informations Client » valide (toutes les cases obligatoires remplies)."
+    },
+    {
+      "id": "renseigner_infos_commande",
+      "label": "Configurer les informations de commande",
+      "instructions": [
+        "Choisir le Statut (par défaut « En attente »).",
+        "Sélectionner le Transporteur* (ex. « Livreur - 7 DT »).",
+        "Activer « Livraison gratuite » si nécessaire.",
+        "Cocher « Échange » s’il s’agit d’une commande d’échange."
+      ],
+      "notes": "Les frais de livraison se mettent à jour selon le transporteur, sauf si « Livraison gratuite » est activée.",
+      "resultat": "Paramètres commande définis, frais calculés."
+    },
+    {
+      "id": "ajouter_produits",
+      "label": "Ajouter des produits et déclinaisons",
+      "instructions": [
+        "Chercher un produit dans « Ajouter des produits ».",
+        "Cliquer pour ouvrir la liste des déclinaisons (taille/couleur, etc.).",
+        "Pour chaque déclinaison, choisir la quantité puis « Ajouter ». Répéter si besoin."
+      ],
+      "notes": "Chaque variante affiche Réf, prix, stock disponible. Les lignes apparaissent dans « Produits de la commande ».",
+      "resultat": "Produits et variantes ajoutés à la commande."
+    },
+    {
+      "id": "ajuster_resume",
+      "label": "Vérifier et ajuster le résumé",
+      "instructions": [
+        "Contrôler le Sous-total, les Frais de livraison, saisir une Remise si applicable.",
+        "Vérifier le Total recalculé automatiquement."
+      ],
+      "resultat": "Montants corrects avant création."
+    },
+    {
+      "id": "creer_commande",
+      "label": "Créer la commande",
+      "instructions": [
+        "Cliquer sur « Créer la commande ».",
+        "Attendre la confirmation et l’ID de la commande."
+      ],
+      "resultat": "Commande créée et accessible depuis la liste /orders et la fiche latérale (impression/synchronisation possibles ensuite)."
+    },
+    {
+      "id": "annuler",
+      "label": "Annuler la création",
+      "instructions": [
+        "Cliquer sur « Annuler » pour quitter sans enregistrer."
+      ],
+      "resultat": "Retour à la liste des commandes sans modification."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Alerte: même numéro a déjà passé 2+ commandes aujourd’hui.",
+      "cause_probable": "Risque de doublon ou d’abus.",
+      "solution": "Vérifier l’historique client, confirmer l’intention avec le client, sinon regrouper/fusionner ou bloquer si spam."
+    },
+    {
+      "symptome": "Bouton « Créer la commande » désactivé ou erreur de validation.",
+      "cause_probable": "Champs obligatoires manquants (Nom, Téléphone principal, Gouvernorat, Source, Adresse complète) ou Transporteur non sélectionné.",
+      "solution": "Remplir tous les champs requis et sélectionner un transporteur, puis réessayer."
+    },
+    {
+      "symptome": "Frais de livraison incorrects.",
+      "cause_probable": "Transporteur changé après ajout ou option « Livraison gratuite » non souhaitée.",
+      "solution": "Revalider le transporteur ou désactiver « Livraison gratuite ». Vérifier que les frais se recalculent."
+    },
+    {
+      "symptome": "Impossible d’ajouter une déclinaison (stock/quantité).",
+      "cause_probable": "Stock insuffisant ou référence inactive.",
+      "solution": "Réduire la quantité, choisir une autre variante ou réapprovisionner le stock."
+    },
+    {
+      "symptome": "Produit introuvable dans la recherche.",
+      "cause_probable": "Indexation récente, libellé partiel, produit non publié.",
+      "solution": "Essayer par référence, vérifier l’état de publication et attendre la fin de l’indexation si ajout récent."
+    },
+    {
+      "symptome": "Total inattendu après remise.",
+      "cause_probable": "Saisie de remise invalide (ex. négative ou supérieure au sous-total).",
+      "solution": "Corriger la remise et vérifier le recalcul du total."
+    }
+  ]
+}
+

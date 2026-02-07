@@ -1,0 +1,84 @@
+{
+  "lien": "https://dash.tiktak.space/settings",
+  "nom": "Paramètres — Paramétrage global (/settings)",
+  "description": "Page centrale pour configurer l’identité et les préférences globales de l’entreprise. Regroupe : Informations de l’entreprise (Nom, Devise), Coordonnées (Adresse, Ville, Pays, Gouvernorat, Code postal, Téléphones, Email), Configuration fiscale (Code TVA, Taux de TVA %), et Configuration avancée (Logo de l’entreprise, Signature de l’entreprise). Ces réglages s’appliquent aux documents (bons, factures), exports et affichages par défaut sur toute la plateforme.",
+  "actions": [
+    {
+      "id": "maj_identite",
+      "label": "Mettre à jour l’identité de l’entreprise",
+      "instructions": [
+        "Renseigner « Nom de l’entreprise ».",
+        "Choisir la « Devise » par défaut (ex. Dinar Tunisien)."
+      ],
+      "resultat": "Nom et devise appliqués sur l’interface, exports et documents."
+    },
+    {
+      "id": "maj_coordonnees",
+      "label": "Renseigner les coordonnées",
+      "instructions": [
+        "Compléter Adresse et Ville.",
+        "Sélectionner le Pays et le Gouvernorat.",
+        "Saisir Code postal, Téléphone principal/secondaire et Email de contact."
+      ],
+      "resultat": "Coordonnées normalisées pour les documents de vente et communications."
+    },
+    {
+      "id": "config_fiscale",
+      "label": "Configurer les informations fiscales",
+      "instructions": [
+        "Saisir « Code TVA » (identifiant fiscal).",
+        "Définir le « Taux de TVA (%) » par défaut appliqué aux produits/services (si vos règles l’exigent)."
+      ],
+      "notes": "Le taux par défaut peut être surchargé au niveau produit ou tarif si votre instance le permet.",
+      "resultat": "Mentions et calculs TVA cohérents sur documents et récapitulatifs."
+    },
+    {
+      "id": "branding",
+      "label": "Téléverser le logo et la signature",
+      "instructions": [
+        "Téléverser « Logo de l’entreprise » (formats recommandés: PNG/JPG/WebP).",
+        "Téléverser « Signature de l’entreprise » si vous signez les documents.",
+        "Vérifier l’aperçu visuel."
+      ],
+      "resultat": "Branding appliqué aux bons de livraison, factures et emails (selon configuration)."
+    },
+    {
+      "id": "enregistrer",
+      "label": "Enregistrer les modifications",
+      "instructions": [
+        "Relire les champs saisis.",
+        "Cliquer sur « Enregistrer » (ou équivalent) pour appliquer.",
+        "Recharger un document (ex. bon) pour vérifier le rendu."
+      ],
+      "resultat": "Paramètres persistés et utilisés par les modules (commandes, expédition, produits…)."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Logo/signature ne s’affichent pas sur les documents.",
+      "cause_probable": "Fichier trop lourd, format non supporté ou cache du navigateur.",
+      "solution": "Compresser l’image (<1–2 Mo), utiliser PNG/JPG/WebP, enregistrer puis rafraîchir (Ctrl+F5)."
+    },
+    {
+      "symptome": "TVA calculée de façon inattendue.",
+      "cause_probable": "Taux de TVA global incorrect ou produits configurés avec un autre taux.",
+      "solution": "Vérifier le « Taux de TVA (%) » global et les exceptions au niveau produit/tarif."
+    },
+    {
+      "symptome": "Email ou téléphone rejeté.",
+      "cause_probable": "Format invalide (espaces, indicatif manquant, email non conforme).",
+      "solution": "Nettoyer les espaces/traits, saisir un email valide (ex. nom@domaine.tld) et un numéro au bon format."
+    },
+    {
+      "symptome": "Devise affichée incorrecte sur les pages/exports.",
+      "cause_probable": "Devise modifiée récemment sans mise à jour des prix, ou cache.",
+      "solution": "Confirmer la devise dans les paramètres, recharger l’interface ; au besoin réimporter/ajuster les prix (changement de devise n’effectue pas de conversion automatique)."
+    },
+    {
+      "symptome": "Adresse/gouvernorat incohérents sur les documents.",
+      "cause_probable": "Ville/Pays/Gouvernorat non alignés ou code postal erroné.",
+      "solution": "Corriger les champs et réenregistrer ; régénérer le document."
+    }
+  ]
+}
+

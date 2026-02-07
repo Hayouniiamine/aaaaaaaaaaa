@@ -1,0 +1,287 @@
+[
+  {
+    "lien": "https://dash.tiktak.space/settings",
+    "nom": "Paramètres — Marques",
+    "description": "Gestion de plusieurs marques/boutiques. Chaque carte affiche : nom, statut (Actif), coordonnées (ville, téléphone), TVA, adresse. Actions rapides : activer/désactiver, éditer, supprimer. Bouton « Nouvelle marque » pour ajouter une marque.",
+    "actions": [
+      {
+        "id": "creer_marque",
+        "label": "Créer une marque",
+        "instructions": [
+          "Cliquer sur « Nouvelle marque ».",
+          "Renseigner nom, coordonnées (adresse/ville), TVA/Matricule et téléphone.",
+          "Enregistrer puis activer la marque."
+        ],
+        "resultat": "La marque apparaît dans la liste et peut être utilisée sur les produits/commandes selon votre configuration."
+      },
+      {
+        "id": "activer_desactiver_marque",
+        "label": "Activer / Désactiver",
+        "instructions": [
+          "Basculer le switch sur la carte de la marque."
+        ],
+        "resultat": "Contrôle de la visibilité/utilisation de la marque dans l’application."
+      },
+      {
+        "id": "editer_supprimer_marque",
+        "label": "Éditer / Supprimer",
+        "instructions": [
+          "Cliquer sur l’icône crayon pour modifier les champs.",
+          "Cliquer sur la corbeille pour supprimer (confirmer)."
+        ],
+        "resultat": "Mise à jour ou retrait de la marque."
+      }
+    ],
+    "problemes_recurrents": [
+      {
+        "symptome": "Impossible de supprimer la marque.",
+        "cause_probable": "Des produits/commandes y sont rattachés.",
+        "solution": "Détacher/archiver les éléments liés ou choisir une autre marque par défaut avant suppression."
+      },
+      {
+        "symptome": "Marque non proposée dans les écrans.",
+        "cause_probable": "Statut inactif.",
+        "solution": "Activer la marque via le switch."
+      }
+    ]
+  },
+  {
+    "lien": "https://dash.tiktak.space/settings",
+    "nom": "Paramètres — Taxes & TVA",
+    "description": "Configuration des taxes additionnelles (ex. Timbre fiscal, FODEC) et des taux de TVA. Chaque ligne indique : nom, valeur, type (Fixe ou Pourcentage), statut et actions (éditer/supprimer).",
+    "actions": [
+      {
+        "id": "ajouter_taxe",
+        "label": "Ajouter une taxe",
+        "instructions": [
+          "Cliquer « Nouvelle taxe ».",
+          "Choisir le type (Fixe/Pourcentage) puis la valeur.",
+          "Activer la taxe et enregistrer."
+        ],
+        "resultat": "Taxe disponible pour le calcul des commandes."
+      },
+      {
+        "id": "gerer_tva",
+        "label": "Gérer les taux de TVA",
+        "instructions": [
+          "Activer les taux utiles (ex. 19%, 13%, 7%, 0%).",
+          "Éditer un taux pour changer son libellé/valeur si nécessaire."
+        ],
+        "resultat": "Taux actifs utilisables par défaut dans les produits/commandes."
+      }
+    ],
+    "problemes_recurrents": [
+      {
+        "symptome": "TVA/taxes calculées deux fois.",
+        "cause_probable": "Taxe additionnelle active en plus d’un taux de TVA.",
+        "solution": "Vérifier quelles taxes doivent être appliquées et désactiver celles non désirées."
+      },
+      {
+        "symptome": "Prix HT/TTC incohérent.",
+        "cause_probable": "Mauvais type (Fixe vs Pourcentage) ou valeur erronée.",
+        "solution": "Corriger le type/valeur puis recalculer."
+      }
+    ]
+  },
+  {
+    "lien": "https://dash.tiktak.space/settings",
+    "nom": "Paramètres — Transporteurs",
+    "description": "Gestion des livreurs et tarifs. Pour chaque transporteur : logo, frais de base, nombre de gouvernorats couverts, statut « Actif », visibilité « Web » (méthode de livraison sur le site) et « Défaut ». Actions : éditer, supprimer. Bouton « Nouveau transporteur ». ",
+    "actions": [
+      {
+        "id": "ajouter_transporteur",
+        "label": "Ajouter un transporteur",
+        "instructions": [
+          "Cliquer « Nouveau transporteur ».",
+          "Renseigner le nom, les frais et zones (gouvernorats).",
+          "Configurer l’intégration (clé API/compte) si synchronisation requise.",
+          "Activer et enregistrer."
+        ],
+        "resultat": "Transporteur disponible dans les commandes et modules d’expédition."
+      },
+      {
+        "id": "defaut_web",
+        "label": "Définir Défaut / Web",
+        "instructions": [
+          "Basculer « Défaut » pour le transporteur prioritaire.",
+          "Activer « Web » pour l’afficher comme mode de livraison sur la boutique."
+        ],
+        "resultat": "Flux de prise de commande aligné avec vos préférences."
+      },
+      {
+        "id": "editer_supprimer",
+        "label": "Éditer / Supprimer",
+        "instructions": [
+          "Cliquer sur crayon pour modifier tarifs/zones.",
+          "Cliquer corbeille pour supprimer si non utilisé."
+        ],
+        "resultat": "Paramétrage à jour."
+      }
+    ],
+    "problemes_recurrents": [
+      {
+        "symptome": "Transporteur non proposé lors de la création de commande.",
+        "cause_probable": "Statut inactif ou zones non définies.",
+        "solution": "Activer le transporteur et compléter les gouvernorats couverts."
+      },
+      {
+        "symptome": "Synchronisation échoue.",
+        "cause_probable": "Clés API invalides ou intégration non configurée.",
+        "solution": "Vérifier les identifiants et la liaison du compte."
+      }
+    ]
+  },
+  {
+    "lien": "https://dash.tiktak.space/settings",
+    "nom": "Paramètres — Équipe & Utilisateurs",
+    "description": "Gestion des comptes utilisateurs et rôles. Liste avec recherche, état « Actif », rôle (administrateur, service-client, etc.). Bouton « Nouvel utilisateur » pour créer un compte.",
+    "actions": [
+      {
+        "id": "creer_utilisateur",
+        "label": "Créer un utilisateur",
+        "instructions": [
+          "Cliquer « Nouvel utilisateur ».",
+          "Remplir Prénom*, Nom*, Email*, Téléphone*, Rôle*.",
+          "Saisir mot de passe et confirmation.",
+          "Activer « Compte actif » et « Envoyer une notification » si souhaité.",
+          "Créer."
+        ],
+        "resultat": "Compte ajouté et opérationnel selon le rôle attribué."
+      },
+      {
+        "id": "activer_desactiver",
+        "label": "Activer / Désactiver un compte",
+        "instructions": [
+          "Basculer le switch « Actif » sur la carte de l’utilisateur."
+        ],
+        "resultat": "Accès autorisé ou suspendu immédiatement."
+      },
+      {
+        "id": "modifier_role",
+        "label": "Modifier rôle et informations",
+        "instructions": [
+          "Éditer l’utilisateur pour changer rôle, téléphone, adresse ou réinitialiser le mot de passe."
+        ],
+        "resultat": "Permissions et coordonnées mises à jour."
+      }
+    ],
+    "problemes_recurrents": [
+      {
+        "symptome": "Création refusée (erreur mot de passe).",
+        "cause_probable": "Confirmation différente ou complexité insuffisante.",
+        "solution": "Saisir des mots de passe identiques et respecter la complexité requise."
+      },
+      {
+        "symptome": "L’utilisateur ne voit pas certains menus.",
+        "cause_probable": "Rôle insuffisant.",
+        "solution": "Monter le rôle ou ajuster les permissions (voir section permissions si disponible)."
+      }
+    ]
+  },
+  {
+    "lien": "https://dash.tiktak.space/settings",
+    "nom": "Paramètres — Sécurité (IPs bloquées)",
+    "description": "Liste des adresses IP bloquées avec statut (actif/expiré), date de création et actions (éditer, supprimer). Bouton « Bloquer une IP » pour ajouter un blocage.",
+    "actions": [
+      {
+        "id": "bloquer_ip",
+        "label": "Bloquer une IP",
+        "instructions": [
+          "Cliquer « Bloquer une IP ».",
+          "Saisir l’adresse IP (ou plage si supportée) et la durée/raison.",
+          "Valider."
+        ],
+        "resultat": "L’IP est ajoutée à la liste et l’accès est restreint."
+      },
+      {
+        "id": "editer_supprimer_ip",
+        "label": "Éditer / Supprimer un blocage",
+        "instructions": [
+          "Cliquer sur crayon pour ajuster la durée/raison.",
+          "Cliquer corbeille pour lever le blocage."
+        ],
+        "resultat": "Blocages mis à jour."
+      },
+      {
+        "id": "rafraichir",
+        "label": "Rafraîchir l’état",
+        "instructions": [
+          "Utiliser l’icône « rafraîchir » pour recharger les statuts (actif/expiré)."
+        ],
+        "resultat": "Vue à jour."
+      }
+    ],
+    "problemes_recurrents": [
+      {
+        "symptome": "Blocage inopérant.",
+        "cause_probable": "IP mal saisie ou utilisateur derrière un proxy/CDN.",
+        "solution": "Vérifier l’IP réelle et adapter la stratégie (plage, règles amont)."
+      },
+      {
+        "symptome": "Blocage trop large (faux positifs).",
+        "cause_probable": "Plage IP excessive.",
+        "solution": "Restreindre à l’IP exacte ou réduire la durée du blocage."
+      }
+    ]
+  },
+  {
+    "lien": "https://dash.tiktak.space/settings",
+    "nom": "Paramètres — Étapes de commande",
+    "description": "Configuration du workflow de commandes. Liste ordonnable des étapes (drag & drop) avec switches « Actif », « Comptable » et « Par défaut ». Actions : ajouter, éditer, supprimer. Avertissement : modifier avec prudence pour éviter les blocages de flux.",
+    "actions": [
+      {
+        "id": "ajouter_etape",
+        "label": "Ajouter une étape",
+        "instructions": [
+          "Cliquer « Ajouter une étape ».",
+          "Définir nom, icône/couleur (si proposé) et options (Comptable/Actif).",
+          "Enregistrer."
+        ],
+        "resultat": "Nouvelle étape disponible dans le module Commandes."
+      },
+      {
+        "id": "definir_par_defaut",
+        "label": "Définir l’étape par défaut",
+        "instructions": [
+          "Basculer le switch « Par défaut » sur l’étape voulue (ex. « En attente »)."
+        ],
+        "resultat": "Les nouvelles commandes démarrent sur cette étape."
+      },
+      {
+        "id": "reordonner",
+        "label": "Réordonner les étapes",
+        "instructions": [
+          "Utiliser le handle de glisser-déposer pour réorganiser la liste.",
+          "Enregistrer si demandé."
+        ],
+        "resultat": "Affichage et priorités alignés sur votre process."
+      },
+      {
+        "id": "activer_comptable",
+        "label": "Marquer comme « Comptable »",
+        "instructions": [
+          "Activer le switch « Comptable » pour les étapes à comptabiliser (ex. Confirmées/Livrées)."
+        ],
+        "resultat": "Ces étapes seront prises en compte dans les rapports/exports comptables."
+      }
+    ],
+    "problemes_recurrents": [
+      {
+        "symptome": "Actions impossibles depuis une étape (ex. expédier).",
+        "cause_probable": "Transitions non prévues entre étapes.",
+        "solution": "Utiliser les étapes standard (En attente → Confirmées → Prêt à expédier → Expédiées → Livrées) ou ajuster vos règles de transitions si disponibles."
+      },
+      {
+        "symptome": "Les nouvelles commandes n’arrivent pas dans l’étape attendue.",
+        "cause_probable": "Mauvaise étape « Par défaut ».",
+        "solution": "Cocher « Par défaut » sur l’étape souhaitée."
+      },
+      {
+        "symptome": "Rapports comptables incomplets.",
+        "cause_probable": "Étapes non marquées « Comptable ». ",
+        "solution": "Activer « Comptable » sur les étapes devant apparaître en comptabilité."
+      }
+    ]
+  }
+]
+

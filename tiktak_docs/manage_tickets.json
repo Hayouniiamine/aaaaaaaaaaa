@@ -1,0 +1,92 @@
+{
+  "lien": "https://dash.tiktak.space/tickets",
+  "nom": "Tickets de support (/tickets)",
+  "description": "Module pour créer, suivre et centraliser vos demandes au support TikTak PRO. Vue avec filtres (Tous, Créés par vous, Statuts, Sujets), bouton « Rafraîchir » et « Nouveau ticket ». Les tickets ont une chronologie (messages/réponses) et passent par des statuts type : Ouvert → En cours → Résolu → Fermé. Délai de traitement indicatif : 24 h selon la disponibilité de l’équipe.",
+  "actions": [
+    {
+      "id": "creer_ticket",
+      "label": "Créer un ticket",
+      "instructions": [
+        "Cliquer « Nouveau ticket ». ",
+        "Renseigner **Titre** (résumé clair).",
+        "Choisir **Type** (ex. Question, Problème bloquant). N’utilisez « Problème bloquant » que si le service est réellement indisponible.",
+        "Sélectionner le **Sujet** (catégorie la plus proche).",
+        "Décrire le **problème** (ce qui était attendu vs. ce qui se passe).",
+        "Ajouter un **scénario** de reproduction (étapes 1,2,3).",
+        "Fournir une **URL** précise si le souci est sur une page donnée.",
+        "Importer une **capture d’écran**/vidéo montrant l’erreur.",
+        "Valider pour créer le ticket."
+      ],
+      "resultat": "Ticket créé et visible dans la liste, prêt à être pris en charge par le support."
+    },
+    {
+      "id": "repondre_ticket",
+      "label": "Répondre / joindre des éléments",
+      "instructions": [
+        "Ouvrir le ticket depuis la liste.",
+        "Écrire votre message (ex. informations complémentaires, nouveaux constats).",
+        "Joindre des fichiers (captures/vidéos/logs) si nécessaire.",
+        "Envoyer."
+      ],
+      "resultat": "La conversation est enrichie et l’équipe est notifiée."
+    },
+    {
+      "id": "filtrer_rechercher",
+      "label": "Filtrer et rechercher vos tickets",
+      "instructions": [
+        "Utiliser les filtres de gauche : **Créés par vous**, **Statut**, **Sujets**.",
+        "Cliquer sur **Rafraîchir** pour recharger la liste."
+      ],
+      "resultat": "Liste focalisée sur les tickets pertinents."
+    },
+    {
+      "id": "clore_ticket",
+      "label": "Clore / rouvrir un ticket",
+      "instructions": [
+        "Quand la solution est satisfaisante, passer le ticket en **Fermé** (ou accepter la résolution).",
+        "En cas de régression, **réouvrir** le même ticket en expliquant le contexte."
+      ],
+      "resultat": "Cycle de vie des tickets propre et traçable."
+    },
+    {
+      "id": "bonnes_pratiques",
+      "label": "Bonnes pratiques pour accélérer le traitement",
+      "instructions": [
+        "Toujours fournir **ID commande / domaine / URL** concernés.",
+        "Inclure un **scénario précis** (étapes + navigateur + horodatage).",
+        "Préciser la **portée** (un utilisateur, tous, mobile, desktop…).",
+        "Joindre **captures d’écran**/vidéos et le **texte exact de l’erreur**.",
+        "Une demande = **un ticket** (évite les confusions)."
+      ],
+      "resultat": "Diagnostic plus rapide et résolution plus fiable."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Ticket marqué « Problème bloquant » mais c’est une question simple.",
+      "cause_probable": "Mauvaise catégorisation.",
+      "solution": "Utiliser « Question »/« Assistance » pour les cas non bloquants afin d’éviter un blocage automatique par le robot."
+    },
+    {
+      "symptome": "Allers-retours longs avec le support.",
+      "cause_probable": "Manque d’infos (URL, captures, scénario).",
+      "solution": "Fournir dès l’ouverture : URL exacte, étapes, horodatage, captures/vidéos, ID concernés."
+    },
+    {
+      "symptome": "Ticket en attente sans réponse visible.",
+      "cause_probable": "Cache de page ou filtre actif.",
+      "solution": "Cliquer **Rafraîchir**, vérifier les **filtres** et les **notifications** liées au ticket."
+    },
+    {
+      "symptome": "Plusieurs tickets pour le même incident.",
+      "cause_probable": "Duplications par plusieurs membres de l’équipe.",
+      "solution": "Consolider les informations dans **un seul ticket** et fermer les doublons."
+    },
+    {
+      "symptome": "Données sensibles exposées dans le ticket.",
+      "cause_probable": "Copie/Coller de secrets ou accès.",
+      "solution": "Ne jamais partager de **mots de passe** ou clés privées. Utiliser des canaux sécurisés si le support en a besoin."
+    }
+  ]
+}
+

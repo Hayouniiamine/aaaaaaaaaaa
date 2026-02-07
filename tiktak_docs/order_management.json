@@ -1,0 +1,225 @@
+{
+  "lien": "https://dash.tiktak.space/orders",
+  "nom": "Commandes (/orders)",
+  "description": "Module de gestion des commandes. Vue tableau avec compteurs par statut (En attente, Confirmées, Prêt à expédier, Expédiées, Livrées, Retour non reçues, Retour reçues, Annulées). Recherche rapide + filtres avancés : source, statut, impression (Oui/Non), synchronisation (Oui/Non), équipe/utilisateur, période (date range), gouvernorat/localisation, transporteurs. Chaque ligne donne accès aux actions rapides (WhatsApp/Appeler, statut, duplication, édition, vue détails latérale) et au suivi de l’historique (modifications, appels).",
+  "actions": [
+    {
+      "id": "filtrer",
+      "label": "Filtrer et rechercher",
+      "instructions": [
+        "Saisir un mot-clé (client, référence, téléphone) dans la barre de recherche.",
+        "Ouvrir les filtres avancés pour sélectionner : Source, Statut, Impression (Oui/Non), Synchronisation (Oui/Non), Équipe/Utilisateur, Période, Transporteur, Gouvernorat.",
+        "Cliquer sur « Tout effacer » pour réinitialiser."
+      ],
+      "resultat": "Le tableau n’affiche que les commandes correspondant aux critères choisis."
+    },
+    {
+      "id": "voir_details",
+      "label": "Voir les détails d’une commande",
+      "instructions": [
+        "Cliquer sur l’icône « œil / view » d’une ligne.",
+        "Consulter les onglets : Détails, Historique, Appels."
+      ],
+      "resultat": "Panneau latéral avec informations client, panier, transport/livraison, historique et appels."
+    },
+    {
+      "id": "modifier",
+      "label": "Modifier une commande",
+      "instructions": [
+        "Cliquer sur le nom/référence de la commande dans le tableau.",
+        "Effectuer les changements (client, produits, adresse, frais, etc.).",
+        "Enregistrer."
+      ],
+      "resultat": "La commande est mise à jour et la modification apparaît dans l’historique."
+    },
+    {
+      "id": "changer_statut",
+      "label": "Changer le statut",
+      "instructions": [
+        "Ouvrir le menu de statut depuis la colonne « Source/Statut » ou la fiche latérale.",
+        "Sélectionner un statut compatible."
+      ],
+      "notes": "Transitions par défaut (peuvent varier selon configuration) : En attente → Confirmée/Annulée ; Confirmée → Prêt à expédier/Annulée ; Prêt à expédier → Expédiée/Annulée ; Expédiée → Livrée/Retour non reçue ; Retour non reçue → Retour reçue.",
+      "resultat": "Le statut change uniquement vers un état autorisé."
+    },
+    {
+      "id": "actions_lot",
+      "label": "Actions en lot (menu « Actions »)",
+      "instructions": [
+        "Cocher une ou plusieurs commandes.",
+        "Ouvrir « Actions » puis choisir : Imprimer bons livraison, Synchroniser transporteur, Tracker (par sélection), Changer livreur, Annuler synchronisation, Exporter vers Excel.",
+        "Suivre les éventuels messages de confirmation."
+      ],
+      "resultat": "L’action choisie s’applique à toutes les commandes sélectionnées."
+    },
+    {
+      "id": "imprimer_bons",
+      "label": "Imprimer les bordereaux",
+      "instructions": [
+        "Sélectionner les commandes.",
+        "Menu « Actions » → « Imprimer bons livraison ».",
+        "Valider et télécharger/imprimer le PDF."
+      ],
+      "resultat": "Un PDF de bordereaux est généré selon le gabarit configuré."
+    },
+    {
+      "id": "synchroniser_livreur",
+      "label": "Synchroniser avec un livreur",
+      "instructions": [
+        "Vérifier qu’un livreur est bien associé dans la commande et que l’intégration est configurée (clé API/token actifs).",
+        "Sélectionner la/les commande(s) → « Actions » → « Synchroniser transporteur ».",
+        "Attendre la confirmation (numéro de suivi/étiquette si disponible)."
+      ],
+      "notes": "La synchronisation peut aussi être automatique selon la configuration du compte livreur.",
+      "resultat": "Commande transmise au transporteur. Un tracking peut être disponible."
+    },
+    {
+      "id": "tracker",
+      "label": "Tracker une commande",
+      "instructions": [
+        "Sélectionner la/les commande(s) avec suivi.",
+        "Menu « Actions » → « Tracker (par sélection) »."
+      ],
+      "resultat": "Récupération/affichage de l’état d’acheminement auprès du transporteur."
+    },
+    {
+      "id": "annuler_sync",
+      "label": "Annuler une synchronisation",
+      "instructions": [
+        "Sélectionner la commande synchronisée.",
+        "Menu « Actions » → « Annuler synchronisation ».",
+        "Confirmer l’annulation."
+      ],
+      "resultat": "La liaison avec le transporteur est annulée (selon les règles de l’intégration)."
+    },
+    {
+      "id": "changer_livreur",
+      "label": "Changer de livreur",
+      "instructions": [
+        "Sélectionner les commandes.",
+        "Menu « Actions » → « Changer livreur ».",
+        "Choisir le nouveau livreur et valider."
+      ],
+      "resultat": "Le transporteur associé est mis à jour."
+    },
+    {
+      "id": "export_excel",
+      "label": "Exporter en Excel",
+      "instructions": [
+        "Sélectionner les commandes à exporter.",
+        "Menu « Actions » → « Exporter vers Excel ».",
+        "Télécharger le fichier généré."
+      ],
+      "resultat": "Un fichier .xlsx contenant les commandes sélectionnées est téléchargé."
+    },
+    {
+      "id": "dupliquer",
+      "label": "Dupliquer une commande",
+      "instructions": [
+        "Cliquer sur l’icône de duplication au bout de la ligne de la commande.",
+        "Confirmer et, si besoin, ajuster les champs de la nouvelle commande.",
+        "Enregistrer."
+      ],
+      "resultat": "Création d’une nouvelle commande copiée de l’originale."
+    },
+    {
+      "id": "pagination",
+      "label": "Paginer la liste",
+      "instructions": [
+        "Utiliser la pagination en bas du tableau pour naviguer entre les pages.",
+        "Adapter le nombre d’éléments par page si l’option est disponible."
+      ],
+      "resultat": "Navigation fluide sur de grands volumes de commandes."
+    },
+    {
+      "id": "contact_whatsapp",
+      "label": "Contacter via WhatsApp",
+      "instructions": [
+        "Cliquer sur le bouton « WhatsApp » dans la colonne Contact.",
+        "Votre navigateur ouvre une conversation avec le numéro du client."
+      ],
+      "resultat": "Ouverture de la discussion WhatsApp avec le client."
+    },
+    {
+      "id": "historique_modifs",
+      "label": "Voir l’historique des modifications",
+      "instructions": [
+        "Ouvrir la vue latérale (œil).",
+        "Aller à l’onglet « Historique »."
+      ],
+      "resultat": "Journal des modifications (qui, quand, quoi)."
+    },
+    {
+      "id": "appels",
+      "label": "Noter et consulter les appels",
+      "instructions": [
+        "Depuis la ligne de la commande, cliquer sur l’icône téléphone / compteur.",
+        "Choisir « Joignable » ou « Non joignable » pour enregistrer le résultat.",
+        "Dans la fiche latérale, onglet « Appels », consulter l’historique des tentatives."
+      ],
+      "resultat": "Suivi du nombre d’appels et de la joignabilité du client."
+    },
+    {
+      "id": "bloquer_numero",
+      "label": "Bloquer un numéro",
+      "instructions": [
+        "Ouvrir la fiche latérale (œil).",
+        "Cliquer sur « Bloquer ce numéro » et confirmer."
+      ],
+      "notes": "Utiliser pour le spam/abus. Le comportement exact (ex. empêcher nouvelles commandes) dépend de la configuration.",
+      "resultat": "Le numéro est marqué comme bloqué."
+    },
+    {
+      "id": "filtre_echange",
+      "label": "Filtrer les commandes d’échange",
+      "instructions": [
+        "Ouvrir les filtres avancés.",
+        "Activer le critère « Échange » (si activé dans votre instance) pour ne lister que les commandes d’échange."
+      ],
+      "resultat": "Le tableau affiche uniquement les commandes d’échange."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Synchronisation transporteur échouée.",
+      "cause_probable": "Livreur non configuré, clé API expirée, statut incompatible, adresse/poids manquants.",
+      "solution": "Vérifier la configuration du livreur (token), compléter les champs requis, repasser la commande à un statut compatible, relancer la synchro."
+    },
+    {
+      "symptome": "Impossible d’imprimer les bordereaux / PDF bloqué.",
+      "cause_probable": "Gabarit non configuré, blocage des pop-ups navigateur.",
+      "solution": "Configurer le modèle d’impression dans les paramètres et autoriser les fenêtres pop-up pour le domaine."
+    },
+    {
+      "symptome": "Export Excel vide ou incomplet.",
+      "cause_probable": "Aucune commande sélectionnée ou filtres trop restrictifs.",
+      "solution": "Sélectionner des lignes avant l’export et/ou assouplir les filtres."
+    },
+    {
+      "symptome": "Actions grisées/non disponibles.",
+      "cause_probable": "Permissions insuffisantes ou statut non compatible avec l’action.",
+      "solution": "Vérifier les rôles/utilisateurs et passer la commande par les statuts requis."
+    },
+    {
+      "symptome": "WhatsApp ne s’ouvre pas.",
+      "cause_probable": "Format de numéro incorrect, WhatsApp Web non disponible, pop-ups bloquées.",
+      "solution": "Utiliser un numéro au format international, vérifier WhatsApp Desktop/Web et débloquer les pop-ups."
+    },
+    {
+      "symptome": "Tracking non renvoyé.",
+      "cause_probable": "Transporteur ne fournit pas le suivi pour ce compte/expédition ou numéro de suivi absent.",
+      "solution": "Vérifier la réponse du transporteur et la présence du tracking ID ; réessayer après synchronisation réussie."
+    },
+    {
+      "symptome": "Duplication involontaire d’une commande.",
+      "cause_probable": "Clic répété sur l’icône « Dupliquer ». ",
+      "solution": "Supprimer/annuler la commande en double et confirmer les actions avant validation."
+    },
+    {
+      "symptome": "Résultats inattendus après filtrage par dates.",
+      "cause_probable": "Mauvais fuseau horaire ou période trop étroite.",
+      "solution": "Élargir le date range et confirmer le fuseau horaire de l’instance."
+    }
+  ]
+}
+

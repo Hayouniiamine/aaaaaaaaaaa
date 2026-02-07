@@ -1,0 +1,138 @@
+{
+  "plateforme": "TikTak PRO v2",
+  "type": "SaaS e-commerce & logistique omnicanal",
+  "lien": "https://dash.tiktak.space",
+  "objectif_general": [
+    "Centraliser la gestion des ventes en ligne et en boutique (POS) dans une seule interface.",
+    "Accélérer la préparation/expédition et réduire les erreurs grâce à l’automatisation.",
+    "Améliorer le suivi client (historique, appels, réclamations, retours) et la fidélisation.",
+    "Donner de la visibilité en temps réel (stocks, commandes, analytics) pour décider vite."
+  ],
+  "comment_ca_t_aide": {
+    "pour_qui": ["Boutiques physiques", "Commerces en ligne", "Marques D2C", "Vendeurs sur réseaux sociaux"],
+    "valeur": [
+      "Gain de temps: filtres avancés, actions de masse, scan douchette, bons d’expédition/manifestes automatiques.",
+      "Moins d’erreurs: workflow d’états contrôlés, synchronisation livreurs, tracking & retours cadrés.",
+      "Plus de ventes: coupons (unique/répétitif/auto), templates site, SEO intégré, POS + fidélité.",
+      "Suivi client complet: historique d’appels, blocage spam, réclamations, tickets de support."
+    ]
+  },
+  "modules_principaux": [
+    { "nom": "Commandes", "route": "/orders", "resume": "Vue unifiée avec filtres (statuts, source, transporteur, date). Détail, édition, impression, duplication, WhatsApp, historisation, blocage numéro." },
+    { "nom": "Créer une commande", "route": "/orders/new", "resume": "Détection client existant par téléphone, contrôle anti-doublon/jour, ajout produits/variantes, frais de livraison, échange, remise." },
+    { "nom": "Échange Commande", "route": "/orders/exchange", "resume": "Reprise d’une commande source, sélection d’articles à échanger, calcul d’avoir/supplément, nouvelle commande liée." },
+    { "nom": "Expédition (scan)", "route": "/shipping", "resume": "Scan colis, détection doublons, exclusion commandes annulées/déjà expédiées, export manifeste et bascule d’état vers « expédiées »." },
+    { "nom": "Retours (scan)", "route": "/returns", "resume": "Scan des retours, remise à jour automatique du stock et repérage des commandes non retournées." },
+    { "nom": "Manifestes", "route": "/manifests", "resume": "Historique des manifestes par jour et par transporteur." },
+    { "nom": "Produits", "route": "/products", "resume": "Catalogue avec import/export Excel et édition de masse. Variantes (taille, couleur, âge…), stock par variante, images, SEO." },
+    { "nom": "Catégories", "route": "/categories", "resume": "Arborescence catégories/sous-catégories avec SEO dédié." },
+    { "nom": "POS (Caisse)", "route": "/pos", "resume": "Vente boutique: scan code-barres, remises, paiement partiel/différé, échanges/avoirs, impression ticket, multi-boutiques, points fidélité." },
+    { "nom": "Clients", "route": "/customers", "resume": "Création auto à chaque commande, édition/suppression, compteur commandes, total dépensé, statut vérifié." },
+    { "nom": "Réclamations", "route": "/reclamations | /complaints", "resume": "Saisie d’une réclamation liée à une commande, type/intervention/responsable, suivi de statut." },
+    { "nom": "Coupons", "route": "/coupons", "resume": "Codes unique/répétitif/remise automatique avec conditions. Message promo auto via lien ?coupon=CODE. Back-office & site." },
+    { "nom": "Gestion de contenu (CMS)", "route": "/content-management", "resume": "Pages statiques (Accueil, CGU, RGPD, FAQ…). Éditeur par sections + SEO (titre, meta, slug, mots-clés, conseils)." },
+    { "nom": "Templates site", "route": "/templates", "resume": "Templates gratuits/payants, achat et installation depuis le back-office." },
+    { "nom": "Tickets de support", "route": "/tickets", "resume": "Ouverture/suivi de tickets, pièces jointes, délais indicatifs ~24h." },
+    { "nom": "Paramètres (généraux)", "route": "/settings", "resume": "Société, devises, taxes/TVA, transports, étapes de commande, équipe/permissions, sécurité (IP), notifications, réseaux sociaux." },
+    { "nom": "Marques multi-brand", "route": "/settings (Marques)", "resume": "Configurer plusieurs marques (coordonnées, TVA, visuels) et les activer." },
+    { "nom": "Stock", "route": "/stock-management", "resume": "Mouvements/inventaires (selon pack)."},
+    { "nom": "Leads Facebook", "route": "/messenger/leads", "resume": "Intégration des leads Messenger (selon pack)."},
+    { "nom": "Tracking automatique", "route": "/automatic-tracking", "resume": "Suivi expéditions automatisé (selon pack)."},
+    { "nom": "Comptabilité", "route": "/accounting", "resume": "Exports et passerelles comptables (selon pack)."}
+  ],
+  "workflows_clefs": [
+    {
+      "id": "commande_vers_livraison",
+      "etapes": [
+        "Création/Import des commandes → vérification statut & coordonnées.",
+        "Actions de masse: impression bons, synchronisation transporteurs, tracking.",
+        "Scan expédition → manifeste → passage « expédiées ».",
+        "Suivi/retours → réintégration stock et traitement des échanges."
+      ],
+      "automatisations": ["Sync transporteurs livrables", "Tracking/annulation sync", "Export Excel"]
+    },
+    {
+      "id": "vente_boutique_pos",
+      "etapes": [
+        "Scan produits (ou recherche) → remise éventuelle.",
+        "Association client (fidélité), paiement (espèces/carte/chèque/différé).",
+        "Ticket & mise en attente si besoin, gestion échange/avoir."
+      ]
+    },
+    {
+      "id": "site_web",
+      "etapes": [
+        "Choix template → contenu/SEO → domaine → coupons/affiliation.",
+        "Suivi analytics & optimisation catégories/produits."
+      ]
+    }
+  ],
+  "activation_modules": {
+    "acces": "Icône ⚙️ près du logo → « Personnaliser le menu »",
+    "selon_pack": true,
+    "exemples": [
+      { "module": "Expédition", "route": "/shipping" },
+      { "module": "Retours", "route": "/returns" },
+      { "module": "Manifestes", "route": "/manifests" },
+      { "module": "Échange Commande", "route": "/orders/exchange" },
+      { "module": "Leads Facebook", "route": "/messenger/leads" },
+      { "module": "Attributs Produits", "route": "/product-attributes" },
+      { "module": "Gestion de Stock", "route": "/stock-management" },
+      { "module": "Clients", "route": "/customers" },
+      { "module": "Réclamations", "route": "/complaints" },
+      { "module": "Comptabilité", "route": "/accounting" },
+      { "module": "POS", "route": "/pos" },
+      { "module": "Tracking automatique", "route": "/automatic-tracking" }
+    ]
+  },
+  "hebergement_domaine_securite": {
+    "modele": "SaaS hébergé (pas d’accès serveur pour les clients).",
+    "ssl": "Certificat SSL géré par TikTak PRO pour les domaines liés/achetés.",
+    "domaine": {
+      "acheter_chez_tiktak": "Possible; inclut SSL et sécurité; propagation DNS jusqu’à ~24h.",
+      "lier_domaine_existant": {
+        "modes": ["Enregistrement A (IP fournie)", "Nameservers (si proposé)"],
+        "diagnostic": "Si le logo/landing TikTak n’apparaît pas, le pointage DNS est incorrect."
+      }
+    }
+  },
+  "integrations_et_outils": [
+    "WhatsApp (lien direct depuis fiche commande).",
+    "Transporteurs (sync, suivi, manifeste).",
+    "Excel (import/export produits & commandes)."
+  ],
+  "support": {
+    "tickets": {
+      "route": "/tickets",
+      "delai_indicatif_heures": 24,
+      "bonnes_pratiques": [
+        "Joindre URL/ID commande, scénario reproductible, captures/vidéo.",
+        "Catégoriser correctement (n’utiliser « Bloquant » qu’en cas de panne réelle).",
+        "1 sujet = 1 ticket."
+      ]
+    },
+    "reclamations_clients": { "route": "/reclamations | /complaints", "but": "Traiter les litiges par type/intervention/responsable." }
+  },
+  "onboarding_rapide": [
+    "Paramètres généraux (marque, taxes/TVA, transporteurs, étapes de commande, équipe/permissions).",
+    "Créer catégories/produits/variantes (+ images, prix, stocks, SEO).",
+    "Configurer le site (template, pages, SEO) et lier/acheter le domaine.",
+    "Activer modules utiles (expédition, retours, POS, coupons…).",
+    "Lancer les ventes; suivre commandes, expéditions, retours et réclamations.",
+    "Mettre en place coupons et messages promo; analyser les performances."
+  ],
+  "bonnes_pratiques": [
+    "Uniformiser les numéros de téléphone (format unique) pour éviter les doublons clients.",
+    "Utiliser les statuts dans l’ordre (pas de livraison directe depuis « En attente »).",
+    "Toujours scanner à l’expédition/retour pour tracer et fiabiliser le stock.",
+    "Associer un client au POS pour paiements différés/points fidélité.",
+    "SEO: respecter les longueurs conseillées (titres 30–60, meta 70–160) et définir un slug unique."
+  ],
+  "problemes_recurrents_et_conseils": [
+    { "symptome": "Domaine non visible après achat/liaison", "cause": "Propagation DNS incomplète ou mauvaise configuration", "solution": "Attendre ~24h, vérifier l’enregistrement A/nameservers; si logo TikTak absent, le DNS est incorrect." },
+    { "symptome": "Module introuvable après activation", "cause": "Pack ou permissions", "solution": "Vérifier pack & rôle (Équipe) puis sauvegarder/rafraîchir." },
+    { "symptome": "Code promo non appliqué", "cause": "Inactif/expiré/conditions non remplies", "solution": "Activer/étendre validité, revoir conditions, tester sur panier conforme." },
+    { "symptome": "Scan douchette ne saisit rien", "cause": "Focus champ ou config lecteur", "solution": "Cliquer la barre de recherche; configurer le lecteur en mode clavier." }
+  ]
+}
+

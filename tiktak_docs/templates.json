@@ -1,0 +1,95 @@
+{
+  "lien": "https://dash.tiktak.space/templates",
+  "nom": "Templates (/templates) — Galerie de thèmes",
+  "description": "Catalogue de thèmes pour votre site TikTak PRO. Les cartes affichent l’aperçu visuel, des tags (catégories) et le prix — certains templates sont **gratuits**, d’autres **payants**. Filtres par catégories à gauche. Chaque carte propose **Aperçu** (demo) et **Acheter/Installer** selon le cas. Après achat, le template peut être installé immédiatement sur la boutique ou plus tard depuis l’espace client.",
+  "actions": [
+    {
+      "id": "rechercher_filtrer",
+      "label": "Rechercher et filtrer des templates",
+      "instructions": [
+        "Utiliser la barre de recherche en haut si disponible.",
+        "Cocher une ou plusieurs **catégories** (ecommerce, tech, pets, etc.) pour réduire la liste.",
+        "Parcourir les cartes ; le **prix** indiqué différencie le gratuit du payant."
+      ],
+      "resultat": "Liste de templates ciblée selon vos besoins."
+    },
+    {
+      "id": "aperçu",
+      "label": "Prévisualiser un template",
+      "instructions": [
+        "Cliquer sur **Aperçu** sur la carte du template.",
+        "Parcourir la démo (pages, sections) pour vérifier l’adéquation."
+      ],
+      "resultat": "Validation visuelle avant installation/achat."
+    },
+    {
+      "id": "installer_gratuit",
+      "label": "Installer un template gratuit",
+      "instructions": [
+        "Cliquer **Installer** (ou équivalent) sur la carte du template gratuit.",
+        "Confirmer l’action ; le thème devient disponible sur votre site."
+      ],
+      "resultat": "Template gratuit appliqué à la boutique."
+    },
+    {
+      "id": "acheter_payant",
+      "label": "Acheter un template payant",
+      "instructions": [
+        "Cliquer **Acheter** sur la carte.",
+        "Vérifier le récapitulatif (article, quantité, prix).",
+        "Choisir la **méthode de paiement** : Paiement en ligne (carte bancaire) ou **Virement bancaire**.",
+        "Cliquer **Confirmer et payer**."
+      ],
+      "notes": "Après confirmation du paiement, l’installation est disponible immédiatement ou plus tard depuis l’espace client.",
+      "resultat": "Licence du template enregistrée sur votre compte."
+    },
+    {
+      "id": "installer_apres_achat",
+      "label": "Installer le template (après achat)",
+      "instructions": [
+        "Depuis la modale de confirmation ou l’espace client, cliquer **Installer le template**.",
+        "Attendre la fin de l’application du thème.",
+        "Vérifier le rendu du site (pages d’accueil, catalogue, panier)."
+      ],
+      "resultat": "Template payant appliqué à la boutique."
+    },
+    {
+      "id": "changer_de_template",
+      "label": "Changer de template ultérieurement",
+      "instructions": [
+        "Revenir sur la galerie / espace des templates installés.",
+        "Sélectionner un autre thème (gratuit ou déjà acheté) et cliquer **Installer**.",
+        "Contrôler les pages clés après le changement."
+      ],
+      "resultat": "Nouveau thème actif sans perdre vos données (contenus et produits restent)."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Le bouton d’aperçu ne charge rien.",
+      "cause_probable": "Blocage popup / cache navigateur.",
+      "solution": "Autoriser les pop-ups pour le domaine et actualiser la page (Ctrl+F5)."
+    },
+    {
+      "symptome": "Paiement refusé lors de l’achat du template.",
+      "cause_probable": "Carte non acceptée, 3-D Secure échoué ou solde insuffisant.",
+      "solution": "Réessayer avec une autre carte, vérifier 3-D Secure ou utiliser **Virement bancaire**."
+    },
+    {
+      "symptome": "Après achat, l’installation n’apparaît pas.",
+      "cause_probable": "Validation de paiement non encore confirmée.",
+      "solution": "Attendre la confirmation (quelques minutes) puis recharger la page ; vérifier l’espace client."
+    },
+    {
+      "symptome": "Le site casse après changement de template.",
+      "cause_probable": "Widgets/sections spécifiques au template précédent.",
+      "solution": "Réorganiser les sections depuis l’éditeur de pages et republier ; choisir un template plus proche de l’existant."
+    },
+    {
+      "symptome": "Le prix affiché diffère du total.",
+      "cause_probable": "TVA/Taxes selon configuration.",
+      "solution": "Vérifier le récapitulatif de commande (TVA affichée dans la modale) avant paiement."
+    }
+  ]
+}
+

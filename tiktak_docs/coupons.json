@@ -1,0 +1,93 @@
+{
+  "lien": "https://dash.tiktak.space/coupons",
+  "nom": "Coupons de réduction (/coupons)",
+  "description": "Créez, gérez et mesurez vos codes promo. 3 types pris en charge : (1) **Code unique** (généré aléatoirement, usage ciblé), (2) **Code répétitif** (un même code utilisé par plusieurs clients, ex: SUMMER10), (3) **Remise automatique** appliquée quand des **conditions** sont remplies (ex: panier ≥ 100 DT, catégorie X, nouveau client, etc.). Les coupons peuvent servir à l’**affiliation** (partage d’un lien contenant le code) et afficher un **message de remise** sur le site quand le code est détecté dans l’URL.",
+  "actions": [
+    {
+      "id": "creer_coupon",
+      "label": "Créer un coupon",
+      "instructions": [
+        "Cliquer « Nouveau coupon ».",
+        "Renseigner **Nom du coupon** et **Code** (ou cliquer « Générer »).",
+        "Choisir le **Montant de la réduction** et le **Type** (Pourcentage % ou Montant fixe).",
+        "Choisir le **Type de coupon**: Code unique, Code répétitif ou Remise automatique (via les conditions).",
+        "Définir la **période de validité** si nécessaire (date début/fin).",
+        "Activer les options utiles (voir action suivante).",
+        "Enregistrer."
+      ],
+      "resultat": "Coupon créé et visible dans la « Liste des coupons »."
+    },
+    {
+      "id": "options_coupon",
+      "label": "Options & visibilité",
+      "instructions": [
+        "Activer **Coupon actif** pour le rendre utilisable.",
+        "Activer **Toujours actif** si pas de dates/limites.",
+        "Activer **Disponible sur le site web** pour l’e-commerce.",
+        "Activer **Disponible en back-office** pour que l’équipe puisse l’appliquer manuellement.",
+        "Activer **Usage unique par client** si besoin.",
+        "Activer **Tous les produits** ou ciblez des produits/catégories spécifiques (via conditions avancées)."
+      ],
+      "resultat": "Comportement du coupon conforme à votre stratégie (site, BO, restrictions)."
+    },
+    {
+      "id": "conditions_application",
+      "label": "Définir des conditions d’application",
+      "instructions": [
+        "Dans « Conditions d’application », ajouter des règles (ex: **Valeur d’achat** ≥ 100 DT, **Catégorie** = Femme, **Nombre d’articles**, **Transporteur**, etc.).",
+        "Empiler plusieurs conditions si nécessaire (toutes doivent être respectées).",
+        "Sauvegarder."
+      ],
+      "resultat": "Remise appliquée uniquement quand les conditions sont remplies."
+    },
+    {
+      "id": "affiliation_message",
+      "label": "Affiliation & message automatique",
+      "instructions": [
+        "Partager l’URL du site en ajoutant le **code** dans le lien (ex: `?coupon=SUMMER10`).",
+        "Configurer le **Texte d’affichage** (ex: \"🌟 Offre −10% sur tous les articles\") pour qu’il s’affiche quand le code est présent.",
+        "Vérifier l’affichage sur la boutique."
+      ],
+      "resultat": "Le visiteur voit le message et la remise se pré-applique s’il remplit les conditions."
+    },
+    {
+      "id": "piloter_liste",
+      "label": "Piloter la liste et les rapports",
+      "instructions": [
+        "Utiliser la recherche par **nom** ou **code**.",
+        "Activer/désactiver un coupon via le **switch** dans la liste.",
+        "Éditer ✎ / Supprimer 🗑️ depuis la colonne **Actions**.",
+        "Consulter en haut : **Total coupons**, **Coupons actifs**, **Utilisations total**, **Revenus générés**."
+      ],
+      "resultat": "Catalogue de coupons propre et métriques à jour."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Le code ne s’applique pas au panier.",
+      "cause_probable": "Coupon **inactif**, **expiré** ou **conditions** non remplies (min panier, produits exclus).",
+      "solution": "Activer le coupon, étendre la validité, vérifier/assouplir les conditions et réessayer."
+    },
+    {
+      "symptome": "Le client dit que le code existe mais est « invalide ». ",
+      "cause_probable": "Type **Usage unique par client** déjà consommé ou code sensible à la **casse**/espaces.",
+      "solution": "Vérifier l’historique d’utilisation, demander au client de retaper sans espace et dans la même casse; si besoin, augmenter le quota."
+    },
+    {
+      "symptome": "Le message de remise n’apparaît pas sur le site.",
+      "cause_probable": "Paramètre **Disponible sur le site web** désactivé ou code absent de l’URL.",
+      "solution": "Activer l’option, ajouter `?coupon=VOTRECODE` au lien partagé et vider le cache navigateur."
+    },
+    {
+      "symptome": "Le coupon s’applique sur des articles exclus.",
+      "cause_probable": "Option **Tous les produits** active ou conditions manquantes.",
+      "solution": "Désactiver « Tous les produits » et cibler les catégories/produits autorisés via les conditions."
+    },
+    {
+      "symptome": "Recettes/Utilisations ne montent pas dans le dashboard.",
+      "cause_probable": "Ventes hors période, commande annulée, ou coupon appliqué en back-office sans finalisation.",
+      "solution": "Filtrer la bonne période, vérifier le statut des commandes et finaliser les paniers BO."
+    }
+  ]
+}
+

@@ -1,0 +1,86 @@
+{
+  "lien": "https://dash.tiktak.space/manifests",
+  "nom": "Historique d’expédition — Manifests (/manifests)",
+  "description": "Vue récapitulative des manifestes d’expédition, regroupés **par jour** puis **par livreur/transporteur**. Un compteur affiche le nombre d’expéditions par transporteur et le total de la journée. Des filtres par **période (date de début/fin)** permettent de restreindre l’historique. Depuis chaque ligne transporteur, on peut ouvrir le détail et (selon configuration) **exporter/télécharger le manifeste** correspondant.",
+  "actions": [
+    {
+      "id": "filtrer_periode",
+      "label": "Filtrer par période",
+      "instructions": [
+        "Choisir « Date de début » et « Date de fin ».",
+        "Cliquer sur « Rechercher » pour actualiser la vue."
+      ],
+      "resultat": "La page liste uniquement les jours/transporteurs ayant des expéditions sur l’intervalle."
+    },
+    {
+      "id": "ouvrir_detail_jour",
+      "label": "Ouvrir les manifestes d’un jour",
+      "instructions": [
+        "Repérer la date souhaitée.",
+        "Cliquer sur la ligne du transporteur ou sur le badge « X expéditions »."
+      ],
+      "resultat": "Accès au détail des expéditions de la journée pour ce transporteur (liste des commandes, montants, options d’export si activées)."
+    },
+    {
+      "id": "exporter_manifest",
+      "label": "Exporter / Télécharger un manifeste",
+      "instructions": [
+        "Depuis le détail d’un transporteur, cliquer sur « Exporter » (PDF / Excel / CSV selon configuration).",
+        "Enregistrer le fichier généré."
+      ],
+      "notes": "Si l’export s’ouvre dans un nouvel onglet/fenêtre, autoriser les pop-ups pour le domaine.",
+      "resultat": "Manifeste du jour/transporteur téléchargé pour archivage ou remise au livreur."
+    },
+    {
+      "id": "verifier_totaux",
+      "label": "Vérifier les totaux",
+      "instructions": [
+        "Comparer le total « X expéditions » du transporteur avec les commandes réellement scannées lors de l’expédition.",
+        "En cas d’écart, ouvrir le détail et contrôler les statuts/duplicats."
+      ],
+      "resultat": "Concordance entre le manifeste et les commandes expédiées."
+    },
+    {
+      "id": "naviguer_periodes",
+      "label": "Changer rapidement de période",
+      "instructions": [
+        "Modifier une seule borne (début ou fin) puis « Rechercher » pour balayer la période jour par jour.",
+        "Utiliser des périodes courtes (ex. 7 jours) pour charger plus vite."
+      ],
+      "resultat": "Consultation fluide d’un grand historique."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Aucun manifeste n’apparaît pour la période.",
+      "cause_probable": "Période sans expédition ou bornes de date inversées/fuseau horaire.",
+      "solution": "Élargir la période, vérifier l’ordre des dates et le fuseau; relancer la recherche."
+    },
+    {
+      "symptome": "Le total du jour ne correspond pas aux commandes scannées.",
+      "cause_probable": "Doublons/annulations après scan, ou statuts non mis à jour.",
+      "solution": "Ouvrir le détail, vérifier l’historique des scans et les statuts des commandes; régénérer le manifeste si nécessaire."
+    },
+    {
+      "symptome": "Impossible de télécharger l’export.",
+      "cause_probable": "Fenêtre pop-up bloquée ou format non activé.",
+      "solution": "Autoriser les pop-ups pour le domaine et essayer un autre format si disponible."
+    },
+    {
+      "symptome": "Un transporteur attendu n’apparaît pas.",
+      "cause_probable": "Aucune expédition validée pour ce transporteur sur la période ou transporteur non associé aux commandes.",
+      "solution": "Contrôler les commandes (transporteur/état expédié) puis relancer la recherche."
+    },
+    {
+      "symptome": "Manifestes partiels sur une même journée.",
+      "cause_probable": "Expéditions réalisées en plusieurs sessions/lots.",
+      "solution": "Ouvrir chaque ligne transporteur du jour et agréger les exports; harmoniser le processus d’expédition."
+    },
+    {
+      "symptome": "Accès refusé au détail/à l’export.",
+      "cause_probable": "Permissions utilisateur insuffisantes.",
+      "solution": "Contacter un administrateur pour accorder les droits de consultation/ export des manifestes."
+    }
+  ]
+}
+

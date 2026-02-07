@@ -1,0 +1,108 @@
+{
+  "lien": "https://dash.tiktak.space/categories",
+  "nom": "Catégories (/categories)",
+  "description": "Création et gestion de l’arborescence des catégories produits. Vue liste avec recherche et filtres (statut, parent, taille de page). Colonnes : Nom, Description, Statut (Active/Inactif), Ordre, Sous-catégories (compteur + lien « Voir »), Créée le, Actions (éditer, supprimer). Le bouton « Nouvelle » ouvre un assistant en 2 étapes : (1) Informations de base (Nom*, Description, Catégorie parente, Actif). (2) SEO (Titre, Description, Slug, bouton « Régénérer »).",
+  "actions": [
+    {
+      "id": "rechercher_filtrer",
+      "label": "Rechercher et filtrer",
+      "instructions": [
+        "Saisir un mot-clé dans « Rechercher une catégorie… ». ",
+        "Utiliser les filtres pour limiter par statut (toutes/actives/inactives) et/ou parente.",
+        "Choisir le nombre d’éléments par page (ex. 10)."
+      ],
+      "resultat": "La liste affiche uniquement les catégories correspondant aux critères."
+    },
+    {
+      "id": "creer_categorie",
+      "label": "Créer une nouvelle catégorie",
+      "instructions": [
+        "Cliquer sur « Nouvelle ». ",
+        "Étape 1 — Renseigner : Nom*, Description, Catégorie parente (optionnel), Actif (Oui/Non), puis « Suivant ». ",
+        "Étape 2 — SEO : Titre SEO, Description SEO, Slug (utiliser « Régénérer » si besoin), puis « Créer »."
+      ],
+      "resultat": "La catégorie est ajoutée à la liste, rattachée au parent choisi."
+    },
+    {
+      "id": "editer_categorie",
+      "label": "Éditer une catégorie",
+      "instructions": [
+        "Cliquer sur l’icône crayon de la ligne.",
+        "Modifier les champs (Nom, Description, Parent, Actif, Ordre, SEO) puis enregistrer."
+      ],
+      "resultat": "Les changements sont sauvegardés et reflétés dans la liste."
+    },
+    {
+      "id": "gerer_sous_categories",
+      "label": "Gérer les sous-catégories",
+      "instructions": [
+        "Dans la colonne « Sous-catégories », cliquer sur « Voir ». ",
+        "Créer/éditer/supprimer des sous-catégories avec le même workflow."
+      ],
+      "notes": "Recommandé : limiter la profondeur à 2–3 niveaux pour une navigation claire.",
+      "resultat": "Arborescence organisée et facile à parcourir côté boutique."
+    },
+    {
+      "id": "changer_ordre",
+      "label": "Définir l’ordre d’affichage",
+      "instructions": [
+        "Ouvrir l’édition de la catégorie.",
+        "Renseigner la valeur « Ordre » (plus petit = position prioritaire) et enregistrer."
+      ],
+      "resultat": "Les catégories s’affichent selon l’ordre souhaité."
+    },
+    {
+      "id": "activer_desactiver",
+      "label": "Activer / Désactiver une catégorie",
+      "instructions": [
+        "Ouvrir l’édition et basculer le champ « Actif ».",
+        "Enregistrer."
+      ],
+      "notes": "Si une catégorie parente est inactive, ses enfants peuvent être masqués côté site selon la configuration.",
+      "resultat": "La visibilité de la catégorie est mise à jour."
+    },
+    {
+      "id": "supprimer_categorie",
+      "label": "Supprimer une catégorie",
+      "instructions": [
+        "Cliquer sur l’icône corbeille.",
+        "Confirmer la suppression."
+      ],
+      "notes": "Peut être bloqué si la catégorie contient des produits ou des enfants selon la politique de votre instance.",
+      "resultat": "Catégorie supprimée ou message expliquant pourquoi l’opération est refusée."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Impossible de supprimer une catégorie.",
+      "cause_probable": "Elle contient des produits et/ou des sous-catégories.",
+      "solution": "Déplacer les produits vers une autre catégorie et supprimer/ déplacer les enfants avant la suppression."
+    },
+    {
+      "symptome": "Catégorie invisible sur le site.",
+      "cause_probable": "Statut « Inactif » ou parent inactif / non publié.",
+      "solution": "Activer la catégorie et vérifier que tous les parents sont actifs ; vider le cache si nécessaire."
+    },
+    {
+      "symptome": "Slug déjà utilisé ou URL en conflit.",
+      "cause_probable": "Un slug identique existe sur une autre catégorie.",
+      "solution": "Modifier le slug manuellement ou utiliser « Régénérer » pour obtenir un slug unique."
+    },
+    {
+      "symptome": "Ordre d’affichage non pris en compte.",
+      "cause_probable": "Valeurs d’ordre identiques ou cache non rafraîchi.",
+      "solution": "Attribuer des ordres distincts (1, 2, 3, …) et purger le cache / relancer l’index si présent."
+    },
+    {
+      "symptome": "Boucle de parenté (catégorie parente = elle-même).",
+      "cause_probable": "Parent incorrect sélectionné.",
+      "solution": "Rééditer et choisir un parent différent ; éviter les cycles dans l’arborescence."
+    },
+    {
+      "symptome": "SEO faible (alerte de qualité).",
+      "cause_probable": "Titre/meta trop courts/longs ; slug non défini ; mots-clés absents.",
+      "solution": "Respecter les longueurs conseillées, renseigner slug et enrichir le contenu."
+    }
+  ]
+}
+

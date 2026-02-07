@@ -1,0 +1,109 @@
+{
+  "lien": "https://dash.tiktak.space/returns",
+  "nom": "Retours (/returns) — Scan & remise en stock",
+  "description": "Module de gestion des retours par scan (douchette ou saisie). À chaque scan, la commande est vérifiée puis marquée « Retour reçue » et les mouvements de stock sont générés automatiquement. Le module empêche les doublons et fournit un rapport des commandes attendues mais non scannées afin d’identifier les « retours non reçus » restants.",
+  "actions": [
+    {
+      "id": "ouvrir_focus",
+      "label": "Ouvrir le module et préparer la douchette",
+      "instructions": [
+        "Accéder à « Retours ».",
+        "Cliquer dans le champ « Scannez ou saisissez l’ID transport / commande » pour activer le focus.",
+        "Vérifier que la douchette envoie un Enter (CR/LF) en fin de scan."
+      ],
+      "resultat": "Prêt à scanner les colis retournés en continu."
+    },
+    {
+      "id": "scanner_retour",
+      "label": "Scanner un colis retourné",
+      "instructions": [
+        "Scanner le code (ID transport ou référence de commande).",
+        "Le système charge la commande et contrôle son éligibilité.",
+        "En cas de succès, la ligne s’ajoute à l’historique et les compteurs (quantité/valeur) sont mis à jour."
+      ],
+      "notes": "Les commandes « Annulée » ou déjà « Retour reçue » sont refusées automatiquement.",
+      "resultat": "Commande ajoutée au lot de retours du jour."
+    },
+    {
+      "id": "qualifier_etat",
+      "label": "Qualifier l’état du retour (option selon configuration)",
+      "instructions": [
+        "Après le scan, choisir l’état de l’article : « Revendable » (OK), « Endommagé/Quarantaine », ou « Incomplet/Manquant ».",
+        "Valider pour enregistrer le mouvement de stock approprié."
+      ],
+      "notes": "Mappings de stock (exemple) : Revendable → +stock vendable ; Endommagé → +stock défectueux ; Incomplet → pas de remise en stock (contrôle manuel ultérieur).",
+      "resultat": "Mouvement de stock créé selon l’état du retour."
+    },
+    {
+      "id": "anti_doublon",
+      "label": "Détection des doublons",
+      "instructions": [
+        "Si le même ID est rescanné, le module l’indique et refuse l’ajout.",
+        "Supprimer une ligne erronée depuis l’historique si nécessaire."
+      ],
+      "resultat": "Aucun doublon dans la session de retours."
+    },
+    {
+      "id": "maj_statut",
+      "label": "Mise à jour du statut commande",
+      "instructions": [
+        "À la validation du scan, la commande passe de « Retour non reçue » à « Retour reçue ».",
+        "Les articles (ou variantes) scannés sont remis en stock selon les règles définies."
+      ],
+      "resultat": "Statut et stock synchronisés avec le retour physique."
+    },
+    {
+      "id": "rapport_non_recus",
+      "label": "Identifier les retours non reçus",
+      "instructions": [
+        "En fin de tournée, ouvrir le rapport/manifest.",
+        "Comparer la liste attendue vs. scannée pour voir les « non reçus » restants.",
+        "Exporter le rapport (PDF/CSV/XLSX selon configuration)."
+      ],
+      "resultat": "Liste claire des retours manquants à relancer auprès du transporteur ou du client."
+    },
+    {
+      "id": "finaliser_session",
+      "label": "Finaliser la session retours",
+      "instructions": [
+        "Vérifier l’historique (quantité & montant total remis en stock).",
+        "Exporter le manifest si requis et archiver la session.",
+        "Redonner le focus au champ pour une nouvelle session si besoin."
+      ],
+      "resultat": "Session clôturée, données enregistrées et traçabilité assurée."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Scan refusé (commande déjà « Retour reçue » ou « Annulée »).",
+      "cause_probable": "Statut incompatible avec un nouveau scan.",
+      "solution": "Vérifier l’historique; si correction nécessaire, réajuster le statut côté commande avant de rescanner."
+    },
+    {
+      "symptome": "Stock non mis à jour après scan.",
+      "cause_probable": "Règle d’état non définie ou mouvement de stock bloqué.",
+      "solution": "Vérifier la configuration des états (Revendable/Endommagé) et les permissions; relancer la création de mouvement si besoin."
+    },
+    {
+      "symptome": "Doublon signalé à la rescannérisation.",
+      "cause_probable": "Même ID transport scanné deux fois.",
+      "solution": "Ignorer le second scan ou supprimer l’entrée en trop depuis l’historique."
+    },
+    {
+      "symptome": "ID inconnu / non trouvé.",
+      "cause_probable": "Étiquette erronée, commande non marquée « retour », mauvais transporteur.",
+      "solution": "Contrôler l’ID, la commande et le transporteur; marquer la commande en « Retour non reçue » si nécessaire puis rescanner."
+    },
+    {
+      "symptome": "Écart entre quantités retournées et attendues.",
+      "cause_probable": "Retour partiel, article manquant, variante incorrecte.",
+      "solution": "Qualifier précisément l’état par variante et ajuster les quantités avant validation."
+    },
+    {
+      "symptome": "Export du manifest/rapport bloqué.",
+      "cause_probable": "Pop-up navigateur bloquée ou format non supporté.",
+      "solution": "Autoriser les pop-ups pour le domaine et choisir un format alternatif si disponible."
+    }
+  ]
+}
+

@@ -1,0 +1,52 @@
+{
+  "id": "playbook-orders",
+  "scope": "orders",
+  "title": "Commande non créée / n'apparaît pas",
+  "triggers": [
+    "commande non créée",
+    "commande n'apparaît pas",
+    "commande n'existe pas",
+    "ma commande a disparu",
+    "commande introuvable",
+    "order not created",
+    "order missing",
+    "cannot create order",
+    "erreur création commande",
+    "commande ne s'affiche pas"
+  ],
+  "description": "Diagnostic création commande : filtres, doublons, erreurs stock/produits.",
+  "steps": [
+    {
+      "kind": "solve",
+      "title": "Commande créée mais cachée par filtres",
+      "condition": "confirmation_seen",
+      "response": "✅ **Votre commande a bien été créée !**\n\nSi vous avez vu le message de confirmation, la commande existe dans le système.\n\n🔍 **Pour la retrouver :**\n\n**1. Vérifiez les filtres actifs**\n\nAllez dans **Commandes** (`/orders`) et :\n\n• Cliquez sur les **filtres** en haut\n• **Réinitialisez tous les filtres** (bouton \"Réinitialiser\" ou \"Tout effacer\")\n• Vérifiez que vous n'avez pas de filtre sur :\n  - Date (aujourd'hui / cette semaine / ce mois)\n  - Statut (En attente / Confirmée / Livrée)\n  - Transporteur\n  - Source de commande\n\n**2. Recherchez par téléphone client**\n\nLe moyen le plus rapide :\n• Utilisez la **barre de recherche**\n• Tapez le **numéro de téléphone du client**\n• La commande apparaîtra immédiatement\n\n**3. Triez par date décroissante**\n\n• Cliquez sur la colonne **\"Date\"**\n• Triez par **plus récent d'abord**\n• Votre commande sera en haut de la liste\n\n💡 **Astuce :** Par défaut, TikTak Pro peut afficher seulement les commandes des 7 derniers jours. Changez le filtre de date si votre commande est plus ancienne.\n\n📱 **Si après avoir réinitialisé les filtres vous ne la trouvez toujours pas**, donnez-moi le numéro de téléphone du client et je vérifierai.",
+      "actions": ["reset_filters", "search_by_phone"]
+    },
+    {
+      "kind": "solve",
+      "title": "Erreur anti-doublon (2+ commandes même jour)",
+      "condition": "duplicate_error",
+      "response": "🔒 **Protection anti-fraude activée**\n\nTikTak Pro bloque automatiquement si le **même numéro de téléphone** a déjà **2 commandes ou plus le même jour**.\n\n✅ **C'est une protection volontaire contre la fraude.**\n\n🔍 **Vérifications à faire :**\n\n**1. Est-ce vraiment un doublon accidentel ?**\n\n• Allez dans **Commandes**\n• Cherchez par le numéro de téléphone du client\n• Regardez si ce client a déjà commandé aujourd'hui\n• Si oui → C'est peut-être une erreur de manipulation\n\n**2. Si c'est un client légitime qui commande beaucoup**\n\nVous avez plusieurs options :\n\n**Option A - La plus propre :**\n• **Contactez le client** pour confirmer qu'il veut vraiment 3+ commandes aujourd'hui\n• Si oui, créez la commande avec un **numéro légèrement différent** (ex: ajoutez +1 à la fin)\n• Notez dans le commentaire le vrai numéro\n\n**Option B - Attendre demain :**\n• La limite se réinitialise à minuit\n• Le client pourra recommander normalement demain\n\n**Option C - Vérifier l'historique :**\n• Si ce client commande souvent plusieurs fois par jour, ce n'est peut-être pas de la fraude\n• Vous pouvez créer avec un faux numéro temporaire puis le corriger après\n\n💡 **Pourquoi cette limite ?** Les fraudeurs testent souvent plusieurs adresses/produits avec le même numéro. Cette protection empêche ça.\n\n📱 **Si vous êtes sûr que c'est légitime**, confirmez-moi et je vous guiderai pour la créer quand même.",
+      "actions": ["check_duplicate_orders", "contact_customer"]
+    },
+    {
+      "kind": "solve",
+      "title": "Stock insuffisant",
+      "condition": "stock_error",
+      "response": "📦 **Stock insuffisant pour créer la commande**\n\nUn ou plusieurs produits n'ont plus assez de stock disponible.\n\n✅ **Vérifications :**\n\n**1. Identifiez le produit en rupture**\n\n• L'erreur doit indiquer quel produit est concerné\n• Notez le nom ou la référence (SKU)\n\n**2. Vérifiez le stock par variante**\n\n⚠️ **Important :** Le stock est géré **par variante**, pas par produit !\n\nAllez dans **Produits** :\n• Cherchez le produit\n• Cliquez dessus\n• Regardez le stock pour la **variante spécifique** (taille/couleur) demandée\n\nExemple :\n```\nT-shirt Rouge:\n- Taille S : Stock 10 ✅\n- Taille M : Stock 0 ❌ ← Problème ici\n- Taille L : Stock 5 ✅\n```\n\n**3. Solutions possibles**\n\n**Option A - Réapprovisionner :**\n• Mettez à jour le stock de la variante concernée\n• Puis recréez la commande\n\n**Option B - Changer de variante :**\n• Proposez au client une autre taille/couleur en stock\n• Créez la commande avec la variante disponible\n\n**Option C - Réduire la quantité :**\n• Si le client veut 5 mais stock = 3\n• Créez pour 3 unités disponibles\n• Notez en commentaire le reste est en attente\n\n💡 **Astuce :** Activez les **alertes stock bas** dans Paramètres pour être prévenu avant la rupture !",
+      "actions": ["check_variant_stock", "restock_product"]
+    },
+    {
+      "kind": "escalate",
+      "title": "Erreur inconnue lors création",
+      "condition": "unknown_error",
+      "reason": "Erreur technique non standard lors de la création de commande - nécessite vérification logs/base de données"
+    },
+    {
+      "kind": "ask",
+      "title": "Demander si confirmation vue",
+      "question": "**Pour comprendre ce qui s'est passé :**\n\nAprès avoir cliqué sur **\"Créer la commande\"**, qu'avez-vous vu exactement ?\n\n• ✅ Message de confirmation (\"Commande créée avec succès\" + numéro)\n• ❌ Message d'erreur (si oui, lequel ?)\n• ⏳ Chargement infini (la page tourne sans fin)\n• ❓ Rien du tout (retour à la liste sans message)\n\nℹ️ Ça m'aide à savoir si la commande existe (mais cachée) ou s'il y a eu un vrai problème."
+    }
+  ]
+}

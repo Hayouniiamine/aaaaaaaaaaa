@@ -1,0 +1,104 @@
+{
+  "lien": "https://dash.tiktak.space/domains",
+  "nom": "Nom de domaine — Achat & Liaison",
+  "description": "Module pour acheter un domaine (avec SSL et sécurité inclus) ou lier un domaine existant à TikTak PRO. Deux parcours : (A) **Achat** directement depuis TikTak (mise en service automatique + certificat SSL). (B) **Liaison** d’un domaine externe par enregistrements DNS (A/WWW) ou, si disponible, par changement de serveurs de noms. Une fois le pointage correct, on **active la liaison** dans l’interface.",
+  "actions": [
+    {
+      "id": "choisir_parcours",
+      "label": "Choisir : Acheter ou Lier un domaine",
+      "instructions": [
+        "Si vous n’avez pas de domaine : utilisez l’onglet de recherche et choisissez une extension (.com, .tn, .shop…).",
+        "Si vous avez déjà un domaine : passez à « Lier un domaine » (DNS A/WWW ou serveurs de noms)."
+      ],
+      "notes": "L’achat via TikTak inclut la gestion SSL et sécurité. La liaison externe nécessite un pointage DNS correct avant activation.",
+      "resultat": "Parcours adapté sélectionné."
+    },
+    {
+      "id": "acheter_domaine",
+      "label": "Acheter un domaine chez TikTak",
+      "instructions": [
+        "Rechercher le nom souhaité et choisir l’extension.",
+        "Valider le panier et payer.",
+        "Attendre la mise en service (propagation DNS + provisionnement SSL)."
+      ],
+      "notes": "Délai normal de propagation : **jusqu’à 24h**. Avant ce délai, il est normal que le site ne réponde pas encore.",
+      "resultat": "Domaine enregistré et relié automatiquement une fois propagé."
+    },
+    {
+      "id": "lier_domaine_dnsA",
+      "label": "Lier un domaine externe (DNS A/WWW)",
+      "instructions": [
+        "Chez votre registraire (ex: OXAHOST, GoDaddy…), ouvrez la gestion DNS.",
+        "Créez/éditez un **A record** pour **@** (domaine racine) avec l’IP **102.211.211.10**.",
+        "Créez aussi un **A record** pour **www** vers la même IP (ou un CNAME www → @).",
+        "TTL conseillé : **3600** (ou laissez la valeur par défaut)."
+      ],
+      "notes": "Si votre DNS ajoute automatiquement un AAAA (IPv6) vers une autre IP, **supprimez-le** pour éviter un mauvais pointage.",
+      "resultat": "Le domaine pointe vers TikTak PRO après propagation."
+    },
+    {
+      "id": "lier_domaine_nameservers",
+      "label": "Lier via serveurs de noms (optionnel)",
+      "instructions": [
+        "Si l’option est proposée dans votre compte, remplacez les NS chez votre registraire par ceux fournis par TikTak.",
+        "Enregistrez et attendez la propagation."
+      ],
+      "notes": "Changer les NS délègue l’intégralité de la zone DNS à TikTak (gestion plus simple, propagation similaire 2–24h).",
+      "resultat": "Zone DNS gérée par TikTak une fois propagée."
+    },
+    {
+      "id": "activer_liaison",
+      "label": "Activer la liaison dans TikTak",
+      "instructions": [
+        "Dans « Activer la liaison », saisissez votre **nom de domaine**.",
+        "Vérifiez vos DNS, puis cliquez **Activer la liaison**.",
+        "Régler les **frais de liaison (29 TND)** si demandés ; vous serez redirigé vers le paiement sécurisé."
+      ],
+      "resultat": "La liaison est enregistrée ; SSL sera émis automatiquement une fois le pointage détecté."
+    },
+    {
+      "id": "verifier_propagation",
+      "label": "Vérifier la propagation et le SSL",
+      "instructions": [
+        "Après 10–60 min, testez avec un outil public (ex. whatsmydns) que **@** et **www** pointent vers **102.211.211.10**.",
+        "Videz le cache navigateur / DNS local si nécessaire.",
+        "Quand tout est correct, la page TikTak (logo) s’affiche avant votre contenu final."
+      ],
+      "notes": "Si la **page TikTak n’apparaît pas**, votre DNS n’est **pas** correctement configuré.",
+      "resultat": "Domaine opérationnel avec certificat SSL actif (le cadenas apparaît)."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "« Rien ne marche » juste après l’achat chez TikTak.",
+      "cause_probable": "Propagation DNS/SSL en cours.",
+      "solution": "Attendre jusqu’à **24h**. C’est normal pendant l’activation initiale."
+    },
+    {
+      "symptome": "Le domaine ne montre pas la page TikTak / le site.",
+      "cause_probable": "Enregistrements DNS incorrects (mauvaise IP, AAAA actif, pas d’entrée pour www).",
+      "solution": "Vérifier que **@** et **www** pointent vers **102.211.211.10**. Supprimer AAAA erroné, mettre TTL 3600, enregistrer et attendre la propagation."
+    },
+    {
+      "symptome": "Bouclage/erreur avec Cloudflare (ou CDN).",
+      "cause_probable": "Proxy orange actif avant le SSL/pointage correct.",
+      "solution": "Désactiver temporairement le proxy (nuage gris), valider la liaison/SSL, puis réactiver si souhaité."
+    },
+    {
+      "symptome": "Certificat SSL non émis (pas de cadenas).",
+      "cause_probable": "DNS pas totalement propagé ou www/apex ne pointent pas au même endroit.",
+      "solution": "Attendre la propagation complète et aligner **@** et **www** sur la même IP ; relancer la vérification."
+    },
+    {
+      "symptome": "Le domaine fonctionne sans www mais pas avec www (ou inversement).",
+      "cause_probable": "Entrée DNS manquante pour l’un des deux.",
+      "solution": "Ajouter **A www → 102.211.211.10** (ou **CNAME www → @**) pour un comportement identique."
+    },
+    {
+      "symptome": "Toujours l’ancien site après modification.",
+      "cause_probable": "Cache DNS local/FAI ou TTL élevé.",
+      "solution": "Vider le cache DNS du poste/routeur, tester sur réseau 4G ou via whatsmydns ; patienter jusqu’à l’expiration du TTL."
+    }
+  ]
+}
+

@@ -1,0 +1,85 @@
+{
+  "lien": "https://dash.tiktak.space (icône ⚙️ à côté du logo → « Personnaliser le menu »)",
+  "nom": "Accès aux modules — Personnaliser le menu",
+  "description": "Le menu latéral est réduit par défaut. En cliquant sur l’icône ⚙️ à côté du logo TikTak PRO, vous pouvez **activer/désactiver** les modules optionnels (selon votre **pack** et vos **droits**) pour les faire apparaître dans la navigation.",
+  "actions": [
+    {
+      "id": "ouvrir_personnaliser_menu",
+      "label": "Ouvrir la personnalisation du menu",
+      "instructions": [
+        "Depuis n’importe quelle page du back-office, cliquer sur l’icône ⚙️ à côté du logo « TikTak PRO ».",
+        "La fenêtre « Personnaliser le menu » s’ouvre avec les catégories de modules."
+      ],
+      "resultat": "La liste des modules activables est visible."
+    },
+    {
+      "id": "activer_module",
+      "label": "Activer un module",
+      "instructions": [
+        "Dans la catégorie concernée, basculer l’interrupteur du module sur **ON**.",
+        "Cliquer sur **Sauvegarder**.",
+        "Rafraîchir la page : le module apparaît dans le menu latéral."
+      ],
+      "resultat": "Le module devient accessible depuis la barre latérale."
+    },
+    {
+      "id": "desactiver_module",
+      "label": "Désactiver un module",
+      "instructions": [
+        "Basculer l’interrupteur du module sur **OFF**.",
+        "Cliquer sur **Sauvegarder** pour appliquer."
+      ],
+      "resultat": "Le module est masqué du menu (sans supprimer les données)."
+    },
+    {
+      "id": "liste_modules_et_routes",
+      "label": "Modules disponibles (selon pack) et routes",
+      "instructions": [
+        "Commandes",
+        "• Expédition — Route: **/shipping**",
+        "• Retours — Route: **/returns**",
+        "• Manifestes — Route: **/manifests**",
+        "• Échange Commande — Route: **/orders/exchange**",
+        "• Leads Facebook — Route: **/messenger/leads**",
+        "Produits",
+        "• Attributs Produits — Route: **/product-attributes**",
+        "Modules généraux",
+        "• Gestion de Stock — Route: **/stock-management**",
+        "• Clients — Route: **/customers**",
+        "• Réclamations — Route: **/complaints**",
+        "• Comptabilité — Route: **/accounting**",
+        "• POS — Route: **/pos**",
+        "• Tracking automatique — Route: **/automatic-tracking**"
+      ],
+      "notes": "La disponibilité varie selon le **pack acheté** et les **permissions** de l’utilisateur."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Le module n’apparaît pas après l’avoir activé.",
+      "cause_probable": "Pack non inclus ou permissions utilisateur insuffisantes.",
+      "solution": "Vérifier votre pack et le rôle (Paramètres → Équipe). Rafraîchir la page / se reconnecter."
+    },
+    {
+      "symptome": "Le changement n’est pas pris en compte.",
+      "cause_probable": "Oubli de cliquer sur « Sauvegarder ».",
+      "solution": "Rouvrir la fenêtre, activer/désactiver puis **Sauvegarder**."
+    },
+    {
+      "symptome": "Erreur 403/404 en ouvrant un module activé.",
+      "cause_probable": "Accès refusé (rôle) ou module non inclus dans le pack.",
+      "solution": "Demander au rôle Administrateur d’accorder le droit ou mettre le pack à niveau."
+    },
+    {
+      "symptome": "Je ne vois pas l’icône ⚙️.",
+      "cause_probable": "Affichage mobile/étroit ou rôle sans accès à la personnalisation.",
+      "solution": "Agrandir la fenêtre / passer en desktop, vérifier les droits ou contacter l’admin."
+    },
+    {
+      "symptome": "Le menu ne se met pas à jour.",
+      "cause_probable": "Cache navigateur.",
+      "solution": "Forcer l’actualisation (Ctrl/Cmd+F5) ou vider le cache, puis réessayer."
+    }
+  ]
+}
+

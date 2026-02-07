@@ -1,0 +1,115 @@
+{
+  "lien": "https://dash.tiktak.space/pos",
+  "nom": "POS — Caisse boutique (/pos)",
+  "description": "Interface de vente en magasin avec scan code-barres, remises, échanges, acomptes (paiement partiel), multi-boutiques et gestion des points fidélité. Le ticket peut être imprimé et la vente est synchronisée avec les commandes/stock.",
+  "actions": [
+    {
+      "id": "demarrer_vente",
+      "label": "Démarrer une vente",
+      "instructions": [
+        "Choisir la boutique (si vous avez plusieurs magasins).",
+        "Rechercher un produit ou cliquer **Scanner** et lire le code-barres.",
+        "Ajuster la **quantité** (+/−) si besoin."
+      ],
+      "resultat": "Les articles s’ajoutent au panier avec prix, stock et SKU."
+    },
+    {
+      "id": "remise_ligne_ou_panier",
+      "label": "Appliquer une remise",
+      "instructions": [
+        "Sur la ligne article, cliquer **%** pour une remise au **pourcentage** ou au **montant**.",
+        "Ou utiliser le bouton **Remise** en haut pour une remise panier."
+      ],
+      "resultat": "Le total se met à jour avec la réduction appliquée."
+    },
+    {
+      "id": "associer_client_fidelite",
+      "label": "Associer un client / fidélité",
+      "instructions": [
+        "Cliquer **Client** → rechercher/sélectionner le client.",
+        "Les **points fidélité** disponibles s’affichent (si activés) : les **utiliser** ou **cumuler** selon la politique."
+      ],
+      "resultat": "La vente est rattachée au client et les points sont gérés."
+    },
+    {
+      "id": "paiement",
+      "label": "Encaisser (Espèces / Carte / Chèque / Différé)",
+      "instructions": [
+        "Vérifier le **Montant à encaisser** (panneau vert).",
+        "Saisir le **montant reçu en espèces** ou choisir un **raccourci** (45/50/60).",
+        "Choisir le **mode**: Espèces, Carte, Chèque ou **Différé**.",
+        "Pour un **acompte**, activer **Paiement partiel** puis encaisser un premier montant (le solde restera dû)."
+      ],
+      "notes": "Le paiement différé/partiel est conseillé **avec un client sélectionné**.",
+      "resultat": "Paiement enregistré, ticket prêt."
+    },
+    {
+      "id": "ticket_et_mise_en_attente",
+      "label": "Ticket / Mise en attente / Charger une commande",
+      "instructions": [
+        "Cliquer **Imprimer ticket** pour remettre le reçu au client.",
+        "Cliquer **Mettre en attente** pour suspendre le panier (client absent, article à chercher).",
+        "**Charger commande** permet de reprendre un panier en attente ou une commande web à encaisser."
+      ],
+      "resultat": "Flux de caisse fluide sans perte de panier."
+    },
+    {
+      "id": "echange_remboursement",
+      "label": "Échange / retour depuis le POS",
+      "instructions": [
+        "Cliquer **Charger commande** et rechercher le ticket/la commande d’origine.",
+        "Sélectionner l’article à **retourner** (remise en stock) puis **ajouter** le ou les nouveaux produits.",
+        "Le POS calcule la différence : encaisser le **supplément** ou générer un **avoir** selon la politique."
+      ],
+      "resultat": "Échange tracé et stocks mis à jour automatiquement."
+    },
+    {
+      "id": "multi_boutique_stock",
+      "label": "Multi-boutiques & mise à jour stock",
+      "instructions": [
+        "Sélectionner la **boutique** active avant la vente.",
+        "Les **stocks** décrémentent sur la boutique/entrepôt choisi.",
+        "Changer de boutique pour encaisser sur un autre point de vente."
+      ],
+      "resultat": "Inventaire et ventes centralisés par boutique."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Le scanner ne lit rien / ajoute des caractères erronés.",
+      "cause_probable": "Focus hors champ de recherche ou configuration lecteur (suffixe/préfixe).",
+      "solution": "Cliquer dans le champ de recherche avant de scanner ; configurer le lecteur en **mode clavier** et désactiver les préfixes/suffixes."
+    },
+    {
+      "symptome": "Produit introuvable au scan.",
+      "cause_probable": "Code-barres absent/différent sur la fiche produit.",
+      "solution": "Ajouter/mettre à jour le **code-barres** dans le catalogue produit puis rescanner."
+    },
+    {
+      "symptome": "Impossible de sélectionner « Différé » ou paiement partiel.",
+      "cause_probable": "Aucun client rattaché à la vente.",
+      "solution": "Associer un **client** puis réessayer (suivi du solde/échéance)."
+    },
+    {
+      "symptome": "Montant rendu incorrect en espèces.",
+      "cause_probable": "Montant reçu non saisi ou arrondi monnaie.",
+      "solution": "Saisir le **montant reçu** exact ; vérifier les règles d’**arrondi**/monnaie dans les paramètres."
+    },
+    {
+      "symptome": "Remise appliquée deux fois (ligne + panier).",
+      "cause_probable": "Remise cumulée par erreur.",
+      "solution": "Supprimer l’une des remises et valider de nouveau le total."
+    },
+    {
+      "symptome": "Ticket n’imprime pas.",
+      "cause_probable": "Imprimante non sélectionnée ou pilote/format incompatible.",
+      "solution": "Vérifier l’imprimante par défaut, le **format ticket** et réessayer ; exporter en PDF si besoin."
+    },
+    {
+      "symptome": "Stock négatif après des échanges.",
+      "cause_probable": "Retour non validé ou boutique incorrecte.",
+      "solution": "S’assurer que l’**article retourné** est bien scanné/validé et que la **boutique** sélectionnée est la bonne."
+    }
+  ]
+}
+

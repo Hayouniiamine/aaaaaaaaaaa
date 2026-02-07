@@ -1,0 +1,122 @@
+{
+  "lien": "https://dash.tiktak.space/products",
+  "nom": "Produits (/products) — Liste & gestion",
+  "description": "Module de gestion de catalogue. Vue liste avec recherche et filtres (type de produit, catégorie). Chaque ligne affiche l’image, le nom, un extrait de description, la référence, le prix, le stock, le statut (switch actif/inactif) et des actions rapides (éditer, supprimer). Le menu « Actions » permet l’Export de tout le catalogue, l’Import Excel et l’Édition en masse pour accélérer les mises à jour multi-produits.",
+  "actions": [
+    {
+      "id": "rechercher_filtrer",
+      "label": "Rechercher et filtrer",
+      "instructions": [
+        "Saisir un mot-clé (nom, référence ou catégorie) dans la barre de recherche.",
+        "Utiliser « Tous les types » pour filtrer par type de produit.",
+        "Utiliser « Toutes les catégories » pour filtrer par catégorie."
+      ],
+      "resultat": "La liste se met à jour en fonction des critères."
+    },
+    {
+      "id": "changer_vue",
+      "label": "Changer l’affichage (grille/liste)",
+      "instructions": [
+        "Cliquer sur les icônes d’affichage en haut à droite (grille ou liste)."
+      ],
+      "resultat": "Affichage adapté à la préférence de lecture."
+    },
+    {
+      "id": "nouveau_produit",
+      "label": "Créer un nouveau produit",
+      "instructions": [
+        "Cliquer sur « Nouveau produit ». ",
+        "Remplir les informations requises (nom, prix, référence, images, stock, catégories, déclinaisons si besoin).",
+        "Enregistrer."
+      ],
+      "resultat": "Le produit apparaît dans la liste avec son statut initial."
+    },
+    {
+      "id": "editer_produit",
+      "label": "Éditer un produit",
+      "instructions": [
+        "Cliquer sur l’icône crayon de la ligne produit.",
+        "Modifier les champs voulus puis enregistrer."
+      ],
+      "resultat": "Les changements sont sauvegardés et visibles dans la liste."
+    },
+    {
+      "id": "activer_desactiver",
+      "label": "Activer / Désactiver un produit",
+      "instructions": [
+        "Basculer le switch dans la colonne « Statut »."
+      ],
+      "notes": "Un produit désactivé n’est plus visible côté boutique (selon la configuration).",
+      "resultat": "Le statut de publication du produit est mis à jour."
+    },
+    {
+      "id": "supprimer_produit",
+      "label": "Supprimer un produit",
+      "instructions": [
+        "Cliquer sur l’icône corbeille.",
+        "Confirmer la suppression."
+      ],
+      "notes": "Action potentiellement irréversible selon la politique de votre instance (corbeille/archivage).",
+      "resultat": "Le produit est retiré du catalogue."
+    },
+    {
+      "id": "exporter_tous",
+      "label": "Exporter tout le catalogue (Excel)",
+      "instructions": [
+        "Ouvrir le menu « Actions » en haut.",
+        "Choisir « Exporter tous ». ",
+        "Télécharger le fichier Excel généré."
+      ],
+      "resultat": "Un fichier .xlsx contenant les produits et leurs champs principaux est téléchargé."
+    },
+    {
+      "id": "importer_excel",
+      "label": "Importer (Excel)",
+      "instructions": [
+        "Ouvrir « Actions » → « Importer Excel ». ",
+        "Téléverser le fichier au format attendu (en-têtes conformes au modèle).",
+        "Lancer l’import et vérifier le rapport."
+      ],
+      "notes": "Utiliser idéalement le modèle exporté pour garantir les bonnes colonnes (nom, référence, prix, stock, statut, catégories, etc.).",
+      "resultat": "Les produits sont créés/mis à jour en lot."
+    },
+    {
+      "id": "edition_masse",
+      "label": "Édition en masse",
+      "instructions": [
+        "Ouvrir « Actions » → « Édition Masse ». ",
+        "Filtrer/charger les produits à modifier.",
+        "Éditer directement les champs (prix, stock, statut, catégorie, etc.) puis sauvegarder."
+      ],
+      "resultat": "Les modifications s’appliquent simultanément à plusieurs produits."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Échec d’import Excel ou lignes ignorées.",
+      "cause_probable": "En-têtes/colonnes non conformes, types de données invalides (texte au lieu de nombre), encodage.",
+      "solution": "Exporter un modèle depuis « Exporter tous », le compléter puis réimporter. Vérifier formats (prix/stock numériques), encodage UTF-8."
+    },
+    {
+      "symptome": "Références en double au moment de l’import.",
+      "cause_probable": "Doublon de champ « référence » utilisé comme identifiant logique.",
+      "solution": "Nettoyer les références pour les rendre uniques ou activer une stratégie d’« update » sur référence selon la configuration."
+    },
+    {
+      "symptome": "Changements non visibles côté boutique après édition.",
+      "cause_probable": "Produit désactivé, cache/indice non rafraîchi.",
+      "solution": "Vérifier le switch « Statut », purger le cache si applicable, attendre la réindexation."
+    },
+    {
+      "symptome": "Stock affiché incohérent.",
+      "cause_probable": "Déclinaisons non prises en compte, mouvements de stock en attente de synchronisation.",
+      "solution": "Contrôler le stock par variante, relancer la synchronisation des mouvements, corriger manuellement si besoin."
+    },
+    {
+      "symptome": "Suppression impossible.",
+      "cause_probable": "Droits insuffisants ou produit lié à des commandes/variantes.",
+      "solution": "Vérifier les permissions et lier une politique d’archivage/masquage si la suppression dure est bloquée."
+    }
+  ]
+}
+

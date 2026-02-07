@@ -1,0 +1,116 @@
+{
+  "lien": "https://dash.tiktak.space/products/new",
+  "nom": "Créer un produit (/products/new)",
+  "description": "Assistant de création en 5 onglets : 1) Informations générales (nom*, référence, description riche, code-barres, affichage : Actif/Visible site, catégories : principale* + tags/secondaires). 2) Tarification (Prix TTC*, remise en % ou valeur, taxes %, prix HT auto, prix d’achat, prix revendeur, prix de livraison personnalisé, paliers de prix par quantité). 3) Images (galerie du produit, ajout multiple). 4) Variantes (attributs et valeurs → génération automatique des combinaisons ; gestion du stock/price/image par variante). 5) SEO (titre 30–60, meta 70–160, slug généré, mots-clés + score & conseils). Actions globales : Visualiser (aperçu) et Enregistrer.",
+  "actions": [
+    {
+      "id": "infos_generales",
+      "label": "Renseigner les informations générales",
+      "instructions": [
+        "Saisir « Nom du produit »* et « Référence » (unique conseillé).",
+        "Rédiger la description (éditeur riche).",
+        "Ajouter un code-barres (optionnel).",
+        "Définir « Actif » = Oui/Non et « Afficher sur le site » = Oui/Non.",
+        "Choisir la Catégorie principale* et, si besoin, des tags/catégories secondaires."
+      ],
+      "resultat": "Section générale valide avec visibilité et catégorisation correctes."
+    },
+    {
+      "id": "tarification",
+      "label": "Configurer la tarification",
+      "instructions": [
+        "Saisir le Prix de vente (TTC)*.",
+        "Définir une Remise (sélectionner % ou devise).",
+        "Renseigner le Taux de taxe (%) pour calculer le HT automatiquement.",
+        "Compléter si utile : Prix d’achat, Prix revendeur.",
+        "Activer « Prix de livraison personnalisé » si le produit déroge aux frais par défaut.",
+        "Ajouter des « Paliers » pour le Prix par quantité (quantité min → prix ou remise)."
+      ],
+      "resultat": "Prix calculés correctement (HT/TTC), conditions de remise et paliers enregistrés."
+    },
+    {
+      "id": "images",
+      "label": "Ajouter les images du produit",
+      "instructions": [
+        "Cliquer « Ajouter des images » et téléverser 1..n photos.",
+        "Réordonner si l’interface le permet pour définir l’image principale."
+      ],
+      "resultat": "Galerie produit complète avec une image principale."
+    },
+    {
+      "id": "variantes",
+      "label": "Créer les variantes",
+      "instructions": [
+        "Choisir un « Nom d’attribut » (ex. Couleur, Taille, Pointure, Âge).",
+        "Sélectionner les valeurs puis cliquer « Ajouter ».",
+        "Répéter pour d’autres attributs ; le système génère toutes les combinaisons.",
+        "Pour chaque variante, définir stock, (éventuel) prix spécifique et image liée (ex. par couleur)."
+      ],
+      "notes": "Les variantes héritent des données du produit si aucun override n’est saisi.",
+      "resultat": "Matrice de variantes prête avec stocks/visuels par combinaison."
+    },
+    {
+      "id": "seo",
+      "label": "Optimiser le SEO",
+      "instructions": [
+        "Saisir le Titre (30–60 caractères) et la Meta description (70–160).",
+        "Générer ou saisir le Slug URL (unique).",
+        "Ajouter ≥3 mots-clés séparés par virgules.",
+        "Vérifier le score et suivre les conseils affichés."
+      ],
+      "resultat": "Fiche conforme SEO avec slug propre et score amélioré."
+    },
+    {
+      "id": "aperçu_enregistrement",
+      "label": "Prévisualiser et enregistrer",
+      "instructions": [
+        "Cliquer « Visualiser » pour vérifier l’affichage.",
+        "Cliquer « Enregistrer » pour créer le produit."
+      ],
+      "resultat": "Produit créé et visible dans /products (statut selon « Actif/Visible site »)."
+    }
+  ],
+  "problemes_recurrents": [
+    {
+      "symptome": "Enregistrement refusé (champs requis).",
+      "cause_probable": "Nom, Prix TTC, Catégorie principale ou autres champs obligatoires manquants.",
+      "solution": "Compléter tous les champs * et réessayer."
+    },
+    {
+      "symptome": "Référence/Slug déjà utilisés.",
+      "cause_probable": "Conflit d’unicité avec un autre produit.",
+      "solution": "Modifier la référence ou le slug pour les rendre uniques."
+    },
+    {
+      "symptome": "Calcul HT/TTC incohérent.",
+      "cause_probable": "Taux de taxe incorrect ou arrondis inattendus.",
+      "solution": "Vérifier le taux de taxe et le mode d’arrondi ; sauvegarder de nouveau."
+    },
+    {
+      "symptome": "Variantes manquantes ou doublées.",
+      "cause_probable": "Attributs/valeurs mal sélectionnés ou ajout répété.",
+      "solution": "Recréer les attributs proprement puis régénérer les combinaisons."
+    },
+    {
+      "symptome": "Image par couleur non prise en compte.",
+      "cause_probable": "Image non associée à la variante ou cache non rafraîchi.",
+      "solution": "Assigner l’image dans la fiche de la variante et vider le cache si nécessaire."
+    },
+    {
+      "symptome": "Paliers de prix non appliqués au panier.",
+      "cause_probable": "Quantité seuil non atteinte ou chevauchement de remises.",
+      "solution": "Vérifier les quantités minimales et l’ordre des règles/remises."
+    },
+    {
+      "symptome": "Score SEO faible malgré les champs remplis.",
+      "cause_probable": "Longueur hors bornes, mots-clés insuffisants.",
+      "solution": "Ajuster Titre (30–60), Meta (70–160) et ajouter ≥3 mots-clés pertinents."
+    },
+    {
+      "symptome": "Téléversment image échoue/lent.",
+      "cause_probable": "Fichiers trop lourds ou format non supporté.",
+      "solution": "Compresser (<1–2 Mo), utiliser JPG/PNG/WebP et réessayer."
+    }
+  ]
+}
+
