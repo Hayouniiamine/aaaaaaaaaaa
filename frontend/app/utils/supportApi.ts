@@ -1,43 +1,50 @@
-import { useRuntimeConfig } from "#app";
+import { useRuntimeConfig } from "#app"
 
-export type Role = "user" | "assistant";
-export type HistoryMsg = { role: Role; content: string };
-
-export type AiAskResponse =
-  | { mode: "solve"; confidence: number; context: string; answer: unknown; actions?: string[]; playbook_id?: string }
-  | { mode: "clarify"; confidence: number; context: string; questions?: string[]; reason?: string; playbook_id?: string }
-  | { mode: "escalate"; confidence: number; context: string; category?: string; reason?: string; r2_key?: string; playbook_id?: string }
-  | { mode: "error"; confidence?: number; context?: string; error?: string };
-
-function normalizeBaseUrl(u: string) {
-  return String(u || "").replace(/\/+$/, "");
+export type SupportAIResponse = {
+  conversation_id: string
+  mode: "solve" | "clarify" | "escalate"
+  answer: string
+  ui: any
+  actions: any[]
+  quality: "high" | "medium" | "low"
+  ticket: any | null
 }
 
-export async function askSupportAI(message: string, history: HistoryMsg[] = []): Promise<AiAskResponse> {
-  const cfg = useRuntimeConfig();
+export async function askSupportAI(
+  message: string,
+  conversationId?: string,
+  confirmEscalation: boolean = false
+): Promise<SupportAIResponse> {
+  const config = useRuntimeConfig()
 
-  // ✅ Put this in nuxt.config.ts:
-  // runtimeConfig: { public: { SUPPORT_API_BASE: "https://...workers.dev" } }
-  const base = normalizeBaseUrl(String(cfg.public.SUPPORT_API_BASE || ""));
+  const baseURL =
+    (config.public.supportApiBaseUrl as string | undefined) ||
+    "http://127.0.0.1:8000"
 
-  if (!base) {
-    return { mode: "error", confidence: 0, context: "client", error: "Missing runtimeConfig.public.SUPPORT_API_BASE" };
+  const widgetSecret =
+    (config.public.supportWidgetSecret as string | undefined) || ""
+
+  const res = await fetch(`${baseURL}/support/ai/ask/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-TikTak-Widget-Secret": widgetSecret,
+    },
+    // IMPORTANT: widget auth is via header, not cookies
+    credentials: "omit",
+    body: JSON.stringify({
+      message,
+      conversation_id: conversationId ?? null,
+      confirm_escalation: confirmEscalation,
+    }),
+  })
+
+  const data = await res.json().catch(() => ({}))
+
+  if (!res.ok) {
+    const msg = data?.error || `HTTP ${res.status}`
+    throw new Error(msg)
   }
 
-  try {
-    const out = await $fetch<AiAskResponse>(`${base}/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: { message, history },
-    });
-
-    return out;
-  } catch (e: any) {
-    return {
-      mode: "error",
-      confidence: 0,
-      context: "network",
-      error: e?.message || "request_failed",
-    };
-  }
+  return data as SupportAIResponse
 }

@@ -1,4 +1,3 @@
-
 <template>
   <div class="tiktak-chat-widget">
     <div class="chat-container">
@@ -7,105 +6,149 @@
         <div class="header-content">
           <div class="logo-section">
             <div class="ai-badge">
-              <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>
+              <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2l1.2 4.3L18 8l-4.8 1.7L12 14l-1.2-4.3L6 8l4.8-1.7L12 2z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
             <div class="header-text">
-              <h2 class="chat-title">TikTak Support</h2>
-              <p class="chat-subtitle">AI Assistant · Always here to help</p>
+              <p class="chat-title">TikTak Assistant</p>
+              <p class="chat-subtitle">Support intelligent (L0/L1)</p>
             </div>
           </div>
-
-          <button class="reset-btn" type="button" @click="resetChat" title="Réinitialiser la conversation">
-            Réinitialiser
-          </button>
         </div>
       </div>
 
-      <!-- Messages Area -->
-      <div class="messages-container" ref="messagesContainer">
+      <!-- Messages -->
+      <div class="messages-container">
         <div class="messages-inner">
-          <!-- Welcome Message (shows when empty) -->
+          <!-- Welcome state -->
           <div v-if="messages.length === 0" class="welcome-message">
             <div class="welcome-icon">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor" opacity="0.2"/>
-                <path d="M12 6L13.5 10.5L18 12L13.5 13.5L12 18L10.5 13.5L6 12L10.5 10.5L12 6Z" fill="currentColor"/>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 22s8-4 8-10V7l-8-3-8 3v5c0 6 8 10 8 10z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
-            <h3 class="welcome-title">Comment puis-je vous aider ?</h3>
-            <p class="welcome-text">Posez-moi vos questions sur TikTak Pro</p>
+            <p class="welcome-title">Demander à TikTak Assistant</p>
+            <p class="welcome-text">Décrivez votre problème, je vous guide étape par étape.</p>
+
             <div class="suggested-questions">
-              <button
-                v-for="(q, idx) in suggestedQuestions"
-                :key="idx"
-                class="suggestion-chip"
-                @click="sendPreset(q)"
-              >
-                {{ q }}
+              <button class="suggestion-chip" type="button" @click="quickSend('Je vois une erreur 404 sur les catégories')">
+                Je vois une erreur 404 sur les catégories
+              </button>
+              <button class="suggestion-chip" type="button" @click="quickSend('Mon paiement échoue, que faire ?')">
+                Mon paiement échoue, que faire ?
+              </button>
+              <button class="suggestion-chip" type="button" @click="quickSend('Mon site ne charge plus')">
+                Mon site ne charge plus
               </button>
             </div>
           </div>
 
-          <!-- Messages -->
+          <!-- Messages list -->
           <div
-            v-for="(m, idx) in messages"
-            :key="idx"
-            class="message-wrapper"
-            :class="{ 'message-user': m.role === 'user', 'message-ai': m.role === 'ai' }"
+            v-for="(msg, index) in messages"
+            :key="index"
+            :class="['message-wrapper', msg.role === 'user' ? 'message-user' : 'message-ai']"
           >
-            <!-- AI Avatar -->
-            <div v-if="m.role === 'ai'" class="message-avatar">
-              <div class="avatar-ai">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>
+            <!-- Avatar -->
+            <div class="message-avatar">
+              <div v-if="msg.role === 'assistant'" class="avatar-ai">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2l1.2 4.3L18 8l-4.8 1.7L12 14l-1.2-4.3L6 8l4.8-1.7L12 2z"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </div>
+              <div v-else class="avatar-user">U</div>
             </div>
 
+            <!-- Content -->
             <div class="message-content">
-              <div v-if="m.role === 'user'" class="message-label">Vous</div>
-              <div v-else class="message-label">Assistant TikTak</div>
-
-              <div class="message-bubble" :class="`bubble-${m.role}`">
-                <div class="message-text" v-html="formatMessage(m.text)"></div>
+              <div class="message-label">
+                {{ msg.role === 'assistant' ? 'Assistant' : 'Vous' }}
               </div>
 
-              <div v-if="m.meta && m.role === 'ai'" class="message-meta">
-                <span class="meta-badge" :class="`mode-${m.meta.mode}`">
-                  {{ getModeLabel(m.meta.mode) }}
-                </span>
-                <span class="meta-confidence">
-                  {{ Math.round((m.meta.confidence || 0) * 100) }}% confiance
-                </span>
-                <span v-if="m.meta.context" class="meta-context">
-                  {{ m.meta.context }}
+              <div
+                :class="[
+                  'message-bubble',
+                  msg.role === 'assistant' ? 'bubble-ai' : 'bubble-user'
+                ]"
+              >
+                <div class="message-text">{{ msg.text }}</div>
+              </div>
+
+              <!-- Meta -->
+              <div v-if="msg.role === 'assistant' && msg.quality" class="message-meta">
+                <span class="meta-confidence">Qualité : {{ msg.quality }}</span>
+                <span v-if="msg.mode" :class="['meta-badge', `mode-${msg.mode}`]">
+                  {{ msg.mode }}
                 </span>
               </div>
-            </div>
 
-            <!-- User Avatar -->
-            <div v-if="m.role === 'user'" class="message-avatar">
-              <div class="avatar-user">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
-                </svg>
+              <!-- Ticket created info -->
+              <div v-if="msg.role === 'assistant' && msg.ticket" class="message-meta">
+                <span class="meta-badge mode-escalate">
+                  Ticket créé ✅ (ID: {{ msg.ticket.external_ticket_id || msg.ticket.id }})
+                </span>
+              </div>
+
+              <!-- Confirm escalation UI -->
+              <div
+                v-if="msg.role === 'assistant' && msg.ui && msg.ui.type === 'confirm_escalation'"
+                class="confirm-card"
+              >
+                <div class="confirm-title">{{ msg.ui.title }}</div>
+                <div class="confirm-text">{{ msg.ui.message }}</div>
+                <div class="confirm-actions">
+                  <button
+                    class="confirm-btn confirm-primary"
+                    type="button"
+                    :disabled="loading"
+                    @click="confirmTicket()"
+                  >
+                    {{ msg.ui.buttons?.[0]?.label || "Oui, créer le ticket" }}
+                  </button>
+                  <button
+                    class="confirm-btn"
+                    type="button"
+                    :disabled="loading"
+                    @click="cancelTicket()"
+                  >
+                    {{ msg.ui.buttons?.[1]?.label || "Non, je veux essayer" }}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Typing Indicator -->
+          <!-- Typing indicator -->
           <div v-if="loading" class="message-wrapper message-ai">
             <div class="message-avatar">
               <div class="avatar-ai avatar-typing">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/>
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2l1.2 4.3L18 8l-4.8 1.7L12 14l-1.2-4.3L6 8l4.8-1.7L12 2z"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </div>
             </div>
             <div class="message-content">
-              <div class="message-label">Assistant TikTak</div>
               <div class="typing-indicator">
                 <span></span><span></span><span></span>
               </div>
@@ -114,233 +157,152 @@
         </div>
       </div>
 
-      <!-- Input Area -->
+      <!-- Input -->
       <div class="input-container">
-        <form class="input-form" @submit.prevent="send">
+        <form class="input-form" @submit.prevent="sendMessage">
           <div class="input-wrapper">
             <input
-              v-model="input"
+              v-model="userInput"
               class="message-input"
-              placeholder="Posez votre question..."
+              type="text"
+              placeholder="Écrivez votre message…"
               :disabled="loading"
-              @keydown.enter.exact.prevent="send"
             />
             <button
-              type="submit"
               class="send-button"
-              :disabled="loading || !input.trim()"
-              :class="{ 'button-disabled': loading || !input.trim() }"
+              type="submit"
+              :disabled="loading || !userInput.trim()"
+              :class="{ 'button-disabled': loading || !userInput.trim() }"
             >
-              <svg v-if="!loading" class="send-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z" fill="currentColor"/>
+              <svg v-if="!loading" class="send-icon" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 12l18-9-9 18-2-7-7-2z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                />
               </svg>
-              <svg v-else class="loading-spinner" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
-                <path d="M12 2C6.48 2 2 6.48 2 12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <svg v-else class="loading-spinner" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2a10 10 0 1010 10"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                />
               </svg>
             </button>
           </div>
         </form>
-        <p class="input-hint">AI peut faire des erreurs. Vérifiez les infos importantes.</p>
+        <p class="input-hint">
+          L’assistant peut escalader vers un ticket uniquement si l’incident est confirmé.
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted } from "vue";
-import { askSupportAI, type AiAskResponse, type HistoryMsg } from "@/utils/supportApi";
+import { ref } from "vue"
+import { askSupportAI } from "@/utils/supportApi"
 
-type Msg = {
-  role: "user" | "ai";
-  text: string; // always string (never null)
-  meta?: { mode: string; confidence: number; context?: string };
-};
-
-const STORAGE_KEY = "tiktak_support_chat_v1";
-
-const input = ref<string>("");
-const loading = ref<boolean>(false);
-const messages = ref<Msg[]>([]);
-const messagesContainer = ref<HTMLElement | null>(null);
-
-const suggestedQuestions = [
-  "slm",
-  "Comment configurer mon domaine ?",
-  "Mon domaine n’apparait pas, DNS il y a 2h",
-  "Mon domaine n’apparait pas même après 48h",
-  "Toujours pas après 4 jours + checks OK",
-];
-
-function metaFrom(out: AiAskResponse): Msg["meta"] {
-  return {
-    mode: (out as any).mode || "solve",
-    confidence: typeof (out as any).confidence === "number" ? (out as any).confidence : 0,
-    context: (out as any).context,
-  };
+type ChatMessage = {
+  role: "user" | "assistant"
+  text: string
+  ui?: any
+  actions?: any[]
+  quality?: "high" | "medium" | "low"
+  mode?: "solve" | "clarify" | "escalate"
+  ticket?: any
 }
 
-function buildHistory(): HistoryMsg[] {
-  return messages.value.slice(-12).map((m) => ({
-    role: m.role === "user" ? "user" : "assistant",
-    content: String(m.text || "").trim(),
-  }));
+const messages = ref<ChatMessage[]>([])
+const userInput = ref("")
+const loading = ref(false)
+const conversationId = ref<string | null>(null)
+
+// used for confirm escalation flow
+const lastUserMessage = ref<string>("")
+
+async function quickSend(text: string) {
+  userInput.value = text
+  await sendMessage()
 }
 
-function getModeLabel(mode: string): string {
-  const labels: Record<string, string> = {
-    solve: "Résolu",
-    clarify: "Clarification",
-    escalate: "Support requis",
-    error: "Erreur",
-  };
-  return labels[mode] || mode;
-}
+async function sendMessage() {
+  const text = userInput.value.trim()
+  if (!text || loading.value) return
 
-function formatMessage(text: string): string {
-  return String(text ?? "")
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/✓/g, '<span class="checkmark">✓</span>')
-    .replace(/→/g, '<span class="arrow">→</span>')
-    .replace(/^• /gm, '<span class="bullet">•</span> ')
-    .replace(/^(\d+)\. /gm, '<span class="number">$1.</span> ')
-    .replace(/\n/g, "<br>");
-}
+  lastUserMessage.value = text
 
-function safeString(v: unknown, fallback: string) {
-  const s = typeof v === "string" ? v : "";
-  return s && s.trim() ? s : fallback;
-}
-
-function safeAnswer(out: AiAskResponse): string {
-  const anyOut: any = out as any;
-  if (typeof anyOut.answer === "string" && anyOut.answer.trim()) return anyOut.answer;
-  if (anyOut.answer == null) return "Pouvez-vous préciser votre demande (module, écran, message d’erreur) ?";
-  try {
-    const asJson = JSON.stringify(anyOut.answer, null, 2);
-    return asJson === "null" ? "Pouvez-vous préciser votre demande ?" : asJson;
-  } catch {
-    return String(anyOut.answer);
-  }
-}
-
-function scrollToBottom() {
-  const el = messagesContainer.value;
-  if (!el) return;
-  el.scrollTop = el.scrollHeight;
-}
-
-function persist() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.value));
-  } catch {}
-}
-
-function restore() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      messages.value = parsed
-        .filter((m) => m && (m.role === "user" || m.role === "ai"))
-        .map((m) => ({
-          role: m.role,
-          text: safeString(m.text, ""),
-          meta: m.meta,
-        }))
-        .filter((m) => m.text.trim().length > 0);
-    }
-  } catch {}
-}
-
-function resetChat() {
-  messages.value = [];
-  persist();
-}
-
-async function sendPreset(q: string) {
-  input.value = q;
-  await send();
-}
-
-async function send() {
-  const text = input.value.trim();
-  if (!text || loading.value) return;
-
-  const history = buildHistory();
-
-  messages.value.push({ role: "user", text });
-  input.value = "";
-  loading.value = true;
-
-  await nextTick();
-  scrollToBottom();
-  persist();
+  messages.value.push({ role: "user", text })
+  userInput.value = ""
+  loading.value = true
 
   try {
-    const out = await askSupportAI(text, history);
+    const response = await askSupportAI(text, conversationId.value || undefined, false)
+    conversationId.value = response.conversation_id
 
-    const mode = (out as any).mode;
-
-    if (mode === "clarify") {
-      const qs = Array.isArray((out as any).questions) ? (out as any).questions : [];
-      const msg = qs.length
-        ? "J’ai besoin de quelques précisions :\n\n" + qs.map((q: string) => "• " + q).join("\n")
-        : "Pouvez-vous préciser votre demande (module, écran, message d’erreur) ?";
-      messages.value.push({ role: "ai", text: msg, meta: metaFrom(out) });
-    } else if (mode === "solve") {
-      messages.value.push({ role: "ai", text: safeAnswer(out), meta: metaFrom(out) });
-    } else if (mode === "escalate") {
-      messages.value.push({
-        role: "ai",
-        text: safeString(
-          (out as any).answer,
-          "Je transfère votre demande à notre équipe support pour une assistance personnalisée."
-        ),
-        meta: metaFrom(out),
-      });
-    } else {
-      messages.value.push({
-        role: "ai",
-        text: "Désolé, une erreur s’est produite. Veuillez réessayer.",
-        meta: { mode: "error", confidence: 0 },
-      });
-    }
-  } catch {
     messages.value.push({
-      role: "ai",
-      text: "Désolé, une erreur s'est produite. Veuillez réessayer ou contacter le support.",
-      meta: { mode: "error", confidence: 0 },
-    });
+      role: "assistant",
+      text: response.answer,
+      ui: response.ui,
+      actions: response.actions,
+      quality: response.quality,
+      mode: response.mode,
+      ticket: response.ticket,
+    })
+  } catch (err) {
+    console.error(err)
+    messages.value.push({
+      role: "assistant",
+      text: "Une erreur est survenue lors de la communication avec le support. Veuillez réessayer.",
+      mode: "clarify",
+      quality: "low",
+    })
   } finally {
-    loading.value = false;
-    await nextTick();
-    scrollToBottom();
-    persist();
+    loading.value = false
   }
 }
 
-onMounted(async () => {
-  restore();
-  await nextTick();
-  scrollToBottom();
-});
+async function confirmTicket() {
+  if (!conversationId.value || !lastUserMessage.value) return
+  if (loading.value) return
 
-// Persist whenever messages change
-watch(
-  () => messages.value,
-  () => persist(),
-  { deep: true }
-);
+  loading.value = true
+  try {
+    const response = await askSupportAI(lastUserMessage.value, conversationId.value, true)
 
-// Auto-scroll
-watch(
-  () => messages.value.length,
-  () => nextTick(() => scrollToBottom())
-);
+    messages.value.push({
+      role: "assistant",
+      text: response.answer,
+      ui: response.ui,
+      actions: response.actions,
+      quality: response.quality,
+      mode: response.mode,
+      ticket: response.ticket,
+    })
+  } catch (err) {
+    console.error(err)
+    messages.value.push({
+      role: "assistant",
+      text: "Impossible de créer le ticket pour le moment. Réessayez.",
+      mode: "clarify",
+      quality: "low",
+    })
+  } finally {
+    loading.value = false
+  }
+}
+
+function cancelTicket() {
+  messages.value.push({
+    role: "assistant",
+    text: "D’accord — essayons d’abord les étapes proposées. Dites-moi ce que vous observez après test.",
+    mode: "clarify",
+    quality: "medium",
+  })
+}
 </script>
-
 
 
 <style scoped>
@@ -368,7 +330,7 @@ watch(
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -625,11 +587,6 @@ watch(
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
 }
 
-.avatar-user svg {
-  width: 20px;
-  height: 20px;
-}
-
 /* Message Content */
 .message-content {
   flex: 1;
@@ -680,35 +637,7 @@ watch(
   white-space: pre-wrap;
 }
 
-/* Message formatting */
-.message-text :deep(strong) {
-  font-weight: 600;
-  color: inherit;
-}
-
-.message-text :deep(.checkmark) {
-  color: var(--color-accent);
-  font-weight: 600;
-  margin-right: 4px;
-}
-
-.message-text :deep(.arrow) {
-  color: var(--color-accent);
-  margin: 0 4px;
-}
-
-.message-text :deep(.bullet) {
-  color: var(--color-accent);
-  font-weight: 600;
-}
-
-.message-text :deep(.number) {
-  color: var(--color-accent);
-  font-weight: 600;
-  margin-right: 4px;
-}
-
-/* Message Meta */
+/* Meta */
 .message-meta {
   display: flex;
   align-items: center;
@@ -718,8 +647,7 @@ watch(
 }
 
 .meta-badge,
-.meta-confidence,
-.meta-context {
+.meta-confidence {
   font-size: 11px;
   padding: 3px 8px;
   border-radius: 6px;
@@ -751,19 +679,7 @@ watch(
   border-color: #fca5a5;
 }
 
-.mode-error {
-  background: #fecaca;
-  color: #7f1d1d;
-  border-color: #f87171;
-}
-
 .meta-confidence {
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
-}
-
-.meta-context {
   background: var(--color-surface);
   color: var(--color-text-muted);
   border: 1px solid var(--color-border);
@@ -789,28 +705,19 @@ watch(
   animation: typing 1.4s infinite;
 }
 
-.typing-indicator span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing-indicator span:nth-child(3) {
-  animation-delay: 0.4s;
-}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes typing {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
   30% { transform: translateY(-6px); opacity: 1; }
 }
 
-/* Input Container */
+/* Input */
 .input-container {
   background: var(--color-bg);
   border-top: 1px solid var(--color-border);
   padding: 16px 20px;
-}
-
-.input-form {
-  margin-bottom: 8px;
 }
 
 .input-wrapper {
@@ -837,15 +744,6 @@ watch(
   box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
 }
 
-.message-input::placeholder {
-  color: var(--color-text-muted);
-}
-
-.message-input:disabled {
-  background: var(--color-surface);
-  cursor: not-allowed;
-}
-
 .send-button {
   width: 44px;
   height: 44px;
@@ -861,15 +759,6 @@ watch(
   box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
 }
 
-.send-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 212, 170, 0.4);
-}
-
-.send-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
 .send-button.button-disabled {
   background: var(--color-surface);
   color: var(--color-text-muted);
@@ -883,9 +772,7 @@ watch(
   height: 20px;
 }
 
-.loading-spinner {
-  animation: spin 1s linear infinite;
-}
+.loading-spinner { animation: spin 1s linear infinite; }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
@@ -895,26 +782,18 @@ watch(
 .input-hint {
   font-size: 11px;
   color: var(--color-text-muted);
-  margin: 0;
+  margin: 8px 0 0;
   text-align: center;
   letter-spacing: 0.01em;
 }
 
-/* Responsive */
 @media (max-width: 640px) {
   .chat-container {
     max-width: 100%;
     height: 100vh;
     border-radius: 0;
   }
-  
-  .messages-inner {
-    padding: 16px;
-  }
-  
-  .input-container {
-    padding: 12px 16px;
-  }
+  .messages-inner { padding: 16px; }
+  .input-container { padding: 12px 16px; }
 }
 </style>
-

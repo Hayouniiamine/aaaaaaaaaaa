@@ -73,6 +73,60 @@ function json(req: Request, data: unknown, status = 200) {
   });
 }
 
+
+// --------------------------------------------------
+// Normalize Worker /chat responses to a stable schema
+// expected by Django + Nuxt (PFE / Sidekick-ready)
+// --------------------------------------------------
+function normalizeSupportResponse(raw: any) {
+  const mode = (raw?.mode ?? "clarify") as string;
+  const confidence = Number(raw?.confidence ?? raw?.signals?.confidence ?? 0);
+  const context = (raw?.context ?? "general") as string;
+
+  const ui = raw?.ui ?? null;
+  const actions = Array.isArray(raw?.actions) ? raw.actions : [];
+
+  const questions: string[] = Array.isArray(raw?.questions) ? raw.questions.map((q: any) => String(q)) : [];
+
+  let answer = typeof raw?.answer === "string" ? raw.answer : "";
+  if (!answer && questions.length) {
+    const cleaned = questions.map((q) => q.trim()).filter(Boolean);
+    if (cleaned.length) answer = "J’ai besoin de préciser :\n- " + cleaned.join("\n- ");
+  }
+  if (!answer && mode === "escalate") {
+    answer = "Je vais escalader ce problème à l’équipe support TikTak PRO.";
+  }
+
+  // Incident flag: keep conservative (true only for explicit incident categories or upstream failures)
+  const cat = String(raw?.category ?? "").toLowerCase();
+  const incidentCategory = ["incident", "outage", "api_down", "backend_error", "permission_issue", "bug_confirmed"].includes(cat);
+  const incident = Boolean(raw?.signals?.incident ?? incidentCategory);
+
+  const out: any = {
+    mode,
+    answer,
+    signals: {
+      confidence: Number(confidence.toFixed(2)),
+      incident,
+    },
+    context,
+    ui,
+    actions,
+  };
+
+  // passthrough useful fields if present
+  if (raw?.playbook_id) out.playbook_id = raw.playbook_id;
+  if (raw?.category) out.category = raw.category;
+  if (raw?.reason) out.reason = raw.reason;
+  if (raw?.evidence) out.evidence = raw.evidence;
+
+  return out;
+}
+
+function chatJson(req: Request, raw: any, status = 200) {
+  return json(req, normalizeSupportResponse(raw), status);
+}
+
 function text(req: Request, body: string, status = 200) {
   return new Response(body, {
     status,
@@ -705,17 +759,31 @@ export default {
 
     // ---------- CHAT ----------
     if (url.pathname === "/chat") {
-      if (req.method !== "POST") return json(req, { error: "use_post" }, 405);
+      if (req.method !== "POST") return chatJson(req, { error: "use_post" }, 405);
 
       const body = (await safeReadJson(req)) as any;
       const message = sanitizeUserText(body?.message || "");
       const history = coerceHistory(body?.history);
 
-      if (!message) return json(req, { error: "message is required" }, 400);
+      // TEMP: debug trigger to test Sidekick confirm escalation UI
+      // (safe: only triggers on this exact magic string)
+      if (message === "__TEST_ESCALATE_CONFIRM__") {
+        return chatJson(req, {
+          mode: "escalate",
+          answer: "Je peux créer un ticket, mais j’ai besoin de votre confirmation.",
+          signals: { confidence: 0.4, incident: false },
+          context: "debug",
+          ui: null,
+          actions: [],
+        });
+      }
+
+
+      if (!message) return chatJson(req, { error: "message is required" }, 400);
 
       // Greets any time user greets (Sidekick-like)
       if (isGreetingOnly(message)) {
-        return json(req, {
+        return chatJson(req, {
           mode: "solve",
           confidence: 1,
           context: "smalltalk",
@@ -726,7 +794,7 @@ export default {
       }
 
       if (isThanksOnly(message)) {
-        return json(req, { mode: "solve", confidence: 1, context: "smalltalk", answer: "Avec plaisir 😊. Autre chose ?" });
+        return chatJson(req, { mode: "solve", confidence: 1, context: "smalltalk", answer: "Avec plaisir 😊. Autre chose ?" });
       }
 
       const debug = url.searchParams.get("debug") === "1";
@@ -739,7 +807,7 @@ export default {
 
       const pbVec = await embedText(env, pbQuery);
       const docsVec = await embedText(env, docsQuery);
-      if (!pbVec || !docsVec) return json(req, { error: "embedding_failed" }, 500);
+      if (!pbVec || !docsVec) return chatJson(req, { error: "embedding_failed" }, 500);
 
       const dnsAgeHours = extractDnsAgeHours(message, history);
       const checksOk = dnsChecksComplete(message, history);
@@ -792,7 +860,7 @@ export default {
       if (shouldUsePlaybook) {
         const r2Key = getMetaString(bestPb.metadata, "r2_key");
         if (!r2Key) {
-          return json(req, {
+          return chatJson(req, {
             mode: "clarify",
             confidence: Number(bestPbScore.toFixed(2)),
             context: "general",
@@ -803,7 +871,7 @@ export default {
 
         const obj = await env.TIKTAK_DOCS.get(r2Key);
         if (!obj) {
-          return json(req, {
+          return chatJson(req, {
             mode: "escalate",
             confidence: Number(bestPbScore.toFixed(2)),
             context: "general",
@@ -817,7 +885,7 @@ export default {
 
         const out = runPlaybook(playbook, message, history) as ChatOut;
         const mapped = await mapPlaybookOutputToNaturalAnswer(env, out, message, history, docsVec);
-        return json(req, mapped);
+        return chatJson(req, mapped);
       }
 
       // 2) Docs fallback
@@ -825,7 +893,7 @@ export default {
       const kbMatches: any[] = Array.isArray((kbRes as any)?.matches) ? (kbRes as any).matches : [];
 
       if (!kbMatches.length) {
-        return json(req, {
+        return chatJson(req, {
           mode: "clarify",
           confidence: 0.4,
           context: "general",
@@ -838,7 +906,7 @@ export default {
       const r2Key = getMetaString(best.metadata, "r2_key");
 
       if (!r2Key) {
-        return json(req, {
+        return chatJson(req, {
           mode: "clarify",
           confidence: Number(score.toFixed(2)),
           context: (best.metadata?.module as string) || "general",
@@ -849,7 +917,7 @@ export default {
 
       const obj = await env.TIKTAK_DOCS.get(r2Key);
       if (!obj) {
-        return json(req, {
+        return chatJson(req, {
           mode: "escalate",
           confidence: Number(score.toFixed(2)),
           context: (best.metadata?.module as string) || "general",
@@ -863,7 +931,7 @@ export default {
       const knowledgeText = String(chunk?.text ?? "").trim();
 
       if (!knowledgeText) {
-        return json(req, {
+        return chatJson(req, {
           mode: "clarify",
           confidence: 0.5,
           context: (best.metadata?.module as string) || "general",
@@ -872,7 +940,7 @@ export default {
       }
 
       if (score < 0.62) {
-        return json(req, {
+        return chatJson(req, {
           mode: "clarify",
           confidence: Number(score.toFixed(2)),
           context: (best.metadata?.module as string) || "general",
@@ -892,7 +960,7 @@ export default {
         max_tokens: 350,
       })) as any;
 
-      return json(req, {
+      return chatJson(req, {
         mode: "solve",
         confidence: Number(score.toFixed(2)),
         context: (best.metadata?.module as string) || "general",
