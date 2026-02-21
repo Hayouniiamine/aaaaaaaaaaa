@@ -1,0 +1,262 @@
+{
+  "id": "playbook-carrier-integration",
+  "scope": "shipping",
+  "title": "Intégration Transporteurs — Intigo / GLS / Aramex / API Livraison",
+  "triggers": [
+    "intigo",
+    "gls",
+    "aramex",
+    "transporteur",
+    "carrier",
+    "livreur",
+    "api livraison",
+    "tracking",
+    "synchronisation livreur",
+    "intégration livraison",
+    "manifeste automatique"
+  ],
+  "description": "Configuration et troubleshooting des intégrations transporteurs: connexion API (Intigo, GLS Tunisia, Aramex), tracking automatique, synchronisation statuts, génération d'étiquettes.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Transporteur : (1) Quel transporteur (Intigo / GLS / Aramex / autre) ? (2) Problème (configuration initiale / API ne connecte pas / tracking non synchro / étiquettes ne génèrent pas) ? (3) Avez-vous les credentials API ?",
+      "step_id": "ASK_01_TRANSPORTEUR_1_QUE_80686D",
+      "field": "issue_type"
+    },
+    {
+      "kind": "solve",
+      "title": "Ajouter un transporteur dans TikTak PRO",
+      "response": "Configuration de base d'un transporteur :\n\n✓ 1. ACCÉDER AUX PARAMÈTRES\n  • Paramètres → Transporteurs (/settings)\n  • Cliquer 'Nouveau transporteur'\n\n✓ 2. INFORMATIONS DE BASE\n  • Nom: [Nom transporteur] (ex: Intigo, GLS Tunisia)\n  • Logo: Upload si disponible\n  • Statut: ✓ Actif\n  • Visibilité Web: ✓ Activer (pour checkout site)\n  • Défaut: Cocher si transporteur principal\n\n✓ 3. ZONES & TARIFS\n  • Frais de base: [montant fixe TND]\n  • Gouvernorats couverts:\n    - Sélectionner chaque gouvernorat\n    - Ou 'Tous' pour national\n  • Frais par zone (optionnel):\n    - Grand Tunis: X TND\n    - Autres villes: Y TND\n    - Zones reculées: Z TND\n\n✓ 4. SAUVEGARDER\n  • Enregistrer configuration\n  • Transporteur apparaît dans liste\n  • Disponible pour commandes\n\nLe transporteur est-il maintenant visible dans la liste ?",
+      "actions": [
+        "add_new_carrier",
+        "configure_basic_info",
+        "set_zones_pricing",
+        "activate_carrier"
+      ],
+      "success_indicator": "Transporteur actif et visible dans création de commande",
+      "time_estimate": "5-10 minutes",
+      "step_id": "SOLVE_02_AJOUTER_UN_TRANSPO_FAD312"
+    },
+    {
+      "kind": "solve",
+      "title": "Intigo - Configuration API",
+      "response": "Intégration Intigo avec TikTak PRO :\n\n✓ 1. OBTENIR CREDENTIALS INTIGO\n  Contact Intigo:\n  • Site: intigo.tn\n  • Email: contact@intigo.tn\n  • Tél: +216 XX XXX XXX\n  \n  Demander:\n  • API Key (clé publique)\n  • API Secret (clé privée)\n  • Préciser: 'Pour intégration TikTak PRO'\n  • Délai: 1-2 jours ouvrables\n\n✓ 2. CONFIGURATION DANS TIKTAKPRO\n  • Paramètres → Transporteurs\n  • Sélectionner/créer 'Intigo'\n  • Section 'Intégration API':\n    - API Key: [coller]\n    - API Secret: [coller]\n    - Mode: Test ou Production\n    - URL API: [auto ou fournie par Intigo]\n  • Sauvegarder\n\n✓ 3. MODES TEST vs PRODUCTION\n  Mode Test:\n  • Pour tests d'intégration\n  • Étiquettes NON réelles\n  • Aucune facturation\n  • Données test Intigo\n  \n  Mode Production:\n  • Vraies étiquettes\n  • Vraie facturation\n  • Commandes réelles\n  • Passer en production après tests OK\n\n✓ 4. TESTER LA CONNEXION\n  • Créer commande test\n  • Expédition → Générer étiquette Intigo\n  • Vérifier:\n    - Étiquette PDF générée ?\n    - Numéro tracking créé ?\n    - Pas d'erreur API ?\n  • Si OK → Intégration fonctionnelle\n\n✓ 5. ZONES DE LIVRAISON INTIGO\n  Zones typiques:\n  • Grand Tunis: 7-8 TND\n  • Grandes villes (Sfax, Sousse, Bizerte): 8-10 TND\n  • Autres gouvernorats: 10-12 TND\n  • Zones reculées: 12-15 TND\n  \n  Configurer dans TikTak selon tarifs Intigo\n\nAvez-vous reçu les credentials API d'Intigo ?",
+      "actions": [
+        "contact_intigo_credentials",
+        "configure_intigo_api",
+        "set_test_mode",
+        "test_intigo_connection",
+        "configure_intigo_zones",
+        "switch_to_production"
+      ],
+      "success_indicator": "Test étiquette généré avec numéro tracking Intigo",
+      "time_estimate": "30 minutes (si credentials déjà disponibles)",
+      "common_errors": [
+        "Invalid API Key → Vérifier copie exacte, pas d'espace",
+        "Authentication failed → Credentials expirés, régénérer",
+        "Test mode in production → Basculer en mode Production",
+        "Zone not covered → Vérifier zones Intigo vs client"
+      ],
+      "step_id": "SOLVE_03_INTIGO_CONFIGURATI_4CF677"
+    },
+    {
+      "kind": "solve",
+      "title": "GLS Tunisia - Configuration API",
+      "response": "Intégration GLS Tunisia avec TikTak PRO :\n\n✓ 1. COMPTE GLS TUNISIA\n  S'inscrire:\n  • Site: gls-tunisia.com\n  • Créer compte professionnel\n  • Documents requis: Patente, CIN\n  • Délai activation: 2-3 jours\n  \n  Obtenir:\n  • Customer ID (identifiant client)\n  • API Token (jeton d'accès)\n  • Login Dashboard GLS\n\n✓ 2. CONFIGURATION TIKTAKPRO\n  • Paramètres → Transporteurs\n  • Créer/modifier 'GLS Tunisia'\n  • Intégration API:\n    - Customer ID: [votre ID]\n    - API Token: [votre token]\n    - Environment: Test/Production\n  • Sauvegarder\n\n✓ 3. SPÉCIFICITÉS GLS\n  Facturation au poids:\n  • GLS facture selon poids colis\n  • Configurer poids produits:\n    - Produits → [Produit] → Poids (kg)\n  • TikTak calcule automatiquement\n  \n  Options disponibles:\n  • Assurance colis (optionnelle)\n  • Cash on Delivery (COD) - supporté\n  • Livraison express (supplément)\n\n✓ 4. ZONES GLS TUNISIA\n  Zones couvertes:\n  • Grand Tunis: 6-8 TND\n  • Grandes villes: Sfax, Sousse, Bizerte, Nabeul\n  • Villes moyennes: Kairouan, Monastir, Gabès\n  • Zones reculées: selon distance\n  \n  Configurer tarifs dans TikTak\n\n✓ 5. TESTER INTÉGRATION\n  • Commande test avec poids\n  • Générer étiquette GLS\n  • Vérifier numéro tracking\n  • Vérifier calcul frais au poids\n\nLe Customer ID et Token sont-ils corrects ?",
+      "actions": [
+        "register_gls_account",
+        "get_gls_credentials",
+        "configure_gls_api",
+        "configure_product_weights",
+        "test_gls_label_generation",
+        "configure_gls_zones"
+      ],
+      "success_indicator": "Étiquette GLS générée avec calcul poids automatique",
+      "note": "GLS nécessite poids produits pour calcul tarif",
+      "step_id": "SOLVE_04_GLS_TUNISIA_CONFIG_B67EE6"
+    },
+    {
+      "kind": "solve",
+      "title": "Aramex - Configuration API",
+      "response": "Intégration Aramex avec TikTak PRO :\n\n✓ 1. COMPTE ARAMEX\n  S'inscrire:\n  • Site: aramex.com\n  • Section: Shipping Solutions\n  • Créer compte expéditeur\n  • Documents: Entreprise, coordonnées\n  \n  Obtenir:\n  • Account Number\n  • Username\n  • Password API\n  • PIN (si requis)\n\n✓ 2. CONFIGURATION TIKTAKPRO\n  • Paramètres → Transporteurs\n  • Créer 'Aramex'\n  • Intégration:\n    - Account Number: [votre numéro]\n    - Username: [API username]\n    - Password: [API password]\n    - PIN: [si applicable]\n    - Country Code: TN (Tunisia)\n  • Sauvegarder\n\n✓ 3. SPÉCIFICITÉS ARAMEX\n  Services disponibles:\n  • Domestic (Tunisie): Livraison nationale\n  • International: Export/Import\n  • Express: Livraison rapide\n  • Economy: Standard\n  \n  Adresse expéditeur:\n  • Doit être configurée dans Aramex\n  • Adresse complète + coordonnées\n  • Validée par Aramex\n\n✓ 4. TARIFICATION\n  • Poids volumétrique vs réel\n  • Zones internationales si applicable\n  • Frais variables selon service\n  • Configurer grille tarifaire\n\n✓ 5. TESTER\n  • Commande test locale (Tunisie)\n  • Générer AWB (étiquette Aramex)\n  • Vérifier numéro tracking\n  • Tester tracking en ligne Aramex\n\nAramex principalement pour international ou aussi local ?",
+      "actions": [
+        "register_aramex_account",
+        "get_aramex_credentials",
+        "configure_aramex_api",
+        "setup_sender_address",
+        "test_aramex_awb_generation"
+      ],
+      "success_indicator": "AWB Aramex généré avec numéro tracking valide",
+      "note": "Aramex souvent utilisé pour international, vérifier services locaux disponibles",
+      "step_id": "SOLVE_05_ARAMEX_CONFIGURATI_2FEF03"
+    },
+    {
+      "kind": "solve",
+      "title": "Problème: Tracking Non Synchronisé",
+      "response": "Si numéro tracking pas visible ou statuts non à jour :\n\n✓ 1. WEBHOOK CONFIGURATION\n  Le transporteur doit envoyer updates à TikTak:\n  \n  URL Webhook TikTak:\n  • https://dash.tiktak.space/api/webhooks/[transporteur]\n  • Ex: /api/webhooks/intigo\n  • Ex: /api/webhooks/gls\n  \n  Configuration:\n  • Dashboard transporteur → Webhooks\n  • Ajouter URL TikTak\n  • Événements: status_update, delivered, failed\n  • Sauvegarder\n\n✓ 2. VÉRIFIER STATUTS COMMANDE\n  Tracking se met à jour seulement si:\n  • Commande statut: 'Expédiée'\n  • Numéro tracking existe\n  • Webhook bien configuré\n  \n  Si commande pas 'Expédiée':\n  • Aucune mise à jour tracking\n  • Changer statut manuellement\n\n✓ 3. DÉLAI SYNCHRONISATION\n  • Updates pas instantanées\n  • Délai normal: 15-30 minutes\n  • Parfois jusqu'à 2h selon transporteur\n  • Rafraîchir page commande\n  • Vérifier après 1h\n\n✓ 4. CREDENTIALS EXPIRÉS\n  • API Key peut expirer (6 mois - 1 an)\n  • Regénérer chez transporteur\n  • Mettre à jour dans TikTak\n  • Tester connexion\n\n✓ 5. VÉRIFICATION MANUELLE\n  • Copier numéro tracking\n  • Aller sur site transporteur\n  • Coller dans recherche tracking\n  • Statut réel sur leur site ?\n  • Si oui: problème webhook\n  • Si non: colis pas encore scanné\n\nLe webhook est-il configuré côté transporteur ?",
+      "actions": [
+        "configure_webhook_url",
+        "verify_order_status_shipped",
+        "wait_sync_delay",
+        "regenerate_api_credentials",
+        "manual_tracking_check"
+      ],
+      "success_indicator": "Statuts tracking se mettent à jour automatiquement dans TikTak",
+      "troubleshooting": {
+        "Tracking jamais à jour": "Webhook pas configuré ou URL incorrecte",
+        "Tracking met à jour 1 fois puis stop": "Credentials expirés, régénérer",
+        "Tracking update très lent (>2h)": "Normal pour certains transporteurs",
+        "Numéro tracking vide": "Étiquette pas générée ou API error"
+      },
+      "step_id": "SOLVE_06_PROBL_ME_TRACKING__69DB5F"
+    },
+    {
+      "kind": "solve",
+      "title": "Problème: Étiquettes Ne Génèrent Pas",
+      "response": "Si clic 'Générer étiquette' → erreur ou rien :\n\n✓ 1. VÉRIFIER API STATUS\n  • Paramètres → Transporteurs → [Transporteur]\n  • Statut connexion API: Connecté ?\n  • Dernière synchro: Récente ?\n  • Tester connexion (bouton test)\n\n✓ 2. CREDENTIALS VALIDES\n  • API Key correct ?\n  • Pas d'espace avant/après\n  • Copié entièrement\n  • Pas expiré\n  • Mode (Test/Production) correct\n\n✓ 3. SOLDE COMPTE TRANSPORTEUR\n  • Certains transporteurs: prépaiement\n  • Vérifier solde sur dashboard transporteur\n  • Si solde = 0: recharger\n  • Retester génération\n\n✓ 4. INFORMATIONS COMMANDE COMPLÈTES\n  Requis pour étiquette:\n  • ✓ Adresse complète (rue, ville, code postal)\n  • ✓ Téléphone client valide\n  • ✓ Transporteur assigné\n  • ✓ Poids (si GLS)\n  • ✓ Statut compatible (Confirmée/Prête)\n  \n  Si manquant → Erreur génération\n\n✓ 5. ERREUR API\n  • Console F12 → Network\n  • Chercher requête API transporteur\n  • Code erreur:\n    - 401: Credentials invalides\n    - 403: Permissions manquantes\n    - 500: Erreur serveur transporteur\n  • Screenshot + escalade si 500\n\nQuel message d'erreur exact s'affiche ?",
+      "actions": [
+        "verify_api_connection_status",
+        "check_credentials_valid",
+        "verify_carrier_account_balance",
+        "check_order_info_complete",
+        "check_api_error_console"
+      ],
+      "success_indicator": "Étiquette PDF téléchargée avec numéro tracking",
+      "escalation_criteria": "Credentials vérifiés, solde OK, infos complètes, mais génération échoue avec erreur 500",
+      "common_errors": [
+        "401 Unauthorized → Credentials invalides ou expirés",
+        "403 Forbidden → Compte pas activé ou zone non couverte",
+        "500 Server Error → Problème côté transporteur, escalade",
+        "Insufficient balance → Recharger compte transporteur"
+      ],
+      "step_id": "SOLVE_07_PROBL_ME_TIQUETTES_BF6A34"
+    },
+    {
+      "kind": "solve",
+      "title": "Comparaison Transporteurs Tunisia",
+      "response": "TRANSPORTEURS PRINCIPAUX EN TUNISIE :\n\n🚚 INTIGO\n  • Couverture: National\n  • Tarifs: 7-15 TND selon zone\n  • API: Oui (facile)\n  • COD: Oui\n  • Tracking temps réel: Oui\n  • Points forts: Fiable, bien réparti\n  • Contact: contact@intigo.tn\n\n🚚 GLS TUNISIA\n  • Couverture: National + International\n  • Tarifs: Au poids (6-12 TND base)\n  • API: Oui\n  • COD: Oui\n  • Assurance: Optionnelle\n  • Points forts: International, professionnel\n  • Contact: gls-tunisia.com\n\n🚚 ARAMEX\n  • Couverture: International surtout\n  • Tarifs: Variables (poids volumétrique)\n  • API: Oui (complexe)\n  • Services: Express, Economy\n  • Points forts: International fiable\n  • Contact: aramex.com\n\n🚚 AUTRES (manuels)\n  • Rapid: Local, pas d'API\n  • Colis Privé: Configuration manuelle\n  • Taxi Colis: Pas d'intégration\n  \nRECOMMANDATION:\n• Principal: Intigo (local fiable)\n• Backup: GLS (redondance)\n• International: Aramex\n• Avoir 2-3 transporteurs minimum\n\nQuel transporteur correspond à vos besoins ?",
+      "note": "Configuration recommandée: 2-3 transporteurs pour redondance et zones différentes",
+      "step_id": "SOLVE_08_COMPARAISON_TRANSP_35EA0A"
+    },
+    {
+      "kind": "verify",
+      "question": "Après configuration, pouvez-vous générer une étiquette test ? Si non, fournissez : transporteur, message erreur API, capture config credentials, statut connexion.",
+      "step_id": "VERIFY_09_APR_S_CONFIGURATIO_2703DF"
+    },
+    {
+      "kind": "escalate",
+      "reason": "API ne se connecte pas après configuration correcte des credentials (vérifiés avec transporteur), ou erreur serveur 500 persistante, ou webhook ne fonctionne pas après configuration",
+      "required_info": [
+        "Nom transporteur (Intigo/GLS/Aramex/autre)",
+        "API Key (masquer sauf 4 derniers caractères)",
+        "Message erreur exact",
+        "Mode configuré (Test/Production)",
+        "Capture écran configuration (masquer secrets)",
+        "Statut connexion API (connecté/déconnecté)",
+        "Solde compte transporteur (suffisant/insuffisant)",
+        "Résultat test manuel tracking sur site transporteur",
+        "URL webhook configurée (si applicable)"
+      ],
+      "step_id": "ESCALATE_10_ESCALATE_765CC5",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "API ne se connecte pas après configuration correcte des credentials (vérifiés avec transporteur), ou erreur serveur 500 persistante, ou webhook ne fonctionne pas après configuration",
+        "repro_steps": [],
+        "evidence": [
+          "Nom transporteur (Intigo/GLS/Aramex/autre)",
+          "API Key (masquer sauf 4 derniers caractères)",
+          "Message erreur exact",
+          "Mode configuré (Test/Production)",
+          "Capture écran configuration (masquer secrets)",
+          "Statut connexion API (connecté/déconnecté)",
+          "Solde compte transporteur (suffisant/insuffisant)",
+          "Résultat test manuel tracking sur site transporteur",
+          "URL webhook configurée (si applicable)"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/settings - Configuration transporteurs, zones, API",
+    "/shipping - Module expédition et manifestes",
+    "/orders - Génération étiquettes par commande"
+  ],
+  "best_practices": [
+    "Configurer au moins 2 transporteurs (redondance)",
+    "Toujours tester en mode Test avant Production",
+    "Noter credentials API en lieu sûr",
+    "Vérifier solde transporteur régulièrement",
+    "Configurer webhooks pour tracking automatique",
+    "Tester génération étiquette après chaque configuration",
+    "Mettre zones et tarifs à jour selon contrat transporteur"
+  ],
+  "carriers_reference": {
+    "Intigo": {
+      "website": "https://intigo.tn",
+      "support": "contact@intigo.tn",
+      "coverage": "National Tunisia",
+      "zones": [
+        "Tunis",
+        "Sfax",
+        "Sousse",
+        "Bizerte",
+        "Autres"
+      ],
+      "features": [
+        "Tracking temps réel",
+        "COD",
+        "API simple"
+      ],
+      "typical_rates": "7-15 TND"
+    },
+    "GLS Tunisia": {
+      "website": "https://gls-tunisia.com",
+      "support": "info@gls-tunisia.com",
+      "coverage": "National + International",
+      "pricing": "Au poids",
+      "features": [
+        "Assurance",
+        "COD",
+        "Express",
+        "API"
+      ],
+      "typical_rates": "6-12 TND base"
+    },
+    "Aramex": {
+      "website": "https://aramex.com",
+      "support": "Via site web",
+      "coverage": "International prioritaire",
+      "services": [
+        "Express",
+        "Economy",
+        "Freight"
+      ],
+      "features": [
+        "International",
+        "Tracking",
+        "Multiple services"
+      ],
+      "note": "Moins utilisé pour local Tunisia"
+    }
+  },
+  "canonical_scope": "shipping",
+  "required_fields": [
+    {
+      "key": "carrier_name",
+      "question": "Quel transporteur (Intigo / GLS / Aramex / autre) ?"
+    },
+    {
+      "key": "api_credentials",
+      "question": "Avez-vous les credentials API (Key + Secret) ?"
+    },
+    {
+      "key": "issue_type",
+      "question": "Quel problème (config initiale / connexion API / tracking / étiquettes) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

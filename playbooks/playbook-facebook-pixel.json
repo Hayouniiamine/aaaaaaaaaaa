@@ -1,0 +1,172 @@
+{
+  "id": "playbook-facebook-pixel",
+  "scope": "apps",
+  "title": "Facebook Pixel — installation / tracking / leads / conversion / debugging",
+  "description": "Guide complet pour installer et configurer le Facebook Pixel sur TikTak PRO, configurer le suivi des conversions, les leads Facebook et résoudre les problèmes de tracking.",
+  "triggers": [
+    "conversion",
+    "conversion pixel",
+    "facebook",
+    "facebook pixel",
+    "installer pixel",
+    "leads",
+    "leads facebook",
+    "meta pixel",
+    "messenger leads",
+    "pixel",
+    "pixel facebook",
+    "pixel code",
+    "suivi conversion",
+    "tracking",
+    "tracking automatique",
+    "pixel ne fonctionne pas",
+    "pixel ne marche pas",
+    "événement pixel",
+    "event pixel",
+    "purchase event",
+    "add to cart event",
+    "view content",
+    "fbclid",
+    "tiktok pixel",
+    "google analytics",
+    "google tag",
+    "gtm",
+    "tag manager"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel est votre besoin concernant le tracking ?\n(1) Installer le Facebook Pixel sur mon site\n(2) Configurer les leads Facebook / Messenger\n(3) Le pixel ne fonctionne pas / pas d'événements\n(4) Tracking automatique (suivi de commandes)\n(5) Installer un autre code de tracking (Google Analytics, TikTok Pixel, GTM)",
+      "step_id": "ASK_01_QUEL_EST_VOTRE_BES_0E2954",
+      "field": "app_name"
+    },
+    {
+      "kind": "solve",
+      "title": "Installer le Facebook Pixel",
+      "response": "Pour installer le Facebook Pixel sur votre site TikTak PRO :\n\n1. Récupérez votre ID Pixel Facebook :\n   • Allez sur business.facebook.com → Gestionnaire d'événements\n   • Copiez l'ID Pixel (nombre à 15-16 chiffres)\n\n2. Ajoutez le pixel dans TikTak :\n   • Allez dans le Builder (dash.tiktak.space/content-management)\n   • Modifiez votre page → Sidebar → onglet 'Code personnalisé'\n   • Collez le code du pixel Facebook dans la section 'Head'\n   • Ou utilisez le module dédié si disponible dans votre pack\n\n3. Vérifiez l'installation :\n   • Installez l'extension 'Facebook Pixel Helper' sur Chrome\n   • Visitez votre site → l'extension doit montrer le pixel actif\n   • Vérifiez dans le Gestionnaire d'événements Facebook que les événements arrivent\n\nÉvénements automatiques TikTak :\n• PageView — chaque page visitée\n• ViewContent — fiche produit consultée\n• AddToCart — produit ajouté au panier\n• InitiateCheckout — début de commande\n• Purchase — commande confirmée\n\nAvez-vous votre ID Pixel Facebook ?",
+      "success_indicator": "Pixel actif, événements visibles dans Facebook Pixel Helper et Gestionnaire d'événements",
+      "common_errors": [
+        "ID Pixel incorrect — vérifier dans business.facebook.com",
+        "Code collé au mauvais endroit — doit être dans <head>",
+        "Double installation — un seul pixel par site",
+        "Événements non envoyés — vérifier avec Pixel Helper extension"
+      ],
+      "step_id": "SOLVE_02_INSTALLER_LE_FACEB_4BEEAF"
+    },
+    {
+      "kind": "solve",
+      "title": "Configurer les leads Facebook / Messenger",
+      "response": "Configuration des Leads Facebook / Messenger :\n\n1. Activez le module Leads :\n   • ⚙️ près du logo → Personnaliser le menu → activez 'Leads Facebook'\n   • Sauvegardez et rafraîchissez la page\n\n2. Accédez aux leads (dash.tiktak.space/messenger/leads) :\n   • Cette section affiche les leads captés depuis vos campagnes Facebook\n   • Les données incluent : nom, téléphone, email, source de la campagne\n\n3. Pour que les leads arrivent :\n   • Vous devez avoir une campagne Facebook Ads active avec formulaire Lead\n   • Le formulaire doit être connecté à votre page Facebook\n   • L'intégration TikTak capte les leads via l'API Facebook\n\n4. Vérifiez la connexion :\n   • Si les leads n'arrivent pas, vérifiez que l'intégration est active\n   • Les leads peuvent prendre quelques minutes à apparaître\n\nAvez-vous des campagnes Facebook Ads actives avec formulaires Lead ?",
+      "success_indicator": "Leads visibles dans dash.tiktak.space/messenger/leads",
+      "ui": {
+        "label": "Ouvrir Leads Facebook",
+        "route": "/messenger/leads"
+      },
+      "step_id": "SOLVE_03_CONFIGURER_LES_LEA_A5CC38"
+    },
+    {
+      "kind": "solve",
+      "title": "Pixel ne fonctionne pas / pas d'événements",
+      "response": "Diagnostic pixel qui ne fonctionne pas :\n\n1. Vérifiez l'installation :\n   • Installez l'extension Chrome 'Facebook Pixel Helper'\n   • Visitez votre site → l'extension doit être verte avec le nombre d'événements\n\n2. Problèmes courants :\n   • Pixel Helper rouge / pas d'icône → le code n'est pas installé ou mal placé\n   • Pixel Helper orange avec erreur → code incorrect ou doublon\n   • Événements 'PageView' uniquement → les événements e-commerce ne sont pas configurés\n\n3. Solutions :\n   • Vérifiez que le code est dans la section <head> du Builder\n   • Supprimez les doublons (un seul code pixel)\n   • Videz le cache du site (Ctrl+F5)\n   • Testez en navigation privée\n   • Vérifiez dans Gestionnaire d'événements Facebook → onglet 'Tester les événements'\n\n4. Si les événements e-commerce manquent :\n   • Vérifiez que le template supporte le tracking e-commerce\n   • Les événements AddToCart/Purchase nécessitent que le checkout fonctionne\n\nQue montre le Facebook Pixel Helper sur votre site ?",
+      "success_indicator": "Pixel Helper vert, événements PageView + Purchase visibles dans Facebook",
+      "step_id": "SOLVE_04_PIXEL_NE_FONCTIONN_A73AF0"
+    },
+    {
+      "kind": "solve",
+      "title": "Tracking automatique",
+      "response": "Module Tracking automatique (dash.tiktak.space/automatic-tracking) :\n\n1. Activez le module :\n   • ⚙️ près du logo → Personnaliser le menu → activez 'Tracking automatique'\n   • Sauvegardez et rafraîchissez\n\n2. Le tracking automatique permet :\n   • Suivi automatique des commandes après expédition\n   • Mise à jour des statuts de livraison\n   • Historique des mouvements colis\n\n3. Prérequis :\n   • Un transporteur avec intégration API configurée\n   • Les commandes doivent être synchronisées avec le transporteur\n   • Les numéros de suivi doivent être générés\n\n4. Fonctionnement :\n   • Après synchronisation transporteur, le tracking est automatique\n   • Les statuts se mettent à jour périodiquement\n   • Visible dans les détails de chaque commande\n\nAvez-vous un transporteur avec API configurée ?",
+      "success_indicator": "Tracking automatique actif, statuts de livraison mis à jour automatiquement",
+      "step_id": "SOLVE_05_TRACKING_AUTOMATIQ_5035B2"
+    },
+    {
+      "kind": "solve",
+      "title": "Autre code de tracking (Google Analytics, TikTok, GTM)",
+      "response": "Pour installer un autre code de tracking :\n\n1. Allez dans le Builder (dash.tiktak.space/content-management)\n2. Modifiez votre page → Sidebar → onglet 'Code personnalisé'\n3. Deux zones disponibles :\n   • Section 'Head' : pour les codes qui doivent charger en premier (recommandé)\n   • Autre section selon le template\n\n4. Codes courants :\n   • Google Analytics 4 : collez le gtag.js dans Head\n   • Google Tag Manager : collez le conteneur GTM dans Head\n   • TikTok Pixel : collez le code TikTok dans Head\n\n5. Sauvegardez et vérifiez :\n   • Ctrl+F5 sur votre site\n   • Utilisez les extensions de vérification (GA Debugger, Tag Assistant)\n\nImportant : ne modifiez pas le code existant du site. Ajoutez votre code de tracking dans la zone dédiée.\n\nQuel code de tracking souhaitez-vous installer ?",
+      "success_indicator": "Code de tracking installé et vérifié via l'outil de diagnostic approprié",
+      "step_id": "SOLVE_06_AUTRE_CODE_DE_TRAC_1F0AA1"
+    },
+    {
+      "kind": "verify",
+      "question": "Le pixel ou code de tracking fonctionne-t-il maintenant ? Que montre l'outil de vérification (Pixel Helper / Tag Assistant) ?",
+      "step_id": "VERIFY_07_LE_PIXEL_OU_CODE_D_E1AB8B"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Pixel installé correctement mais aucun événement reçu, intégration Leads Facebook non fonctionnelle, ou tracking automatique ne met pas à jour les statuts",
+      "required_info": [
+        "ID Pixel ou code de tracking",
+        "Capture du Facebook Pixel Helper ou outil de diagnostic",
+        "URL du site",
+        "Template utilisé",
+        "Capture de l'onglet Code personnalisé dans le Builder",
+        "Événements manquants (lesquels)"
+      ],
+      "step_id": "ESCALATE_08_ESCALATE_F96440",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Pixel installé correctement mais aucun événement reçu, intégration Leads Facebook non fonctionnelle, ou tracking automatique ne met pas à jour les statuts",
+        "repro_steps": [],
+        "evidence": [
+          "ID Pixel ou code de tracking",
+          "Capture du Facebook Pixel Helper ou outil de diagnostic",
+          "URL du site",
+          "Template utilisé",
+          "Capture de l'onglet Code personnalisé dans le Builder",
+          "Événements manquants (lesquels)"
+        ],
+        "suspected_component": "apps",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Pixel installé mais aucun événement dans Facebook",
+      "cause": "Code dans la mauvaise section ou erreur dans l'ID pixel",
+      "solution": "Vérifier ID pixel, placer dans Head, tester avec Pixel Helper"
+    },
+    {
+      "symptom": "Double comptage des événements",
+      "cause": "Pixel installé deux fois (code personnalisé + module)",
+      "solution": "Supprimer le doublon, garder une seule installation"
+    },
+    {
+      "symptom": "Leads Facebook n'apparaissent pas",
+      "cause": "Module non activé ou pas de campagne active",
+      "solution": "Activer module Leads Facebook, vérifier campagne active dans Facebook Ads"
+    },
+    {
+      "symptom": "Événements e-commerce manquants (Purchase, AddToCart)",
+      "cause": "Template ne supporte pas les événements e-commerce ou checkout cassé",
+      "solution": "Vérifier le template, tester un achat complet, contacter support si persiste"
+    }
+  ],
+  "best_practices": [
+    "Un seul pixel Facebook par site",
+    "Toujours vérifier avec Facebook Pixel Helper après installation",
+    "Tester les événements via le mode Test dans Gestionnaire d'événements",
+    "Ne pas modifier le code du template, utiliser la zone Code personnalisé"
+  ],
+  "related_playbooks": [
+    "playbook-modules",
+    "playbook-contents",
+    "playbook-templates"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "app_name",
+      "question": "Quelle application / intégration (Facebook, Pixel, etc.) ?"
+    },
+    {
+      "key": "account",
+      "question": "Quel compte/Business Manager est utilisé ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quelle alerte / message exact dans l’outil ?"
+    }
+  ]
+}

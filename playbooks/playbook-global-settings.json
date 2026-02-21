@@ -1,0 +1,170 @@
+{
+  "id": "playbook-global-settings",
+  "scope": "settings",
+  "title": "Paramétrage global — identité / devise / coordonnées / fiscal / logo / signature",
+  "triggers": [
+    "adresse entreprise",
+    "bon de livraison",
+    "branding",
+    "changer devise",
+    "code postal",
+    "code tva",
+    "configurer entreprise",
+    "coordonnées",
+    "devise",
+    "dinar",
+    "document",
+    "email contact",
+    "email entreprise",
+    "facturation",
+    "gouvernorat",
+    "identité",
+    "logo",
+    "logo entreprise",
+    "matricule fiscal",
+    "modifier nom entreprise",
+    "nom entreprise",
+    "paramétrage global",
+    "pays",
+    "signature",
+    "taxe défaut",
+    "taux tva défaut",
+    "téléphone entreprise",
+    "ville"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Paramétrage global : (1) Identité entreprise (nom/devise), (2) Coordonnées (adresse/tél/email), (3) Configuration fiscale (TVA/matricule), (4) Branding (logo/signature) ?",
+      "step_id": "ASK_01_PARAM_TRAGE_GLOBAL_BA9834",
+      "field": "setting_area"
+    },
+    {
+      "kind": "solve",
+      "response": "Identité de l'entreprise (/settings → Paramétrage global) :\n• Nom de l'entreprise : affiché sur tous les documents (bons, factures, emails)\n• Devise : ex. Dinar Tunisien — appliquée partout (interface, exports, documents)\n\n⚠️ IMPORTANT : changer la devise ne convertit PAS automatiquement les prix existants.\nIl faudra réimporter/ajuster les prix manuellement si vous changez de devise.\n\n✓ Pour mettre à jour :\n  1. /settings → Paramétrage global\n  2. Modifier le nom et/ou la devise\n  3. Cliquer 'Enregistrer'\n  4. Recharger un document (bon, facture) pour vérifier\n\nQuel champ voulez-vous modifier (nom ou devise) ?",
+      "actions": [
+        "update_company_name",
+        "change_currency"
+      ],
+      "success_indicator": "Nom et devise corrects sur tous les documents",
+      "step_id": "SOLVE_02_IDENTIT_DE_L_ENTRE_A5C09E"
+    },
+    {
+      "kind": "solve",
+      "response": "Coordonnées de l'entreprise :\n• Adresse, Ville, Pays, Gouvernorat, Code postal\n• Téléphone principal et secondaire\n• Email de contact\n\n✓ Ces coordonnées apparaissent sur :\n  - Bons de livraison\n  - Factures\n  - Communications emails\n  - Pied de page documents\n\n✓ Problèmes fréquents :\n  - Email rejeté → format invalide (espaces, indicatif manquant, pas @domaine.tld)\n  - Téléphone rejeté → nettoyer espaces/traits, indicatif conforme\n  - Adresse incohérente → aligner ville, gouvernorat et code postal\n\n✓ Saisie :\n  1. /settings → Paramétrage global → section Coordonnées\n  2. Compléter tous les champs\n  3. Enregistrer\n  4. Vérifier sur un document généré\n\nQuelles coordonnées voulez-vous mettre à jour ?",
+      "actions": [
+        "update_address",
+        "update_phone",
+        "update_email"
+      ],
+      "success_indicator": "Coordonnées cohérentes sur documents de vente",
+      "step_id": "SOLVE_03_COORDONN_ES_DE_L_E_E76D00"
+    },
+    {
+      "kind": "solve",
+      "response": "Configuration fiscale :\n• Code TVA : votre identifiant fiscal (matricule fiscal tunisien)\n• Taux de TVA (%) : taux par défaut appliqué aux produits/services\n\n✓ Le taux par défaut peut être surchargé au niveau produit si votre config le permet\n✓ Le Code TVA apparaît sur factures et documents officiels\n\n✓ Vérifications :\n  - TVA inattendue → vérifier taux global vs exceptions produit\n  - Code TVA non imprimé → renseigner le champ 'Code TVA'\n  - Calculs TTC incorrects → vérifier taux par défaut et taxes additionnelles (/settings → Taxes)\n\n✓ En Tunisie :\n  - Taux standard : 19%\n  - Taux réduit : 13% ou 7% (selon catégorie)\n  - Exonéré : 0%\n  - Timbre fiscal : ajouter comme taxe fixe dans /settings → Taxes\n\nQuel est votre taux TVA principal ? Code TVA renseigné ?",
+      "actions": [
+        "set_vat_code",
+        "set_default_vat_rate"
+      ],
+      "success_indicator": "Code TVA et taux corrects sur factures",
+      "step_id": "SOLVE_04_CONFIGURATION_FISC_5E3741"
+    },
+    {
+      "kind": "solve",
+      "response": "Logo et signature d'entreprise :\n• Logo : téléverser dans /settings → Configuration avancée\n  - Formats acceptés : PNG, JPG, WebP\n  - Taille max recommandée : 1-2 Mo\n  - Apparaît sur : bons de livraison, factures, emails\n\n• Signature : téléverser si vous signez les documents\n  - Même formats et limites\n  - Apparaît sur documents officiels selon configuration\n\n✓ Problèmes fréquents :\n  - Logo/signature non affichés → image trop lourde, mauvais format, cache\n  - Solution : compresser (<2 Mo), utiliser PNG/JPG/WebP, enregistrer, Ctrl+F5\n  - Vérifier l'aperçu visuel dans les paramètres\n  - Tester en imprimant/exportant un document\n\nVoulez-vous téléverser un logo ou une signature ?",
+      "actions": [
+        "upload_logo",
+        "upload_signature",
+        "preview_branding"
+      ],
+      "success_indicator": "Logo/signature visibles dans aperçu et sur documents imprimés",
+      "step_id": "SOLVE_05_LOGO_ET_SIGNATURE__365C72"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Impossible de sauvegarder les paramètres globaux malgré données valides, ou documents toujours incorrects après configuration",
+      "required_info": [
+        "Section paramètres concernée",
+        "Capture écran de l'erreur",
+        "Données saisies (nom, devise, TVA)",
+        "Capture d'un document montrant le problème",
+        "Navigateur + version"
+      ],
+      "step_id": "ESCALATE_06_ESCALATE_03F810",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Impossible de sauvegarder les paramètres globaux malgré données valides, ou documents toujours incorrects après configuration",
+        "repro_steps": [],
+        "evidence": [
+          "Section paramètres concernée",
+          "Capture écran de l'erreur",
+          "Données saisies (nom, devise, TVA)",
+          "Capture d'un document montrant le problème",
+          "Navigateur + version"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_07_APR_S_CES_TAPES_ES_02B92D"
+    }
+  ],
+  "related_docs": [
+    "/settings → Paramétrage global : identité, coordonnées, config fiscale, branding",
+    "Logo/signature appliqués aux bons de livraison, factures et emails",
+    "Code TVA = matricule fiscal tunisien",
+    "Devise par défaut (Dinar Tunisien), pas de conversion auto"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Logo non affiché sur documents",
+      "cause": "Image trop lourde ou format non supporté",
+      "solution": "Compresser <2 Mo, PNG/JPG/WebP, enregistrer et Ctrl+F5"
+    },
+    {
+      "symptom": "TVA calculée incorrectement",
+      "cause": "Taux global ne correspond pas au taux voulu",
+      "solution": "Vérifier taux dans Paramétrage global + exceptions produit"
+    },
+    {
+      "symptom": "Email/téléphone rejeté",
+      "cause": "Format invalide",
+      "solution": "Email: nom@domaine.tld. Tél: chiffres avec indicatif, sans espaces"
+    },
+    {
+      "symptom": "Devise incorrecte sur pages/exports",
+      "cause": "Devise modifiée sans maj prix",
+      "solution": "Confirmer devise dans paramètres, réimporter/ajuster prix"
+    },
+    {
+      "symptom": "Adresse incohérente sur documents",
+      "cause": "Ville/Pays/Gouvernorat non alignés",
+      "solution": "Corriger les champs et régénérer le document"
+    }
+  ],
+  "best_practices": [
+    "Configurez l'identité dès le démarrage",
+    "Téléversez logo et signature avant de générer le premier document",
+    "Vérifiez les coordonnées sur un bon de livraison test",
+    "Le matricule fiscal est obligatoire pour des factures conformes",
+    "Documentez vos paramètres fiscaux pour l'équipe"
+  ],
+  "canonical_scope": "settings",
+  "required_fields": [
+    {
+      "key": "setting_area",
+      "question": "Quel paramètre global (identité, coordonnées, fiscal, logo) ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu'est-ce qui ne marche pas ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

@@ -1,0 +1,187 @@
+{
+  "id": "playbook-templates",
+  "scope": "builder",
+  "title": "Templates — galerie / aperçu / achat / installation",
+  "triggers": [
+    "acheter template",
+    "aperçu template",
+    "changer template",
+    "galerie templates",
+    "installer template",
+    "paiement template",
+    "prix template",
+    "site casse template",
+    "template",
+    "theme",
+    "thème",
+    "virement template"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Galerie templates (/templates) :\n• Templates gratuits et payants\n• Filtres : catégories (e-commerce, mode, tech...)\n• Recherche par nom\n• Chaque template : aperçu, prix, description\n• Cliquez 'Aperçu' pour voir en action\n• Cliquez 'Acheter' ou 'Installer' selon type\n\nVous cherchez quel style/catégorie de template ?",
+      "actions": [
+        "browse_templates",
+        "filter_templates",
+        "preview_template"
+      ],
+      "success_indicator": "Liste templates affichée, aperçus fonctionnent",
+      "step_id": "SOLVE_01_GALERIE_TEMPLATES__B556F2"
+    },
+    {
+      "kind": "solve",
+      "response": "Aperçu template ne charge pas :\n✓ Autorisez pop-ups pour dash.tiktak.space\n✓ Ctrl+F5 puis réessayez\n✓ Testez navigation privée\n✓ Testez autre template pour isoler\n✓ Testez autre navigateur\n\nLe navigateur bloque-t-il les pop-ups ? Quel template exactement ?",
+      "actions": [
+        "allow_popups",
+        "test_preview"
+      ],
+      "success_indicator": "Aperçu s'ouvre dans nouvel onglet",
+      "step_id": "SOLVE_02_APER_U_TEMPLATE_NE_77F709"
+    },
+    {
+      "kind": "solve",
+      "response": "Acheter template payant :\n• Cliquez 'Acheter' → récapitulatif\n• Mode paiement :\n  - Carte bancaire (en ligne)\n  - Virement bancaire (confirmation manuelle)\n• Confirmez et payez\n• Après paiement confirmé : template disponible 'Mes templates'\n• Installation depuis 'Mes templates'\n\nQuel message recevez-vous au paiement ? Mode carte ou virement ?",
+      "actions": [
+        "purchase_template",
+        "pay_by_card",
+        "pay_by_transfer"
+      ],
+      "success_indicator": "Paiement validé, template dans 'Mes templates'",
+      "step_id": "SOLVE_03_ACHETER_TEMPLATE_P_6150FD"
+    },
+    {
+      "kind": "solve",
+      "response": "Après achat, installation n'apparaît pas :\n✓ Rechargez page / espace client (Ctrl+F5)\n✓ Vérifiez que paiement est bien confirmé (email confirmation)\n✓ Pour virement : délai traitement manuel 24-48h\n✓ Vérifiez 'Mes templates' ou 'Templates achetés'\n\nDepuis combien de temps achat ? Mode paiement (carte immédiat, virement 24-48h) ?",
+      "actions": [
+        "refresh_my_templates",
+        "check_payment_confirmation"
+      ],
+      "success_indicator": "Template disponible à installer",
+      "time_estimate": "Carte : immédiat, Virement : 24-48h",
+      "step_id": "SOLVE_04_APR_S_ACHAT_INSTAL_CBBA55"
+    },
+    {
+      "kind": "solve",
+      "response": "Installer un template :\n• 'Mes templates' → cliquez 'Installer' sur template choisi\n• Confirmation installation\n• Le templateService.ts applique le template → structure/design changent\n• Vous devez réorganiser sections/widgets dans le Builder si besoin :\n  - Ouvrir le Builder → PageContentBuilder\n  - Vérifier chaque section : certaines peuvent être incompatibles\n  - Ajouter les sections manquantes (header, footer) via AddSectionDrawer\n  - Reconfigurer le menu via MenuEditor (Sidebar → Navigation)\n  - Revoir les couleurs/typo via ThemeConfig (Sidebar → Style/Thème)\n  - Republier les changements\n\n⚠️ Conseil : activer le mode maintenance pendant la transition.\n\nTemplate installé mais site casse ou mal affiché ?",
+      "actions": [
+        "install_template",
+        "reorganize_sections",
+        "open_menu_editor",
+        "open_theme_config",
+        "toggle_maintenance"
+      ],
+      "success_indicator": "Template appliqué, site fonctionne",
+      "step_id": "SOLVE_05_INSTALLER_UN_TEMPL_092D1E"
+    },
+    {
+      "kind": "solve",
+      "response": "Site casse après changement template :\n⚠️ URGENT - Problème affichage post-installation\n\n✓ Actions immédiates :\n  - Ouvrez éditeur contenu (/content-management)\n  - Réorganisez sections/widgets selon nouveau template\n  - Retirez sections incompatibles\n  - Ajoutez sections manquantes (header, footer...)\n  - Republiez\n\n✓ Si ça ne suffit pas :\n  - Revenez à l'ancien template temporairement\n  - Ou choisissez un template plus proche de l'ancien\n\n✓ Préventif futur :\n  - Testez template sur page test d'abord\n  - Sauvegardez config pages avant changement\n\nQuelle page/section casse ? Tout le site ou juste Accueil ?",
+      "actions": [
+        "reorganize_content_after_template",
+        "rollback_template",
+        "fix_broken_sections"
+      ],
+      "success_indicator": "Site fonctionne avec nouveau template",
+      "escalation_criteria": "Site cassé même après réorganisation sections + retour ancien template",
+      "step_id": "SOLVE_06_SITE_CASSE_APR_S_C_F2F4A8"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_07_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Paiement effectué mais template jamais disponible après 48h, ou site reste cassé après tous essais réorganisation/rollback",
+      "required_info": [
+        "Template acheté (nom)",
+        "Capture paiement/confirmation",
+        "Capture erreur site",
+        "Navigateur",
+        "Depuis combien temps achat",
+        "Mode paiement"
+      ],
+      "step_id": "ESCALATE_08_ESCALATE_1A85BA",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Paiement effectué mais template jamais disponible après 48h, ou site reste cassé après tous essais réorganisation/rollback",
+        "repro_steps": [],
+        "evidence": [
+          "Template acheté (nom)",
+          "Capture paiement/confirmation",
+          "Capture erreur site",
+          "Navigateur",
+          "Depuis combien temps achat",
+          "Mode paiement"
+        ],
+        "suspected_component": "builder",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/templates - Galerie gratuits/payants, achat/installation depuis back-office"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Le site casse après changement de template",
+      "cause": "Widgets/sections spécifiques au template précédent",
+      "solution": "Réorganiser les sections depuis l'éditeur, retirer celles incompatibles, republier. Si persistant : revenir à l'ancien template"
+    },
+    {
+      "symptom": "Le bouton Aperçu ne charge rien",
+      "cause": "Pop-ups bloquées par le navigateur",
+      "solution": "Autoriser les pop-ups pour dash.tiktak.space, Ctrl+F5"
+    },
+    {
+      "symptom": "Paiement template refusé",
+      "cause": "Carte non acceptée, 3DS échoué ou solde insuffisant",
+      "solution": "Essayer autre carte, vérifier 3DS, ou utiliser virement bancaire"
+    },
+    {
+      "symptom": "Template non disponible après achat par carte",
+      "cause": "Délai de traitement ou cache",
+      "solution": "Recharger page, vérifier 'Mes templates' ou espace client"
+    },
+    {
+      "symptom": "Template non disponible après virement",
+      "cause": "Confirmation manuelle requise",
+      "solution": "Attendre 24-48h pour confirmation manuelle du virement"
+    },
+    {
+      "symptom": "Pages cassées après installation (sections manquantes)",
+      "cause": "Sections incompatibles avec le nouveau template",
+      "solution": "Éditer chaque page, ajouter les sections manquantes (header, footer), supprimer les incompatibles"
+    },
+    {
+      "symptom": "Le prix affiché ne correspond pas au total",
+      "cause": "TVA/taxes selon configuration",
+      "solution": "Vérifier le récapitulatif dans la modale avant paiement"
+    }
+  ],
+  "best_practices": [
+    "Prévisualisez TOUJOURS avant achat",
+    "Testez template sur page test si possible",
+    "Sauvegardez config contenu avant changement",
+    "Templates proches = transition facile",
+    "Virement = 24-48h délai"
+  ],
+  "canonical_scope": "builder",
+  "required_fields": [
+    {
+      "key": "page_or_section",
+      "question": "Quelle page/section (home, produit, panier, etc.) ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu’est-ce qui ne marche pas (affichage, publication, template, menu) ?"
+    },
+    {
+      "key": "url",
+      "question": "Avez-vous un lien ou capture ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

@@ -1,0 +1,5952 @@
+[
+  {
+    "ticket_id": 4182,
+    "subject": "Autre",
+    "ticket_type": "Critical",
+    "company": "Ste Menzberg",
+    "user_message": "Bonjour\r\n\r\nNous rencontrons un problème de performance sur notre site web lorsqu’il est visité via les publicité Facebook. En effet, nous avons constaté que le temps de chargement est parfois très lon",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident",
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 631
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 16.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour\r\n\r\nNous rencontrons un problème de performance sur notre site web lorsqu’il est visité via les publicité Facebook. En effet, nous avons constaté que le temps de chargement est parfois très lon",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident', 'bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Et si ça persiste après ces étapes, quelle est la suite?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5087,
+    "subject": "Commande",
+    "ticket_type": "Problem",
+    "company": "Baya Phone",
+    "user_message": "Bonjour l’équipe,\r\nConcernant la recherche des informations clients déjà saisies lors de précédentes commandes, nous avons constaté un problème. En effet, pour plusieurs commandes traitées par le pass",
+    "gold": {
+      "expected_modules": [
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 486
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour l’équipe,\r\nConcernant la recherche des informations clients déjà saisies lors de précédentes commandes, nous avons constaté un problème. En effet, pour plusieurs commandes traitées par le pass",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1505,
+    "subject": "Intégration d'un livreur",
+    "ticket_type": "Problem",
+    "company": "shop square",
+    "user_message": "il a un problème d'affichage de bordereau colis chez collicom quand le texte est un peu long \r\nexemple en pièce joint",
+    "gold": {
+      "expected_modules": [
+        "orders",
+        "shipping"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 136
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "il a un problème d'affichage de bordereau colis chez collicom quand le texte est un peu long \r\nexemple en pièce joint",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders', 'shipping']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3425,
+    "subject": "Navigation",
+    "ticket_type": "Question",
+    "company": null,
+    "user_message": "comment faire une remboursement 9.900",
+    "gold": {
+      "expected_modules": [
+        "orders",
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 51
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "comment faire une remboursement 9.900",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders', 'builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Je suis dans le dashboard mais je ne trouve pas cette option",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4259,
+    "subject": "Commande",
+    "ticket_type": "Problem",
+    "company": "Dar el Falleh",
+    "user_message": "Bonjour,\r\nJe souhaite signaler un problème concernant la non-conformité entre les commandes affichées sur la plateforme et celles envoyées par e-mail. \r\n\r\nMerci de bien vouloir vérifier et corriger ce",
+    "gold": {
+      "expected_modules": [
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 335
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour,\r\nJe souhaite signaler un problème concernant la non-conformité entre les commandes affichées sur la plateforme et celles envoyées par e-mail. \r\n\r\nMerci de bien vouloir vérifier et corriger ce",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Et si ça persiste après ces étapes, quelle est la suite?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2652,
+    "subject": "Page d'accueil",
+    "ticket_type": "Question",
+    "company": "GOTECH",
+    "user_message": "Bonjour , \r\nest ce que possible de m'aider comment fragmenter le Navigation Header de notre site web comme la photo dans la pièce jointe svp !!",
+    "gold": {
+      "expected_modules": [
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 163
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour , \r\nest ce que possible de m'aider comment fragmenter le Navigation Header de notre site web comme la photo dans la pièce jointe svp !!",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "D'accord, mais comment je fais exactement la première étape?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 713,
+    "subject": "Page d'accueil",
+    "ticket_type": "Problem",
+    "company": "Bala Streetwear",
+    "user_message": "la baniere doit avoir un bouton qui nous mene a la page choisis , sans bouton il ne seras pas clair pour le client qu'on peut y clicker",
+    "gold": {
+      "expected_modules": [
+        "customers",
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 146
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "la baniere doit avoir un bouton qui nous mene a la page choisis , sans bouton il ne seras pas clair pour le client qu'on peut y clicker",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['customers', 'builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Et si ça persiste après ces étapes, quelle est la suite?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5067,
+    "subject": "Commande",
+    "ticket_type": "Problem",
+    "company": "OASIS",
+    "user_message": "1 - Le mail que nous recevons pour nous annoncer une commande ne mentionne pas la taille\r\nIl y a quantité - Ref - prix mais pas de taille\r\n2 - On ne reçoit qu'un seul mail alors que nous avons mis un ",
+    "gold": {
+      "expected_modules": [
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 233
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "1 - Le mail que nous recevons pour nous annoncer une commande ne mentionne pas la taille\r\nIl y a quantité - Ref - prix mais pas de taille\r\n2 - On ne reçoit qu'un seul mail alors que nous avons mis un ",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3209,
+    "subject": "Landing page",
+    "ticket_type": "Critical",
+    "company": "HerGlow Cosmetics",
+    "user_message": "Le site web ne s'affiche pas",
+    "gold": {
+      "expected_modules": [
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident",
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "critical",
+        "high"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 54
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Le site web ne s'affiche pas",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['incident', 'bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Je suis dans le dashboard mais je ne trouve pas cette option",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4328,
+    "subject": "Landing page",
+    "ticket_type": "Problem",
+    "company": "Lighty",
+    "user_message": "Bonsoir\r\nj'ai trouve mon site n'est pas activé !!",
+    "gold": {
+      "expected_modules": [
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 75
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonsoir\r\nj'ai trouve mon site n'est pas activé !!",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "D'accord, mais comment je fais exactement la première étape?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1455,
+    "subject": "Autre",
+    "ticket_type": "Question",
+    "company": "Côté lina",
+    "user_message": "Bonjour \r\nSvp j ai un nom de domaine de la part d ooredoo host je veux le lier avec boutique tiktak\r\nSvp je veux savoir esque je peux le faire ou vous accepter seulement les noms de domaine de la part",
+    "gold": {
+      "expected_modules": [
+        "settings"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 247
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour \r\nSvp j ai un nom de domaine de la part d ooredoo host je veux le lier avec boutique tiktak\r\nSvp je veux savoir esque je peux le faire ou vous accepter seulement les noms de domaine de la part",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['settings']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "D'accord, mais comment je fais exactement la première étape?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4294,
+    "subject": "Page produits",
+    "ticket_type": "Blocking",
+    "company": "Hammami Mall",
+    "user_message": "https://hammami-mall.tn/product/71989/%C3%A9lectrom%C3%A9nager-tn/66465/discover-purificateur-d'air---diffuseur-de-parfum-%C3%A9lectrique--blanc/\r\nhttps://hammami-mall.tn/product/12463/category-3/1608",
+    "gold": {
+      "expected_modules": [
+        "products"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug",
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high",
+        "critical",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 339
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "https://hammami-mall.tn/product/71989/%C3%A9lectrom%C3%A9nager-tn/66465/discover-purificateur-d'air---diffuseur-de-parfum-%C3%A9lectrique--blanc/\r\nhttps://hammami-mall.tn/product/12463/category-3/1608",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['products']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug', 'incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "D'accord, mais comment je fais exactement la première étape?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3459,
+    "subject": "Website builder",
+    "ticket_type": "Question",
+    "company": "Tunifly",
+    "user_message": "je veux utiliser la template  Timevo",
+    "gold": {
+      "expected_modules": [
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 45
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 20.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "je veux utiliser la template  Timevo",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "D'accord, mais comment je fais exactement la première étape?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3182,
+    "subject": "Navigation",
+    "ticket_type": "Problem",
+    "company": "easy daily",
+    "user_message": "Bonjour\r\nJe rencontre un problème avec ma boutique en ligne concernant l’affichage des produits dans la catégorie “Promo”. Voici les étapes que j’ai suivies :\r\n\r\n\t1.\tJ’ai créé une nouvelle catégorie “",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "critical"
+      ],
+      "governance_tag": "http_5xx",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 1006
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour\r\nJe rencontre un problème avec ma boutique en ligne concernant l’affichage des produits dans la catégorie “Promo”. Voici les étapes que j’ai suivies :\r\n\r\n\t1.\tJ’ai créé une nouvelle catégorie “",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [http_5xx] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "http_5xx",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Et si ça persiste après ces étapes, quelle est la suite?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4287,
+    "subject": "Page d'accueil",
+    "ticket_type": "Blocking",
+    "company": "Palmares Collection",
+    "user_message": "Bonjour , le site web est bloqué .https://palmarescollection.com/blocked",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug",
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 84
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour , le site web est bloqué .https://palmarescollection.com/blocked",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug', 'incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Je suis dans le dashboard mais je ne trouve pas cette option",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1631,
+    "subject": "Autre",
+    "ticket_type": "Problem",
+    "company": "Facile.tn",
+    "user_message": "Bonjour, je souhaite que vous avez bien. voici quelques probleme que j'ai trouver au cours de concepter mon boutique :\r\n\r\n     1- le video insérer dans la page produit ne fonctionne pas.\r\n     2- le v",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "critical"
+      ],
+      "governance_tag": "http_5xx",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 1867
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour, je souhaite que vous avez bien. voici quelques probleme que j'ai trouver au cours de concepter mon boutique :\r\n\r\n     1- le video insérer dans la page produit ne fonctionne pas.\r\n     2- le v",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [http_5xx] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "http_5xx",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1771,
+    "subject": "Landing page",
+    "ticket_type": "Problem",
+    "company": "Thetunisiashop",
+    "user_message": "bllhy khouya site ki zedet domaine maadch yheb yet7al ki nenzel visualiser wki nekteb domaine fi google yet7alch",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 131
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salam",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "bllhy khouya site ki zedet domaine maadch yheb yet7al ki nenzel visualiser wki nekteb domaine fi google yet7alch",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4871,
+    "subject": "Website builder",
+    "ticket_type": "Problem",
+    "company": "MEGA MART",
+    "user_message": "le site ne marche pas",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 38
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Hello",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "le site ne marche pas",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1206,
+    "subject": "Checkout",
+    "ticket_type": "Problem",
+    "company": "Motif bijoux personnalisés",
+    "user_message": "Bonjour  pourquoi la traduction due la boutique ne marche  pas en arabe",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 98
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonsoir",
+        "ok": true,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour  pourquoi la traduction due la boutique ne marche  pas en arabe",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "Je suis dans le dashboard mais je ne trouve pas cette option",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2552,
+    "subject": "Navigation",
+    "ticket_type": "Problem",
+    "company": "Yaloumart",
+    "user_message": "Bonjour \r\nSuite à une faute  technique mon site ne fonctionne plus \r\nmerci",
+    "gold": {
+      "expected_modules": [
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "emotion",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 116
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 21.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour \r\nSuite à une faute  technique mon site ne fonctionne plus \r\nmerci",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['builder']",
+          "Not actionable: Empty answer",
+          "Governance [emotion] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "emotion",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "D'accord, mais comment je fais exactement la première étape?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2281,
+    "subject": "Checkout",
+    "ticket_type": "Question",
+    "company": "LAYDEZ",
+    "user_message": "Bonjour\r\nJ'aimerais savoir comment afficher le prix de livraison à chachout et aussi après avoir passé la commande.(sur le message \r\nParfois ça apparaît et parfois non, je ne sais pas pourquoi.",
+    "gold": {
+      "expected_modules": [
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 202
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour\r\nJ'aimerais savoir comment afficher le prix de livraison à chachout et aussi après avoir passé la commande.(sur le message \r\nParfois ça apparaît et parfois non, je ne sais pas pourquoi.",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3659,
+    "subject": "Page d'accueil",
+    "ticket_type": "Problem",
+    "company": "Ideal brod",
+    "user_message": "Bonjour j ai un problème sur page d accueille  tetela3li Kima waritek f pieces jointe et svp nom de domain j ai acheter aparament mouche sécurises",
+    "gold": {
+      "expected_modules": [
+        "builder"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 154
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour j ai un problème sur page d accueille  tetela3li Kima waritek f pieces jointe et svp nom de domain j ai acheter aparament mouche sécurises",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['builder']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3031,
+    "subject": "Autre",
+    "ticket_type": "Problem",
+    "company": "HefHef.home",
+    "user_message": "je vais acheter un nom de domaine de  Oxahost  il m'annonce que mon domaine est activé . mais je le  trouve  pas!!!! comment sera il  activé.?",
+    "gold": {
+      "expected_modules": [
+        "settings"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 157
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "je vais acheter un nom de domaine de  Oxahost  il m'annonce que mon domaine est activé . mais je le  trouve  pas!!!! comment sera il  activé.?",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['settings']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1715,
+    "subject": "Autre",
+    "ticket_type": "Problem",
+    "company": "Sirop.tn",
+    "user_message": "Asslema brabi site mta3i http w not secure kima f secreenshot",
+    "gold": {
+      "expected_modules": [
+        "settings"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 79
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Asslema brabi site mta3i http w not secure kima f secreenshot",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['settings']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5719,
+    "subject": "Paramétrages",
+    "ticket_type": "Problem",
+    "company": "GOTECH",
+    "user_message": "Bonjour,\r\nj'ai un problème dans la connexion api conversion et j'ai un message d'erreur dans le meta facebook (le taux de couverture des évènements de 0 % à 75 %) \r\nles évènement conversion mouch 9a3d",
+    "gold": {
+      "expected_modules": [
+        "apps",
+        "settings"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 486
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour,\r\nj'ai un problème dans la connexion api conversion et j'ai un message d'erreur dans le meta facebook (le taux de couverture des évènements de 0 % à 75 %) \r\nles évènement conversion mouch 9a3d",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['apps', 'settings']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3647,
+    "subject": "Applications",
+    "ticket_type": "Question",
+    "company": "Tunisien Store",
+    "user_message": "salut \r\nJe veux s'avoir si vous avez un module d'email marketing efficace pour la fidélisation de mes clients et l'augmentation des conversions.",
+    "gold": {
+      "expected_modules": [
+        "apps"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 160
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "salut \r\nJe veux s'avoir si vous avez un module d'email marketing efficace pour la fidélisation de mes clients et l'augmentation des conversions.",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['apps']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5686,
+    "subject": "Page produits",
+    "ticket_type": "Problem",
+    "company": "Vytalabs",
+    "user_message": "fel resumé mtaa commande mafamech el remise",
+    "gold": {
+      "expected_modules": [
+        "orders",
+        "products"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 69
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "fel resumé mtaa commande mafamech el remise",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders', 'products']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4983,
+    "subject": "Produits",
+    "ticket_type": "Problem",
+    "company": "Oppa Store",
+    "user_message": "Le stock sur Tiktak PRO est compétemnt différent de celui dans SHIPPER même aprés actualiser la connection",
+    "gold": {
+      "expected_modules": [
+        "inventory",
+        "products"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 137
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Le stock sur Tiktak PRO est compétemnt différent de celui dans SHIPPER même aprés actualiser la connection",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['inventory', 'products']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 3564,
+    "subject": "Commande",
+    "ticket_type": "Question",
+    "company": "Coin Joyeux",
+    "user_message": "Bonjour,\r\nPour les commandes de teste, je vois qu'il n'y a pas moyen de les supprimer à travers l'interface graphique.\r\nDans ce sas, il suffit de changer le statut à  \"annulé\" tout en précisant la rai",
+    "gold": {
+      "expected_modules": [
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 551
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour,\r\nPour les commandes de teste, je vois qu'il n'y a pas moyen de les supprimer à travers l'interface graphique.\r\nDans ce sas, il suffit de changer le statut à  \"annulé\" tout en précisant la rai",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1195,
+    "subject": "Checkout",
+    "ticket_type": "Blocking",
+    "company": "Hentati Business Associates (HBA)",
+    "user_message": "Bonjour,\r\nJ'ai créé un compte sur Konnect et j'ai fais la configuration du wallet ID et de la clé coté Titak Pro.\r\nSachant que j'ai paramètre le boutique pour accepter que les paiements en ligne, le s",
+    "gold": {
+      "expected_modules": [
+        "payments",
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug",
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high",
+        "critical",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 535
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour,\r\nJ'ai créé un compte sur Konnect et j'ai fais la configuration du wallet ID et de la clé coté Titak Pro.\r\nSachant que j'ai paramètre le boutique pour accepter que les paiements en ligne, le s",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['payments', 'orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug', 'incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2048,
+    "subject": "Paiement en ligne",
+    "ticket_type": "Problem",
+    "company": "OVIVASTORE",
+    "user_message": "Bonjour, Manajemtech naamel activation lel compte ki nenzel ala el bouton\"payer en ligne\" no93ed f nafs el page ( 9a3ed njareb b telifoun)",
+    "gold": {
+      "expected_modules": [
+        "payments"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 159
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour, Manajemtech naamel activation lel compte ki nenzel ala el bouton\"payer en ligne\" no93ed f nafs el page ( 9a3ed njareb b telifoun)",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['payments']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2876,
+    "subject": "Vente",
+    "ticket_type": "Problem",
+    "company": "Articles de maison",
+    "user_message": "Bonjour \r\nDans l'article étagère de rangement ( 15619 ) les 5 articles a 62dt la cliente. Apasser la commande a 49dt\r\nNum de commande : 2005\r\n\r\nAussi la commande num: 2017\r\n les 4 a 47.600 mais dans l",
+    "gold": {
+      "expected_modules": [
+        "orders"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 237
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour \r\nDans l'article étagère de rangement ( 15619 ) les 5 articles a 62dt la cliente. Apasser la commande a 49dt\r\nNum de commande : 2005\r\n\r\nAussi la commande num: 2017\r\n les 4 a 47.600 mais dans l",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 899,
+    "subject": "Intégration d'un livreur",
+    "ticket_type": "Problem",
+    "company": "so tunopt",
+    "user_message": "probleme d'impression de bordereau",
+    "gold": {
+      "expected_modules": [
+        "orders",
+        "shipping"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 69
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "probleme d'impression de bordereau",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders', 'shipping']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5421,
+    "subject": "Autre",
+    "ticket_type": "Blocking",
+    "company": "Veranda",
+    "user_message": "Bonjour,\r\nAprès l’achat de mon nom de domaine, mon site est bloqué : je ne peux plus y accéder et aucune modification n’est enregistrée.\r\nMerci de m’indiquer comment résoudre ce problème.\r\nVous trouve",
+    "gold": {
+      "expected_modules": [
+        "settings"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug",
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high",
+        "critical",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 269
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour,\r\nAprès l’achat de mon nom de domaine, mon site est bloqué : je ne peux plus y accéder et aucune modification n’est enregistrée.\r\nMerci de m’indiquer comment résoudre ce problème.\r\nVous trouve",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['settings']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug', 'incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4635,
+    "subject": "Paramétrages",
+    "ticket_type": "Question",
+    "company": "l'intense",
+    "user_message": "Bonjour ,\r\nJe me permets de vous contacter concernant une situation concernant mon compte client. En effet, j’ai constaté qu’un nouveau paiement m’est demandé pour l’activation de mon compte, alors qu",
+    "gold": {
+      "expected_modules": [
+        "customers",
+        "settings"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "question"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "low",
+        "medium"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 590
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour ,\r\nJe me permets de vous contacter concernant une situation concernant mon compte client. En effet, j’ai constaté qu’un nouveau paiement m’est demandé pour l’activation de mon compte, alors qu",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['customers', 'settings']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['question']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 59,
+    "subject": "Applications",
+    "ticket_type": "Problem",
+    "company": "DomicileShop",
+    "user_message": "Aslema khalit Loom about a missing Initiate checkout event fel facebook, w kifech ninstalli conversion API \r\nhttps://www.loom.com/share/bcf25fe3adfa49deac21969f8758e77b",
+    "gold": {
+      "expected_modules": [
+        "orders",
+        "apps"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "darija",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 176
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Aslema khalit Loom about a missing Initiate checkout event fel facebook, w kifech ninstalli conversion API \r\nhttps://www.loom.com/share/bcf25fe3adfa49deac21969f8758e77b",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['orders', 'apps']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'darija'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2751,
+    "subject": "Page produits",
+    "ticket_type": "Problem",
+    "company": "GreenHerb TN",
+    "user_message": "le produit et afficher sur le site mais ki nhel page produit je trouve rien !!! même amlt un autre produit et rien",
+    "gold": {
+      "expected_modules": [
+        "products"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 135
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "le produit et afficher sur le site mais ki nhel page produit je trouve rien !!! même amlt un autre produit et rien",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['products']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5956,
+    "subject": "Produits",
+    "ticket_type": "Problem",
+    "company": "B&B shop",
+    "user_message": "Quand j'ajoute une photo de LP dans la partie description n'est pas ajouter j'ai changer l'appareil encore le meme produit j'acctualiser pas mal de fois même Probleme",
+    "gold": {
+      "expected_modules": [
+        "products"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 191
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 23.8,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": false,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": false,
+        "live": true,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Quand j'ajoute une photo de LP dans la partie description n'est pas ajouter j'ai changer l'appareil encore le meme produit j'acctualiser pas mal de fois même Probleme",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['products']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4482,
+    "subject": "Website builder",
+    "ticket_type": "Blocking",
+    "company": "SOCIÉTÉ INZO Textile",
+    "user_message": "Le site ne s'ouvre pas.\r\nPrière de résoudre le problème en urgence, ça fait arrêter les ventes, par conséquence le travail.\r\nNous comptons sur votre rapidité.\r\nMerci.\r\nCordialement \r\nANOUAR CHEBIL \r\nM",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug",
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 225
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Hello",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Le site ne s'ouvre pas.\r\nPrière de résoudre le problème en urgence, ça fait arrêter les ventes, par conséquence le travail.\r\nNous comptons sur votre rapidité.\r\nMerci.\r\nCordialement \r\nANOUAR CHEBIL \r\nM",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug', 'incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 4168,
+    "subject": "Checkout",
+    "ticket_type": "Critical",
+    "company": "مكتبة 14 جانفي قابس",
+    "user_message": "Bonjour, \r\nLe champ \"Délégation\" ne s'affiche pas dans le formulaire de checkout, bien qu'il soit activé dans les paramètres du tableau de bord. De plus, la limitation de caractères dans le champ \"Tél",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident",
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 426
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour, j'ai besoin d'aide",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour, \r\nLe champ \"Délégation\" ne s'affiche pas dans le formulaire de checkout, bien qu'il soit activé dans les paramètres du tableau de bord. De plus, la limitation de caractères dans le champ \"Tél",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident', 'bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1648,
+    "subject": "Website builder",
+    "ticket_type": "Blocking",
+    "company": null,
+    "user_message": "Bonsoir, c’est suite a l’ajout de mon nom de domaine de chez OVH cloud pouvez vous me renseigner s’il y a un probleme de liaison avec la boutique sur tiktakpro? En rentrant min nom de domaine sur le n",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "critical"
+      ],
+      "governance_tag": "http_5xx",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 287
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salut, j'ai un problème",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonsoir, c’est suite a l’ajout de mon nom de domaine de chez OVH cloud pouvez vous me renseigner s’il y a un probleme de liaison avec la boutique sur tiktakpro? En rentrant min nom de domaine sur le n",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [http_5xx] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "http_5xx",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2806,
+    "subject": "Paramétrages",
+    "ticket_type": "Problem",
+    "company": "DRIRA INDUSTRIAL EQUIPMENT",
+    "user_message": "Bonjour,\r\n\r\nMerci pour votre réponse concernant les tickets et les questions que j'ai soulevés. Je souhaite signaler plusieurs fautes de votre part, par exemple \"sitemap\". Nous avons ouvert plus de 5 ",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 2311
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonsoir",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour,\r\n\r\nMerci pour votre réponse concernant les tickets et les questions que j'ai soulevés. Je souhaite signaler plusieurs fautes de votre part, par exemple \"sitemap\". Nous avons ouvert plus de 5 ",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2963,
+    "subject": "Navigation",
+    "ticket_type": "Demande",
+    "company": null,
+    "user_message": "Hello,\r\nCould you please check the status of my website \"peeka.tn\" , I am anable to navigate correctly to my homepage, it shows \r\n\"\" 502 Bad Gateway nginx/1.18.0 (Ubuntu)\"\"\r\nKnowing that i already ask",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident"
+      ],
+      "expected_language": "en",
+      "expected_severities": [
+        "critical"
+      ],
+      "governance_tag": "http_5xx",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 351
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Hello,\r\nCould you please check the status of my website \"peeka.tn\" , I am anable to navigate correctly to my homepage, it shows \r\n\"\" 502 Bad Gateway nginx/1.18.0 (Ubuntu)\"\"\r\nKnowing that i already ask",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [http_5xx] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident']",
+          "Language '' != expected 'en'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "http_5xx",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1534,
+    "subject": "Autre",
+    "ticket_type": "Problem",
+    "company": "InnO",
+    "user_message": "Lien embed youtube ne fonctionne pas. Je l'ai utilisé sur la page upcycling.",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 91
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonsoir",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Lien embed youtube ne fonctionne pas. Je l'ai utilisé sur la page upcycling.",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5947,
+    "subject": "Page d'accueil",
+    "ticket_type": "Blocking",
+    "company": "Tej+",
+    "user_message": "Je peux pas accéder a ma boutique \r\nNi modifier ni accéder ni rien \r\n502 bad gateway",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "critical"
+      ],
+      "governance_tag": "http_5xx",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 107
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salem",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Je peux pas accéder a ma boutique \r\nNi modifier ni accéder ni rien \r\n502 bad gateway",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [http_5xx] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "http_5xx",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2286,
+    "subject": "Autre",
+    "ticket_type": "Blocking",
+    "company": "Takalidna",
+    "user_message": "pourquoi le site web ne fonctionne pas",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug",
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 68
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Hello",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "pourquoi le site web ne fonctionne pas",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug', 'incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5794,
+    "subject": "Page d'accueil",
+    "ticket_type": "Critical",
+    "company": "Mypetshop",
+    "user_message": "Objet : Urgence – Erreur 502 Bad Gateway sur mon site mypetttshop.com\r\n\r\nBonjour,\r\n\r\nJe rencontre actuellement une erreur \"502 Bad Gateway\" lorsque j’essaie d’accéder à mon site https://mypetttshop.co",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "incident"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "critical"
+      ],
+      "governance_tag": "http_5xx",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 800
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonsoir",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Objet : Urgence – Erreur 502 Bad Gateway sur mon site mypetttshop.com\r\n\r\nBonjour,\r\n\r\nJe rencontre actuellement une erreur \"502 Bad Gateway\" lorsque j’essaie d’accéder à mon site https://mypetttshop.co",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [http_5xx] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['incident']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "http_5xx",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 1111,
+    "subject": "Navigation",
+    "ticket_type": "Problem",
+    "company": "Le biscuit",
+    "user_message": "Bonjour, \r\nj'arrive pas à accéder au site ainsi que les personnes qui veulent passer des commandes. \r\nci-dessous le message qui s'affiche: \r\n\r\nVotre connexion n'est pas privée\r\nDes individus malveilla",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 435
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Salam alaykom",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "Bonjour, \r\nj'arrive pas à accéder au site ainsi que les personnes qui veulent passer des commandes. \r\nci-dessous le message qui s'affiche: \r\n\r\nVotre connexion n'est pas privée\r\nDes individus malveilla",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 2916,
+    "subject": "Page produits",
+    "ticket_type": "Problem",
+    "company": "Mezyana Bio",
+    "user_message": "le lien du produit \" Fibres Capillaires Noir 22g \" ne fonctionne pas",
+    "gold": {
+      "expected_modules": [
+        "technical"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "tiktak_side"
+      ],
+      "must_escalate": true,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "high"
+      ],
+      "governance_tag": "site_down",
+      "is_governed": true,
+      "is_false_positive": false,
+      "desc_length": 105
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": false,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 24.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": null,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Bonjour",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "le lien du produit \" Fibres Capillaires Noir 22g \" ne fonctionne pas",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": false,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['tiktak_side']",
+          "Category ''→'general' WRONG, expected ['technical']",
+          "Not actionable: Empty answer",
+          "Governance [site_down] requires escalate=True + verdict=tiktak_side, got escalate=False verdict=''",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "site_down",
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  },
+  {
+    "ticket_id": 5906,
+    "subject": "Attributs",
+    "ticket_type": "Problem",
+    "company": "Patisserie Aicha",
+    "user_message": "1kg - 1KG\r\n500g - 500G \r\n1* ???????",
+    "gold": {
+      "expected_modules": [
+        "products"
+      ],
+      "accept_any_module": false,
+      "expected_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "must_escalate": null,
+      "must_not_escalate": false,
+      "expected_ticket_types": [
+        "bug"
+      ],
+      "expected_language": "fr",
+      "expected_severities": [
+        "medium",
+        "high",
+        "low"
+      ],
+      "governance_tag": "none",
+      "is_governed": false,
+      "is_false_positive": false,
+      "desc_length": 51
+    },
+    "gates": {
+      "A_verdict": false,
+      "B_module": false,
+      "C_no_hallucination": true,
+      "D_actionable": false,
+      "E_governance": null,
+      "F_ticket_type": false,
+      "G_next_question": null,
+      "H_escalate_consistent": true,
+      "I_language": false,
+      "passed_core": 1,
+      "total_core": 4
+    },
+    "detected": {
+      "verdict": "",
+      "category": "",
+      "language": "",
+      "ticket_type": "",
+      "sentiment": "",
+      "severity": "",
+      "escalate": null,
+      "confidence": 0.0
+    },
+    "resolved": false,
+    "weighted_score": 25.0,
+    "confidence_correct": false,
+    "severity_match": false,
+    "greeting_ok": true,
+    "followup_context_kept": false,
+    "route_link_valid": false,
+    "hallucinations": [],
+    "processing_time_ms": 0,
+    "gate_d_reason": "Empty answer",
+    "phases": [
+      {
+        "phase": "greeting",
+        "user_msg": "Hello",
+        "ok": true,
+        "live": false,
+        "ai_answer": "Salut 👋 Je suis ton assistant TikTak PRO. Décris-moi ton problème et je t'aide à le résoudre ! Si tu as un message d'erreur ou une URL, partage-les pour un diagnostic plus rapide."
+      },
+      {
+        "phase": "problem",
+        "user_msg": "1kg - 1KG\r\n500g - 500G \r\n1* ???????",
+        "gates": {
+          "gate_a_verdict": false,
+          "gate_b_module": false,
+          "gate_c_no_halluc": true,
+          "gate_d_actionable": false,
+          "gate_d_reason": "Empty answer",
+          "gate_e_governance": null,
+          "gate_f_ticket_type": false,
+          "gate_g_next_question": null,
+          "gate_h_escalate_consistent": true,
+          "gate_i_language": false
+        },
+        "gate_d_reason": "Empty answer",
+        "issues": [
+          "Verdict '' (mode='') not in expected ['user_side', 'unclear']",
+          "Category ''→'general' WRONG, expected ['products']",
+          "Not actionable: Empty answer",
+          "ticket_type '' not in expected ['bug']",
+          "Language '' != expected 'fr'"
+        ],
+        "category": "",
+        "verdict": "",
+        "mode": "",
+        "confidence": 0.0,
+        "escalate": null,
+        "ticket_type": "",
+        "gov_tag": "none",
+        "ai_answer": ""
+      },
+      {
+        "phase": "followup",
+        "user_msg": "J'ai essayé mais ça ne marche toujours pas, que faire?",
+        "context_kept": false,
+        "ai_answer": ""
+      }
+    ],
+    "errors": [],
+    "phase1_3_metrics": {
+      "phase1_playbook_score": 0.0,
+      "phase2_pattern_matched": false,
+      "phase3_facts_count": 0,
+      "enabled": {
+        "phase1": false,
+        "phase2": false,
+        "phase3": false
+      }
+    }
+  }
+]

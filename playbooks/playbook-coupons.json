@@ -1,0 +1,193 @@
+{
+  "id": "playbook-coupons",
+  "scope": "orders",
+  "title": "Coupons — création / application / restrictions / affiliation",
+  "triggers": [
+    "affiliation",
+    "bon",
+    "code promo",
+    "code répétitif",
+    "code unique",
+    "coupon",
+    "coupon expiré",
+    "coupon invalide",
+    "discount",
+    "promo",
+    "remise automatique",
+    "réduction"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer un coupon (/coupons) :\n• Coupons → 'Nouveau coupon'\n• Renseignez Nom du coupon* et Code* (ou cliquez 'Générer' pour code aléatoire)\n• Définissez Montant de réduction* et Type* (Pourcentage % ou Montant fixe)\n• Choisissez Type de coupon* :\n  - Code unique : usage ciblé, généré aléatoirement\n  - Code répétitif : même code pour plusieurs clients (ex: SUMMER10)\n  - Remise automatique : appliquée quand conditions remplies (sans saisie code)\n• Définissez période validité (dates début/fin) ou 'Toujours actif'\n• Activez options : Coupon actif, Disponible site web, Disponible back-office, Usage unique par client\n• Enregistrez\n\nQuel code promo voulez-vous créer, pour quelles dates et quel type (unique/répétitif/auto) ?",
+      "actions": [
+        "create_coupon"
+      ],
+      "success_indicator": "Coupon créé et visible dans la liste avec statut actif",
+      "common_errors": [
+        "Code déjà utilisé → choisir un code unique",
+        "Montant ou type manquant → champs requis",
+        "Dates incohérentes → date fin avant date début"
+      ],
+      "step_id": "SOLVE_01_CR_ER_UN_COUPON_CO_7FA39A"
+    },
+    {
+      "kind": "solve",
+      "response": "Conditions d'application du coupon :\n• Dans 'Conditions d'application', ajoutez des règles :\n  - Valeur d'achat minimum (ex: ≥ 100 DT)\n  - Catégories spécifiques (ex: Femme, Électronique)\n  - Produits spécifiques\n  - Nombre d'articles minimum\n  - Transporteur spécifique\n  - Nouveau client uniquement\n  - Client existant uniquement\n• Empilez plusieurs conditions (toutes doivent être respectées en même temps)\n• Option 'Tous les produits' : désactivez pour cibler produits/catégories spécifiques\n• Sauvegardez\n\nQuelles conditions voulez-vous appliquer (montant min, catégorie, produit, autre) ?",
+      "actions": [
+        "set_coupon_conditions",
+        "target_products_categories"
+      ],
+      "success_indicator": "Remise appliquée uniquement quand toutes les conditions sont remplies",
+      "step_id": "SOLVE_02_CONDITIONS_D_APPLI_5D2446"
+    },
+    {
+      "kind": "solve",
+      "response": "Coupon ne s'applique pas au panier :\n✓ Vérifiez statut : 'Coupon actif' = Oui, 'Disponible sur le site web' = Oui\n✓ Vérifiez dates (début/fin) → coupon doit être dans la période valide\n✓ Vérifiez conditions d'application :\n  - Montant minimum panier atteint ?\n  - Produits/catégories éligibles dans le panier ?\n  - Usage unique déjà consommé par ce client ?\n✓ Vérifiez que le code est saisi EXACTEMENT (sensible à la casse, pas d'espaces)\n✓ Testez avec un panier conforme aux conditions\n\nQuel message exact s'affiche au checkout ? Le panier remplit-il les conditions (montant, produits) ?",
+      "actions": [
+        "coupon_not_applied",
+        "verify_coupon_conditions",
+        "check_usage_history"
+      ],
+      "success_indicator": "Coupon appliqué et réduction visible dans le panier",
+      "common_reasons": [
+        "Coupon inactif ou expiré",
+        "Conditions non remplies (montant/produits/catégories)",
+        "Usage unique déjà consommé",
+        "Code mal saisi (casse/espaces)"
+      ],
+      "step_id": "SOLVE_03_COUPON_NE_S_APPLIQ_3CB289"
+    },
+    {
+      "kind": "solve",
+      "response": "Coupon 'expiré' ou 'invalide' :\n✓ Confirmez l'orthographe EXACTE du code (majuscules/minuscules/tirets)\n✓ Vérifiez la timezone et date de fin (peut expirer à minuit selon fuseau horaire)\n✓ Vérifiez que la période de validité est correcte\n✓ Désactivez puis réactivez le coupon\n✓ Étendez la date de fin si nécessaire\n✓ Testez en back-office d'abord pour isoler le problème\n\nPouvez-vous envoyer une capture des paramètres du coupon (dates, statuts, conditions) ?",
+      "actions": [
+        "coupon_validate",
+        "extend_validity_period",
+        "test_in_backoffice"
+      ],
+      "success_indicator": "Coupon accepté et appliqué correctement",
+      "step_id": "SOLVE_04_COUPON_EXPIR_OU_IN_61B4C4"
+    },
+    {
+      "kind": "solve",
+      "response": "Affiliation & message automatique :\n• Partagez l'URL de votre site avec le code dans le lien : `?coupon=VOTRECODE`\n  Exemple : https://votresite.com?coupon=SUMMER10\n• Configurez le 'Texte d'affichage' dans la fiche coupon (ex: '🌟 Offre -10% sur tous les articles')\n• Activez 'Disponible sur le site web'\n• Le message s'affiche automatiquement quand le visiteur arrive via ce lien\n• La remise se pré-applique si les conditions sont remplies\n• Vérifiez l'affichage sur la boutique\n\nVoulez-vous un code pour affiliation ou un message promo automatique ?",
+      "actions": [
+        "configure_affiliation_link",
+        "set_promo_message",
+        "test_affiliation_display"
+      ],
+      "success_indicator": "Message affiché sur le site quand code présent dans URL, remise pré-appliquée",
+      "step_id": "SOLVE_05_AFFILIATION_MESSAG_A0F03B"
+    },
+    {
+      "kind": "solve",
+      "response": "Gestion et rapports coupons :\n• Recherche par nom ou code\n• Activez/désactivez via le switch dans la liste (sans supprimer)\n• Éditez ✎ pour modifier paramètres\n• Supprimez 🗑️ si plus utilisé\n• Consultez les métriques en haut :\n  - Total coupons\n  - Coupons actifs\n  - Utilisations total\n  - Revenus générés\n• Filtrez par période pour analyser les performances\n\nVoulez-vous voir les performances d'un coupon spécifique ou une analyse globale ?",
+      "actions": [
+        "view_coupon_metrics",
+        "filter_by_period",
+        "analyze_performance"
+      ],
+      "success_indicator": "Métriques à jour et cohérentes avec les ventes",
+      "step_id": "SOLVE_06_GESTION_ET_RAPPORT_3AFDD3"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Coupon actif avec bonnes conditions mais ne s'applique pas après tous les tests, ou incohérence dans les métriques",
+      "required_info": [
+        "Code du coupon",
+        "Capture paramètres complets (dates, conditions, statuts, type)",
+        "Capture erreur au checkout côté client",
+        "URL concernée",
+        "Détails du panier de test (montant, produits)",
+        "Historique d'utilisation si applicable",
+        "Navigateur client"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_21D236",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Coupon actif avec bonnes conditions mais ne s'applique pas après tous les tests, ou incohérence dans les métriques",
+        "repro_steps": [],
+        "evidence": [
+          "Code du coupon",
+          "Capture paramètres complets (dates, conditions, statuts, type)",
+          "Capture erreur au checkout côté client",
+          "URL concernée",
+          "Détails du panier de test (montant, produits)",
+          "Historique d'utilisation si applicable",
+          "Navigateur client"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : code coupon + capture paramètres complets + capture erreur checkout + détails panier test + URL.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_09_POUR_ESCALADER_COD_1FD100",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Coupons — création / application / restrictions / affiliation",
+        "repro_steps": [],
+        "evidence": [
+          "checkout_url",
+          "payment_method",
+          "error_message"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/coupons - Module de gestion des coupons",
+    "Types : Code unique, Code répétitif, Remise automatique",
+    "Conditions : montant, catégories, produits, transporteur, type client",
+    "Affiliation : lien ?coupon=CODE avec message automatique"
+  ],
+  "common_workflows": [
+    "Création code promo standard → définition conditions → activation → partage",
+    "Création remise automatique → conditions panier → activation → clients éligibles reçoivent automatiquement",
+    "Affiliation → création code unique → lien ?coupon=CODE → tracking utilisations → revenus"
+  ],
+  "best_practices": [
+    "Testez TOUJOURS le coupon en back-office avant de le partager",
+    "Utilisez des codes courts et mémorables pour les codes répétitifs",
+    "Définissez des dates de fin pour créer l'urgence",
+    "Utilisez les remises automatiques pour fidéliser (ex: -10% si panier >200 DT)",
+    "Suivez les métriques pour optimiser vos campagnes",
+    "Usage unique par client pour éviter les abus sur les codes généreux"
+  ],
+  "canonical_scope": "checkout",
+  "required_fields": [
+    {
+      "key": "checkout_url",
+      "question": "Quelle est l’URL de checkout ?"
+    },
+    {
+      "key": "payment_method",
+      "question": "Quelle méthode de paiement ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message/code exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

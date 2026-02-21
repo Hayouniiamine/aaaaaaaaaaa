@@ -1,0 +1,210 @@
+{
+  "id": "playbook-order-management",
+  "scope": "orders",
+  "title": "Commandes — gestion / statuts / export / synchro / actions en masse",
+  "triggers": [
+    "actions en lot",
+    "bordereaux",
+    "etiquette",
+    "export commandes",
+    "expédier",
+    "gestion commandes",
+    "imprimer",
+    "livrer",
+    "order management",
+    "statut commande",
+    "synchronisation transporteur",
+    "tracking",
+    "whatsapp"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Concernant les commandes : (1) Filtrage/recherche, (2) Changement statut, (3) Actions en masse (export/impression/sync), (4) Synchronisation transporteur, (5) Tracking/WhatsApp ?",
+      "step_id": "ASK_01_CONCERNANT_LES_COM_C58B5A",
+      "field": "order_id"
+    },
+    {
+      "kind": "solve",
+      "response": "Filtrer et rechercher commandes (/orders) :\n• Barre recherche : client, référence, téléphone\n• Filtres avancés :\n  - Source (web, back-office, POS, etc.)\n  - Statut (En attente, Confirmées, Prêt à expédier, Expédiées, Livrées, Retours, Annulées)\n  - Impression (Oui/Non)\n  - Synchronisation (Oui/Non)\n  - Équipe/Utilisateur\n  - Période (date début/fin)\n  - Transporteur\n  - Gouvernorat/Localisation\n• Compteurs par statut en haut\n• 'Tout effacer' pour réinitialiser\n\nQue cherchez-vous exactement (client, période, statut, transporteur) ?",
+      "actions": [
+        "search_orders",
+        "filter_orders",
+        "clear_filters"
+      ],
+      "success_indicator": "Tableau affiche uniquement les commandes correspondantes",
+      "step_id": "SOLVE_02_FILTRER_ET_RECHERC_1EC35C"
+    },
+    {
+      "kind": "solve",
+      "response": "Changement de statut impossible / transitions :\n✓ Transitions standard par défaut :\n  - En attente → Confirmée ou Annulée\n  - Confirmée → Prêt à expédier ou Annulée\n  - Prêt à expédier → Expédiée ou Annulée\n  - Expédiée → Livrée ou Retour non reçue\n  - Retour non reçue → Retour reçue\n✓ Vérifiez que l'étape cible existe et est active (/settings → Étapes commande)\n✓ Vérifiez vos permissions utilisateur\n✓ Respectez l'ordre logique (pas de passage direct En attente → Expédiée)\n✓ Certains statuts peuvent être personnalisés selon configuration\n\nQuel est le statut actuel et celui voulu ? Quelle erreur s'affiche ?",
+      "actions": [
+        "change_order_status",
+        "verify_transitions",
+        "check_custom_statuses"
+      ],
+      "success_indicator": "Statut changé vers état autorisé",
+      "escalation_criteria": "Transition logique refusée + étapes actives + permissions OK",
+      "step_id": "SOLVE_03_CHANGEMENT_DE_STAT_A2777B"
+    },
+    {
+      "kind": "solve",
+      "response": "Actions en masse (menu 'Actions') :\n✓ Cochez une ou plusieurs commandes\n✓ Menu 'Actions' propose :\n  - Imprimer bons livraison (bordereaux PDF)\n  - Synchroniser transporteur (envoi info au livreur)\n  - Tracker (par sélection) - statut acheminement\n  - Changer livreur (réassigner transporteur)\n  - Annuler synchronisation\n  - Exporter vers Excel\n✓ Suivez messages confirmation\n✓ Pour impression : autorisez pop-ups\n\nQuelle action voulez-vous faire en lot ? Combien de commandes sélectionnées ?",
+      "actions": [
+        "bulk_print",
+        "bulk_sync",
+        "bulk_track",
+        "bulk_export",
+        "change_carrier"
+      ],
+      "success_indicator": "Action appliquée à toutes les commandes sélectionnées",
+      "step_id": "SOLVE_04_ACTIONS_EN_MASSE_M_E7F9F3"
+    },
+    {
+      "kind": "solve",
+      "response": "Export/Impression ne fonctionne pas :\n✓ Autorisez pop-ups pour dash.tiktak.space\n  Chrome/Edge : icône bloqué dans barre → Autoriser\n  Firefox : Préférences → Pop-ups → Exceptions\n✓ Vérifiez gabarit d'impression configuré (/settings)\n✓ Testez navigation privée\n✓ Testez autre navigateur\n✓ Vérifiez que des commandes sont bien sélectionnées\n✓ Vérifiez filtres (n'exportez pas une liste vide)\n\nPop-ups autorisés ? Gabarit d'impression configuré ? Combien de commandes dans la sélection ?",
+      "actions": [
+        "allow_popups",
+        "configure_print_template",
+        "verify_selection"
+      ],
+      "success_indicator": "PDF généré ou Excel téléchargé",
+      "step_id": "SOLVE_05_EXPORT_IMPRESSION__D42229"
+    },
+    {
+      "kind": "solve",
+      "response": "Synchronisation transporteur échoue :\n✓ Vérifications préalables :\n  - Transporteur bien associé à la commande\n  - Intégration configurée (/settings → Transporteurs)\n  - Clé API/token actifs\n  - Adresse client complète (gouvernorat, ville, téléphone)\n  - Poids/dimensions si requis par transporteur\n  - Statut compatible (généralement 'Confirmée' ou 'Prêt à expédier')\n✓ Erreurs fréquentes :\n  - 'Adresse incomplète' → compléter gouvernorat/ville\n  - 'Token invalide' → vérifier clés API\n  - 'Statut incompatible' → mettre commande en 'Prêt à expédier'\n✓ La synchro peut être automatique selon config transporteur\n\nQuel transporteur ? Quel message d'erreur exact ? L'adresse est-elle complète ?",
+      "actions": [
+        "sync_carrier",
+        "verify_carrier_config",
+        "complete_address"
+      ],
+      "success_indicator": "Commande transmise, tracking disponible si fourni",
+      "common_carriers": [
+        "Aramex",
+        "DHL",
+        "Colissimo",
+        "Transporteur local"
+      ],
+      "escalation_criteria": "Config transporteur OK + adresse complète + statut OK mais sync échoue toujours",
+      "step_id": "SOLVE_06_SYNCHRONISATION_TR_332C8F"
+    },
+    {
+      "kind": "solve",
+      "response": "Tracking et WhatsApp :\n• WhatsApp :\n  - Cliquez bouton WhatsApp dans colonne Contact\n  - Ouvre conversation avec numéro client\n  - Format numéro doit être international (+216...)\n  - WhatsApp Web/Desktop doit être accessible\n• Tracking :\n  - Sélectionnez commandes synchronisées\n  - Actions → 'Tracker (par sélection)'\n  - Affiche statut acheminement du transporteur\n  - Tracking ID visible dans détails commande\n\nWhatsApp ne s'ouvre pas ou tracking non disponible ?",
+      "actions": [
+        "contact_whatsapp",
+        "track_shipment",
+        "view_tracking_id"
+      ],
+      "success_indicator": "WhatsApp ouvert ou statut tracking affiché",
+      "troubleshooting": {
+        "whatsapp": "Format numéro, WhatsApp installé, pop-ups autorisés",
+        "tracking": "Commande synchronisée, transporteur fournit tracking"
+      },
+      "step_id": "SOLVE_07_TRACKING_ET_WHATSA_23C792"
+    },
+    {
+      "kind": "solve",
+      "response": "Historique modifications et appels :\n• Vue latérale (icône œil) → Onglets :\n  - Détails : infos commande complètes\n  - Historique : journal modifications (qui, quand, quoi)\n  - Appels : tentatives contact client\n• Noter appel :\n  - Icône téléphone dans ligne commande\n  - 'Joignable' ou 'Non joignable'\n  - Compteur appels visible\n• Bloquer numéro spam :\n  - Vue latérale → 'Bloquer ce numéro'\n  - Empêche nouvelles commandes selon config\n\nVoulez-vous consulter l'historique ou noter un appel ?",
+      "actions": [
+        "view_history",
+        "log_call",
+        "block_number"
+      ],
+      "success_indicator": "Historique visible, appels tracés, numéro bloqué si demandé",
+      "step_id": "SOLVE_08_HISTORIQUE_MODIFIC_FAC2A8"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Problème technique persistant sur gestion commandes : sync transporteur échoue malgré config OK, export impossible après tous tests, changement statut bloqué malgré transitions valides",
+      "required_info": [
+        "ID commande(s)",
+        "Transporteur concerné",
+        "Message erreur exact",
+        "Capture écran",
+        "Rôle utilisateur",
+        "Action tentée",
+        "Statut actuel/cible",
+        "Navigateur"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_0E48F8",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Problème technique persistant sur gestion commandes : sync transporteur échoue malgré config OK, export impossible après tous tests, changement statut bloqué malgré transitions valides",
+        "repro_steps": [],
+        "evidence": [
+          "ID commande(s)",
+          "Transporteur concerné",
+          "Message erreur exact",
+          "Capture écran",
+          "Rôle utilisateur",
+          "Action tentée",
+          "Statut actuel/cible",
+          "Navigateur"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_10_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : ID commande + transporteur + message erreur + capture + rôle + action + statuts + navigateur.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_11_POUR_ESCALADER_ID__E5B461",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Commandes — gestion / statuts / export / synchro / actions en masse",
+        "repro_steps": [],
+        "evidence": [
+          "order_id",
+          "status_or_step",
+          "error_message"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/orders - Module commandes avec filtres, actions masse, sync transporteurs, tracking, WhatsApp"
+  ],
+  "best_practices": [
+    "Respectez transitions statuts logiques",
+    "Synchro transporteur = adresses complètes obligatoires",
+    "Testez gabarit impression avant export masse",
+    "Notez appels pour traçabilité",
+    "Autorisez pop-ups pour exports/impressions"
+  ],
+  "canonical_scope": "orders",
+  "required_fields": [
+    {
+      "key": "order_id",
+      "question": "Quel est l’ID de la commande (ou email/téléphone du client) ?"
+    },
+    {
+      "key": "status_or_step",
+      "question": "À quelle étape ça bloque (création, paiement, validation, livraison) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

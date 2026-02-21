@@ -1,0 +1,160 @@
+{
+  "id": "playbook-exchanges",
+  "scope": "orders",
+  "title": "Échanges — échange de produit / commande d'échange / retour et remplacement",
+  "description": "Guide pour gérer les échanges de produits : créer une commande d'échange depuis le dashboard ou le POS, traiter les retours avec remplacement, et résoudre les problèmes d'échange.",
+  "triggers": [
+    "échange",
+    "echange",
+    "exchange",
+    "remplacer produit",
+    "remplacement",
+    "commande échange",
+    "commande d'échange",
+    "échanger",
+    "echanger",
+    "retour échange",
+    "retour et échange",
+    "retourner produit",
+    "produit échangé",
+    "échange produit",
+    "changer produit",
+    "changer article",
+    "mauvais produit",
+    "mauvaise taille",
+    "mauvaise couleur",
+    "wrong size",
+    "wrong product",
+    "lbadla",
+    "nbadel"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel type d'échange souhaitez-vous effectuer ?\n(1) Créer un échange depuis le dashboard (commandes en ligne)\n(2) Échange en boutique POS\n(3) Le client a reçu un mauvais produit\n(4) Problème avec une commande d'échange existante",
+      "step_id": "ASK_01_QUEL_TYPE_D_CHANGE_A37ABB",
+      "field": "order_id"
+    },
+    {
+      "kind": "solve",
+      "title": "Créer un échange depuis le dashboard",
+      "response": "Créer une commande d'échange (dash.tiktak.space/orders/exchange) :\n\n1. Activez le module Échange :\n   • ⚙️ près du logo → Personnaliser le menu → activez 'Échange'\n   • Sauvegardez et rafraîchissez\n\n2. Créez la commande d'échange :\n   • Allez dans Commandes → Échange (ou dash.tiktak.space/orders/exchange)\n   • Recherchez la commande originale (par numéro, nom client ou téléphone)\n   • Sélectionnez les articles à retourner\n   • Ajoutez les nouveaux articles (remplacement)\n   • Le système calcule automatiquement la différence de prix\n\n3. Validez l'échange :\n   • Vérifiez le récapitulatif (articles retournés vs nouveaux)\n   • Si différence de prix positive : le client doit payer le supplément\n   • Si différence négative : crédit ou remboursement\n   • Confirmez la commande d'échange\n\n4. Traitement du retour :\n   • L'article retourné sera remis en stock (si revendable)\n   • Le nouvel article sera préparé pour expédition\n\nQuel est le numéro de la commande à échanger ?",
+      "success_indicator": "Commande d'échange créée, articles retournés remis en stock, nouveaux articles expédiés",
+      "ui": {
+        "label": "Ouvrir Échanges",
+        "route": "/orders/exchange"
+      },
+      "common_errors": [
+        "Module échange non activé — activer dans Personnaliser le menu",
+        "Commande introuvable — vérifier numéro ou téléphone client",
+        "Article non en stock — le remplacement n'est pas disponible",
+        "Statut incompatible — la commande doit être livrée pour échange"
+      ],
+      "step_id": "SOLVE_02_CR_ER_UN_CHANGE_DE_564BE0"
+    },
+    {
+      "kind": "solve",
+      "title": "Échange en boutique POS",
+      "response": "Échange en boutique POS (dash.tiktak.space/pos) :\n\n1. Dans le POS, cliquez 'Charger commande'\n2. Recherchez et sélectionnez la commande originale\n3. Sélectionnez l'article à retourner :\n   • L'article retourné est automatiquement remis en stock\n   • Le stock de la boutique concernée est mis à jour\n4. Ajoutez les nouveaux produits :\n   • Recherchez ou scannez le produit de remplacement\n   • Ajustez la quantité\n5. Le POS calcule automatiquement la différence :\n   • Si le nouveau produit est plus cher → le client paie la différence\n   • Si le nouveau produit est moins cher → remboursement partiel\n6. Finalisez la vente avec le mode de paiement approprié\n7. Imprimez le nouveau ticket\n\nAttention : choisissez bien la boutique active (le stock est décompté par boutique).\n\nL'échange est-il en boutique physique ?",
+      "success_indicator": "Échange POS finalisé, stock mis à jour, ticket imprimé",
+      "ui": {
+        "label": "Ouvrir POS",
+        "route": "/pos"
+      },
+      "step_id": "SOLVE_03_CHANGE_EN_BOUTIQUE_E3D872"
+    },
+    {
+      "kind": "solve",
+      "title": "Client a reçu un mauvais produit",
+      "response": "Si un client a reçu un mauvais produit :\n\n1. Vérifiez la commande originale :\n   • Allez dans Commandes → trouvez la commande\n   • Vérifiez les articles commandés vs articles expédiés\n   • Vérifiez les variantes (taille, couleur) et la quantité\n\n2. Si erreur confirmée :\n   • Créez une commande d'échange (dash.tiktak.space/orders/exchange)\n   • Incluez le bon produit avec la bonne variante\n   • Organisez le retour du mauvais produit\n\n3. Pour le retour du mauvais produit :\n   • Envoyez un transporteur ou demandez au client de renvoyer\n   • À réception : scannez le retour (dash.tiktak.space/returns)\n   • Qualifiez l'état : Revendable / Endommagé / Incomplet\n\n4. Prévention :\n   • Vérifier les variantes (taille/couleur) lors de la préparation\n   • Scanner les articles avant expédition\n   • Comparer bon de livraison avec articles physiques\n\nPouvez-vous confirmer le numéro de commande et le produit reçu par rapport à celui commandé ?",
+      "success_indicator": "Échange effectué, bon produit renvoyé, mauvais produit retourné",
+      "step_id": "SOLVE_04_CLIENT_A_RE_U_UN_M_6CFA2B"
+    },
+    {
+      "kind": "solve",
+      "title": "Problème avec une commande d'échange",
+      "response": "Problèmes courants avec les échanges :\n\n• Module échange non visible :\n  → ⚙️ → Personnaliser le menu → vérifiez que 'Échange' est activé\n  → Si grisé : module non inclus dans votre pack\n\n• Impossible de trouver la commande :\n  → Vérifiez le numéro exact, nom ou téléphone du client\n  → La commande doit être au statut 'Livrée' ou 'Retour reçu'\n\n• Stock insuffisant pour le remplacement :\n  → Vérifiez la disponibilité du produit de remplacement\n  → Ajustez manuellement le stock si nécessaire (Gestion de stock)\n\n• Différence de prix incorrecte :\n  → Vérifiez les prix des articles originaux et de remplacement\n  → Les réductions/coupons de la commande originale ne s'appliquent pas à l'échange\n\n• Stock non mis à jour après échange :\n  → Vérifiez la qualité du retour (Revendable remet en stock sellable)\n  → Endommagé/Incomplet ne remet pas en stock vendable\n\nQuel est le problème exact avec votre échange ?",
+      "success_indicator": "Problème d'échange résolu, stock cohérent",
+      "step_id": "SOLVE_05_PROBL_ME_AVEC_UNE__BCC8C5"
+    },
+    {
+      "kind": "verify",
+      "question": "L'échange a-t-il été effectué correctement ? Le stock est-il mis à jour ? Si non, décrivez le problème restant.",
+      "step_id": "VERIFY_06_L_CHANGE_A_T_IL_T__E09B84"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Échange impossible malgré les vérifications (module actif, commande trouvée, stock disponible), ou incohérence de stock/prix après échange",
+      "required_info": [
+        "Numéro de commande originale",
+        "Articles à retourner (nom + variante)",
+        "Articles de remplacement souhaités",
+        "Capture écran de l'erreur",
+        "Mode d'échange (dashboard ou POS)",
+        "Boutique concernée (si POS)"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_08AC3B",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Échange impossible malgré les vérifications (module actif, commande trouvée, stock disponible), ou incohérence de stock/prix après échange",
+        "repro_steps": [],
+        "evidence": [
+          "Numéro de commande originale",
+          "Articles à retourner (nom + variante)",
+          "Articles de remplacement souhaités",
+          "Capture écran de l'erreur",
+          "Mode d'échange (dashboard ou POS)",
+          "Boutique concernée (si POS)"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Module échange non disponible",
+      "cause": "Non activé ou non inclus dans le pack",
+      "solution": "Activer dans Personnaliser le menu. Si grisé, upgrade pack requis"
+    },
+    {
+      "symptom": "Commande non trouvée pour échange",
+      "cause": "Mauvais critère de recherche ou statut incompatible",
+      "solution": "Chercher par numéro exact. La commande doit être livrée"
+    },
+    {
+      "symptom": "Stock négatif après échange POS",
+      "cause": "Article retourné non validé (état non qualifié) ou mauvaise boutique sélectionnée",
+      "solution": "Qualifiez l'état du retour et vérifiez la boutique active dans le POS"
+    }
+  ],
+  "best_practices": [
+    "Toujours vérifier la commande originale avant de créer l'échange",
+    "Scanner les articles retournés pour confirmation",
+    "Vérifier la disponibilité du remplacement avant de promettre au client",
+    "En POS, vérifier que la bonne boutique est sélectionnée"
+  ],
+  "related_playbooks": [
+    "playbook-order-management",
+    "playbook-return-scan",
+    "playbook-pos",
+    "playbook-stock-inventory"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "order_id",
+      "question": "Quel est le numéro de commande ?"
+    },
+    {
+      "key": "status",
+      "question": "Quel statut actuel de la commande ?"
+    },
+    {
+      "key": "expected_behavior",
+      "question": "Quel résultat attendez-vous (expédition, paiement, etc.) ?"
+    }
+  ]
+}

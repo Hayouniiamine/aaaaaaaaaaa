@@ -1,0 +1,249 @@
+{
+  "n": 15,
+  "module_acc": 1.0,
+  "verdict_acc": 1.0,
+  "gov_escalate_acc": 1.0,
+  "gov_total": 4,
+  "details": [
+    {
+      "desc": "Mon domaine .tn ne se connecte pas au dashboard",
+      "expected_module": "settings",
+      "predicted_modules": [
+        "settings"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "Je veux ajouter une variante couleur sur mon produit",
+      "expected_module": "products",
+      "predicted_modules": [
+        "products"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "Commande #12450 jamais expédiée",
+      "expected_module": "orders",
+      "predicted_modules": [
+        "orders"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "site verrouillé je peux plus éditer",
+      "expected_module": "builder",
+      "predicted_modules": [
+        "builder"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "erreur 500 sur mon site je peux rien faire",
+      "expected_module": "technical",
+      "predicted_modules": [
+        "technical"
+      ],
+      "module_ok": true,
+      "expected_verdict": "tiktak_side",
+      "predicted_verdicts": [
+        "tiktak_side"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "http_5xx",
+      "escalate_ok": true
+    },
+    {
+      "desc": "paiement konnect refusé lors du checkout",
+      "expected_module": "payments",
+      "predicted_modules": [
+        "payments"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": ".",
+      "expected_module": "general",
+      "predicted_modules": [
+        "general"
+      ],
+      "module_ok": true,
+      "expected_verdict": "unclear",
+      "predicted_verdicts": [
+        "unclear",
+        "user_side"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "comment activer le scanner douchette pour aramex",
+      "expected_module": "shipping",
+      "predicted_modules": [
+        "shipping"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "je veux renouveler mon abonnement pack pro",
+      "expected_module": "billing",
+      "predicted_modules": [
+        "billing",
+        "settings"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "facebook pixel ne se déclenche pas",
+      "expected_module": "apps",
+      "predicted_modules": [
+        "apps"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "j'ai 500 produits à importer est-ce possible",
+      "expected_module": "products",
+      "predicted_modules": [
+        "products"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "http_false_positive",
+      "escalate_ok": true
+    },
+    {
+      "desc": "service unavailable depuis ce matin impossible de travailler",
+      "expected_module": "technical",
+      "predicted_modules": [
+        "technical"
+      ],
+      "module_ok": true,
+      "expected_verdict": "tiktak_side",
+      "predicted_verdicts": [
+        "tiktak_side"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "http_5xx",
+      "escalate_ok": true
+    },
+    {
+      "desc": "connexion OTP ne fonctionne pas je reçois pas le code",
+      "expected_module": "auth",
+      "predicted_modules": [
+        "auth",
+        "settings"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "stock ne se synchronise plus avec les commandes",
+      "expected_module": "inventory",
+      "predicted_modules": [
+        "orders",
+        "inventory"
+      ],
+      "module_ok": true,
+      "expected_verdict": "user_side",
+      "predicted_verdicts": [
+        "user_side",
+        "unclear"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "none",
+      "escalate_ok": true
+    },
+    {
+      "desc": "je veux parler à un responsable c'est inacceptable",
+      "expected_module": "general",
+      "predicted_modules": [
+        "general"
+      ],
+      "module_ok": true,
+      "expected_verdict": "tiktak_side",
+      "predicted_verdicts": [
+        "tiktak_side"
+      ],
+      "verdict_ok": true,
+      "gov_tag": "emotion",
+      "escalate_ok": true
+    }
+  ]
+}

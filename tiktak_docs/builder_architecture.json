@@ -1,0 +1,418 @@
+{
+  "lien": "https://dash.tiktak.space/content-management",
+  "nom": "Builder — Architecture complète de l'éditeur de site TikTak PRO",
+  "description": "L'éditeur de site (Builder) est l'outil principal pour créer et personnaliser les pages de la boutique TikTak PRO. Il utilise une architecture React avec drag & drop (DnD Kit), WebSocket temps réel pour la collaboration, un système de sections/widgets, et des formulaires dynamiques (FormViewer). Cette page documente l'ensemble des composants, hooks et services disponibles dans le Builder.",
+
+  "architecture_composants": {
+    "page_principale": {
+      "nom": "Builder.tsx",
+      "description": "Point d'entrée principal de l'éditeur. Orchestre la sidebar, l'éditeur de contenu, la prévisualisation iframe et les panneaux de configuration.",
+      "enfants_directs": [
+        "BuilderSidebar.tsx",
+        "BuilderEventHandler.tsx",
+        "PageContentBuilder.tsx",
+        "Iframe Preview",
+        "FormViewer/",
+        "Custom Hooks",
+        "Configuration Panels",
+        "Layout Components"
+      ]
+    },
+
+    "sidebar": {
+      "nom": "BuilderSidebar.tsx",
+      "description": "Barre latérale de navigation avec 10 onglets de configuration du site. Chaque onglet correspond à un aspect configurable de la boutique.",
+      "onglets": [
+        {
+          "id": "main-content",
+          "label": "Contenu principal",
+          "description": "Gestion des sections et blocs de la page en cours d'édition."
+        },
+        {
+          "id": "navigation-header",
+          "label": "En-tête / Navigation",
+          "description": "Configuration du header : logo, menu principal, liens de navigation, barre de recherche."
+        },
+        {
+          "id": "footer",
+          "label": "Pied de page",
+          "description": "Configuration du footer : liens, colonnes, informations légales, copyright."
+        },
+        {
+          "id": "style-theme",
+          "label": "Style / Thème",
+          "description": "Couleurs, typographies, espacements globaux du site. Personnalisation visuelle du template actif."
+        },
+        {
+          "id": "social-links",
+          "label": "Réseaux sociaux",
+          "description": "Liens vers Facebook, Instagram, TikTok, Twitter, YouTube, etc. Affichés dans le header/footer."
+        },
+        {
+          "id": "checkout",
+          "label": "Checkout",
+          "description": "Personnalisation de la page de paiement/checkout : champs, couleurs, boutons."
+        },
+        {
+          "id": "maintenance",
+          "label": "Maintenance",
+          "description": "Mode maintenance : activer/désactiver la page 'site en construction' pour les visiteurs."
+        },
+        {
+          "id": "seo",
+          "label": "SEO",
+          "description": "Paramètres SEO globaux : titre site, meta description, mots-clés, Open Graph."
+        },
+        {
+          "id": "custom-code",
+          "label": "Code personnalisé",
+          "description": "Injection de code HTML/CSS/JS personnalisé dans le header ou footer du site."
+        },
+        {
+          "id": "debug",
+          "label": "Debug",
+          "description": "Outils de diagnostic internes pour le support technique (visible en mode avancé)."
+        }
+      ]
+    },
+
+    "event_handler": {
+      "nom": "BuilderEventHandler.tsx",
+      "description": "Gère la communication temps réel via WebSocket et le système d'événements pour la sauvegarde automatique.",
+      "sous_composants": {
+        "websocket_hook": {
+          "nom": "useBuilderWebSocket.ts",
+          "description": "Hook React gérant la connexion WebSocket entre le Builder et le serveur.",
+          "fonctionnalites": [
+            {
+              "id": "websocket_connection",
+              "label": "Connexion WebSocket",
+              "description": "Établit et maintient une connexion persistante pour la communication temps réel avec le serveur."
+            },
+            {
+              "id": "message_sending",
+              "label": "Envoi de messages",
+              "description": "Transmet les modifications (ajout/suppression/réorganisation de sections) au serveur en temps réel."
+            },
+            {
+              "id": "presence_detection",
+              "label": "Détection de présence",
+              "description": "Détecte si d'autres utilisateurs sont connectés au Builder en même temps. Affiche qui est en train d'éditer."
+            },
+            {
+              "id": "builder_locking",
+              "label": "Verrouillage du Builder",
+              "description": "Verrouille le Builder lorsqu'un autre utilisateur est déjà en train d'éditer, pour éviter les conflits. Un message indique 'Ce builder est en cours d'utilisation par [nom]'. L'éditeur passe en lecture seule."
+            }
+          ]
+        },
+        "events_hook": {
+          "nom": "useBuilderEvents.tsx / useBuilderEvents.ts",
+          "description": "Hook gérant la file d'attente d'événements et la sauvegarde groupée (batching).",
+          "fonctionnalites": [
+            {
+              "id": "event_queue",
+              "label": "File d'attente d'événements",
+              "description": "Accumule les modifications avant de les envoyer au serveur. Évite les envois simultanés qui pourraient causer des conflits."
+            },
+            {
+              "id": "debounced_flush",
+              "label": "Envoi différé (Debounce)",
+              "description": "Attend un court délai après la dernière modification avant d'envoyer au serveur. Optimise les performances réseau."
+            },
+            {
+              "id": "event_batching",
+              "label": "Regroupement d'événements",
+              "description": "Regroupe plusieurs modifications en un seul envoi serveur. Par exemple : déplacer 3 sections = 1 seul appel API au lieu de 3."
+            }
+          ]
+        }
+      }
+    },
+
+    "page_content_builder": {
+      "nom": "PageContentBuilder.tsx",
+      "description": "Zone principale d'édition : affiche les sections de la page, gère le drag & drop et permet d'ajouter de nouvelles sections.",
+      "sous_composants": {
+        "section_card": {
+          "nom": "SectionCard.tsx",
+          "description": "Carte représentant une section dans l'éditeur. Chaque section a un affichage, des actions et le support du drag & drop.",
+          "fonctionnalites": [
+            {
+              "id": "section_display",
+              "label": "Affichage de section",
+              "description": "Affiche le contenu de la section (texte, image, produits…) en mode édition."
+            },
+            {
+              "id": "section_actions",
+              "label": "Actions sur section",
+              "description": "Boutons : éditer, dupliquer, supprimer, masquer/afficher la section."
+            },
+            {
+              "id": "section_drag_drop",
+              "label": "Glisser-déposer (Drag & Drop)",
+              "description": "Permet de réorganiser l'ordre des sections par glisser-déposer. Utilise la bibliothèque DnD Kit."
+            }
+          ]
+        },
+        "dnd_kit_integration": {
+          "nom": "DnD Kit Integration",
+          "description": "Intégration de la bibliothèque DnD Kit (React) pour le glisser-déposer des sections. Gère les indicateurs visuels de placement et les animations de réorganisation."
+        },
+        "add_section_drawer": {
+          "nom": "AddSectionDrawer",
+          "description": "Tiroir latéral listant les types de sections disponibles à ajouter (texte, image, bannière, grille produits, HTML, formulaire, etc.)."
+        }
+      }
+    },
+
+    "form_viewer": {
+      "nom": "FormViewer/",
+      "description": "Système de formulaires dynamiques. Quand une section est sélectionnée, le FormViewer affiche le formulaire de configuration correspondant avec les champs appropriés.",
+      "composants_principaux": [
+        {
+          "nom": "FormViewer.tsx",
+          "description": "Composant parent qui orchestre l'affichage du formulaire de configuration d'une section. Reçoit la définition des champs et les valeurs actuelles."
+        },
+        {
+          "nom": "FormField.tsx",
+          "description": "Composant intermédiaire qui détermine quel type de champ afficher (texte, image, sélection, etc.) selon la configuration."
+        }
+      ],
+      "types_de_champs": [
+        {
+          "composant": "TextFieldComponent",
+          "description": "Champ texte simple (une ligne). Pour : titres, labels, liens URL.",
+          "usage": "Titre de section, Bouton CTA, URL de lien"
+        },
+        {
+          "composant": "TextareaFieldComponent",
+          "description": "Zone de texte multi-lignes. Pour : paragraphes, descriptions longues.",
+          "usage": "Description de section, texte de présentation"
+        },
+        {
+          "composant": "SelectFieldComponent",
+          "description": "Menu déroulant de sélection. Pour : choix parmi options prédéfinies.",
+          "usage": "Style d'affichage, nombre de colonnes, disposition"
+        },
+        {
+          "composant": "CheckboxFieldComponent",
+          "description": "Cases à cocher (choix multiples). Pour : options activables/désactivables.",
+          "usage": "Catégories à afficher, options de filtre"
+        },
+        {
+          "composant": "BooleanFieldComponent",
+          "description": "Interrupteur (toggle) Oui/Non. Pour : activer/désactiver une fonctionnalité.",
+          "usage": "Afficher le prix, Afficher le bouton d'achat, Activer autoplay"
+        },
+        {
+          "composant": "HtmlEditorFieldComponent",
+          "description": "Éditeur HTML riche (WYSIWYG). Pour : contenu formaté avec gras, italique, listes, liens.",
+          "usage": "Contenu textuel des sections, descriptions enrichies"
+        },
+        {
+          "composant": "ImageFieldComponent",
+          "description": "Sélecteur/téléchargeur d'images. Pour : bannières, logos, photos de section.",
+          "usage": "Bannière hero, image de fond, logo"
+        },
+        {
+          "composant": "ProductsWidgetFieldComponent",
+          "description": "Sélecteur de produits. Pour : choisir quels produits afficher dans un widget/grille.",
+          "usage": "Section produits vedettes, carrousel de nouveautés"
+        },
+        {
+          "composant": "LinkWidgetFieldComponent",
+          "description": "Configurateur de liens avec URL + texte + cible (_blank, _self). Pour : boutons, liens de navigation dans les sections.",
+          "usage": "Bouton CTA (Acheter, Voir plus), Liens rapides"
+        },
+        {
+          "composant": "TableWidgetFieldComponent",
+          "description": "Éditeur de tableaux. Pour : grilles tarifaires, comparatifs, tableaux de données.",
+          "usage": "Tableau de prix, comparatif de plans, spécifications produit"
+        },
+        {
+          "composant": "AlignFieldComponents",
+          "description": "Contrôle d'alignement (gauche, centre, droite). Pour : positionner le texte ou les éléments dans une section.",
+          "usage": "Alignement du texte de section, position des boutons"
+        }
+      ]
+    },
+
+    "custom_hooks": {
+      "description": "Hooks React personnalisés utilisés par le Builder pour la gestion d'état et les opérations.",
+      "hooks": [
+        {
+          "nom": "usePages",
+          "description": "Gestion des pages du site : liste, création, suppression, sélection de la page en cours d'édition."
+        },
+        {
+          "nom": "useSections",
+          "description": "Gestion des sections de la page sélectionnée : ajout, suppression, réorganisation, duplication."
+        },
+        {
+          "nom": "useBuilderWebSocket",
+          "description": "Connexion WebSocket temps réel : envoi des modifications, détection de présence, verrouillage."
+        },
+        {
+          "nom": "useBuilderEvents",
+          "description": "File d'événements, debounce et batching pour la sauvegarde automatique des modifications."
+        },
+        {
+          "nom": "useSectionsForms",
+          "description": "Gestion des formulaires de configuration de sections : validation, soumission, état des champs."
+        }
+      ]
+    },
+
+    "configuration_panels": {
+      "description": "Panneaux de configuration spécialisés accessibles depuis la sidebar ou lors de l'édition d'une section.",
+      "panneaux": [
+        {
+          "nom": "ProductDrawer",
+          "description": "Tiroir de sélection de produits. Permet de rechercher et sélectionner des produits à intégrer dans une section (widget produits, carrousel, grille).",
+          "acces": "Cliquer sur un widget produit dans une section → ProductDrawer s'ouvre."
+        },
+        {
+          "nom": "SectionConfigPanel",
+          "description": "Panneau principal de configuration d'une section sélectionnée. Affiche le FormViewer avec tous les champs éditables.",
+          "acces": "Cliquer sur une section dans l'éditeur → panneau latéral de conf."
+        },
+        {
+          "nom": "MenuEditor",
+          "description": "Éditeur du menu de navigation du site. Permet d'ajouter/supprimer/réorganiser les éléments du menu principal et des sous-menus.",
+          "acces": "Sidebar → onglet Navigation/Header → MenuEditor."
+        },
+        {
+          "nom": "SocialMediaConfig",
+          "description": "Configuration des liens réseaux sociaux (Facebook, Instagram, TikTok, Twitter, YouTube, LinkedIn). Ces liens s'affichent dans le header/footer du site.",
+          "acces": "Sidebar → onglet Réseaux sociaux."
+        },
+        {
+          "nom": "ThemeConfig",
+          "description": "Configuration du thème visuel : couleurs principales, couleurs secondaires, typographies, tailles de texte, espacements, coins arrondis.",
+          "acces": "Sidebar → onglet Style/Thème."
+        },
+        {
+          "nom": "WebsiteSettings",
+          "description": "Paramètres généraux du site : nom du site, favicon, langue, devise, informations de contact.",
+          "acces": "Sidebar → ou via le bouton paramètres dans la toolbar."
+        }
+      ]
+    },
+
+    "layout_components": {
+      "description": "Composants de mise en page et d'interface du Builder lui-même.",
+      "composants": [
+        {
+          "nom": "ResizablePanelGroup",
+          "description": "Panneaux redimensionnables : sidebar + éditeur + preview. L'utilisateur peut ajuster la taille de chaque zone en glissant les séparateurs."
+        },
+        {
+          "nom": "Toolbar",
+          "description": "Barre d'outils en haut du Builder : sélection de page, vue mobile/desktop, bouton sauvegarder, bouton prévisualiser."
+        },
+        {
+          "nom": "View Mode Toggle",
+          "description": "Commutateur Desktop / Tablette / Mobile. Change la taille de l'iframe de prévisualisation pour simuler différents appareils."
+        },
+        {
+          "nom": "Save/Preview Actions",
+          "description": "Boutons Sauvegarder et Prévisualiser. Sauvegarder envoie toutes les modifications au serveur. Prévisualiser ouvre le site dans un nouvel onglet."
+        }
+      ]
+    },
+
+    "state_management": {
+      "context": {
+        "nom": "SectionsContext.tsx",
+        "description": "Contexte React centralisant l'état de toutes les sections de la page en cours d'édition. Fournit les données et les fonctions de mutation à tous les composants enfants."
+      },
+      "service": {
+        "nom": "templateService.ts",
+        "description": "Service API pour la gestion des templates. Communique avec le backend TikTak PRO.",
+        "operations": [
+          "Lister les templates disponibles (gratuits + payants)",
+          "Installer un template sur la boutique",
+          "Acheter un template payant (carte ou virement)",
+          "Mettre à jour les paramètres du template actif"
+        ]
+      },
+      "types": {
+        "nom": "template.ts",
+        "description": "Types TypeScript définissant la structure des templates, sections, champs et widgets."
+      }
+    }
+  },
+
+  "problemes_recurrents": [
+    {
+      "symptome": "Le builder est verrouillé / 'en cours d'utilisation par quelqu'un d'autre'",
+      "cause_probable": "Un autre utilisateur (ou un onglet précédent) a une session WebSocket active sur le builder.",
+      "solution": "1) Demander à l'autre utilisateur de quitter le builder. 2) Fermer tous les onglets du dashboard et rouvrir. 3) Attendre 2-3 minutes (le timeout WebSocket libère automatiquement). 4) Vider le cache navigateur et se reconnecter."
+    },
+    {
+      "symptome": "Modifications non sauvegardées / données perdues après édition",
+      "cause_probable": "Perte de connexion WebSocket pendant l'édition. Le système de batching n'a pas pu envoyer les événements au serveur.",
+      "solution": "1) Vérifier la connexion internet. 2) Cliquer explicitement sur 'Sauvegarder' avant de quitter. 3) Ne pas fermer l'onglet pendant que le spinner de sauvegarde tourne. 4) Si données perdues : vérifier si la dernière version sauvegardée est récente (horodatage visible)."
+    },
+    {
+      "symptome": "Le drag & drop (glisser-déposer) ne fonctionne pas",
+      "cause_probable": "Extension navigateur bloquante, appareil tactile sans support souris, ou navigateur obsolète.",
+      "solution": "1) Désactiver temporairement les extensions navigateur (surtout ad-blockers). 2) Essayer en navigation privée. 3) Vérifier que le navigateur est Chrome/Edge/Firefox récent. 4) Sur mobile/tablette : utiliser les boutons flèche haut/bas à la place du drag & drop. 5) Vider le cache navigateur (Ctrl+F5)."
+    },
+    {
+      "symptome": "Un type de widget/section spécifique ne s'affiche pas correctement",
+      "cause_probable": "Champ obligatoire non rempli dans le formulaire de configuration de la section (FormViewer).",
+      "solution": "1) Cliquer sur la section dans l'éditeur pour ouvrir son panneau de configuration. 2) Vérifier que tous les champs requis sont remplis (image, texte, lien). 3) Pour le widget Produits : vérifier que des produits sont sélectionnés. 4) Pour l'éditeur HTML : vérifier que le contenu n'est pas vide. 5) Sauvegarder et prévisualiser."
+    },
+    {
+      "symptome": "L'iframe de prévisualisation est blanche / ne charge pas",
+      "cause_probable": "Erreur JavaScript dans les sections, template corrompu, ou problème de connexion.",
+      "solution": "1) Ctrl+F5 pour recharger. 2) Vérifier la console navigateur (F12) pour les erreurs. 3) Essayer de retirer la dernière section ajoutée. 4) Tester en navigation privée. 5) Si persiste : changer de template temporairement pour isoler."
+    },
+    {
+      "symptome": "Onglet sidebar manquant (ex: Custom Code, Debug non visible)",
+      "cause_probable": "Permissions du compte ou mode d'affichage restreint.",
+      "solution": "Certains onglets (Custom Code, Debug) sont réservés aux comptes avec permissions avancées. Contacter le support pour activer si nécessaire."
+    },
+    {
+      "symptome": "Le menu de navigation ne se met pas à jour sur le site",
+      "cause_probable": "Les modifications du MenuEditor n'ont pas été sauvegardées ou le cache n'est pas vidé.",
+      "solution": "1) Sauvegarder les modifications dans le MenuEditor. 2) Publier/sauvegarder le builder. 3) Vider le cache navigateur (Ctrl+F5). 4) Tester en navigation privée."
+    },
+    {
+      "symptome": "Les couleurs/styles du thème ne s'appliquent pas",
+      "cause_probable": "Les paramètres ThemeConfig sont sauvegardés mais le template a des styles CSS prioritaires.",
+      "solution": "1) Sauvegarder les modifications dans ThemeConfig. 2) Rafraîchir la prévisualisation. 3) Si les styles ne changent pas : le template peut avoir des styles CSS en dur qui prennent priorité. Dans ce cas, utiliser l'onglet Custom Code pour ajouter des surcharges CSS avec !important."
+    },
+    {
+      "symptome": "Erreur lors de l'ajout d'une section depuis le tiroir (AddSectionDrawer)",
+      "cause_probable": "Limite de sections atteinte ou type de section incompatible avec le template actuel.",
+      "solution": "1) Vérifier si le nombre maximum de sections est atteint (dépend du template). 2) Essayer un autre type de section. 3) Sauvegarder, recharger le builder et réessayer."
+    },
+    {
+      "symptome": "Liens sociaux (Facebook, Instagram…) ne s'affichent pas sur le site",
+      "cause_probable": "URLs non renseignées dans SocialMediaConfig ou le template ne supporte pas l'affichage des réseaux sociaux dans le header/footer.",
+      "solution": "1) Ouvrir Sidebar → Réseaux sociaux. 2) Remplir les URLs complètes (https://facebook.com/votrepage). 3) Sauvegarder. 4) Vérifier que le template actif affiche les icônes sociales (certains templates n'incluent pas cette section)."
+    }
+  ],
+
+  "guide_utilisation_builder": {
+    "etapes_principales": [
+      "1. Accéder au Builder depuis /content-management → cliquer 'Éditer' sur une page.",
+      "2. Le Builder se charge avec trois zones : Sidebar (gauche), Éditeur de sections (centre), Prévisualisation (droite).",
+      "3. Utiliser la Sidebar pour naviguer entre les onglets de configuration (contenu, navigation, footer, thème, SEO…).",
+      "4. Dans l'onglet Contenu principal : ajouter/modifier/supprimer des sections via le PageContentBuilder.",
+      "5. Cliquer sur une section pour ouvrir le SectionConfigPanel et modifier ses paramètres via le FormViewer.",
+      "6. Utiliser le glisser-déposer (DnD) pour réorganiser l'ordre des sections.",
+      "7. Basculer entre Desktop/Tablette/Mobile avec le View Mode Toggle pour vérifier le responsive.",
+      "8. Cliquer 'Sauvegarder' pour enregistrer. Cliquer 'Prévisualiser' pour voir le résultat final.",
+      "9. Les modifications sont aussi sauvegardées automatiquement via le système de batching WebSocket."
+    ],
+    "raccourcis": [
+      "Ctrl+S : Sauvegarder (dans le builder)",
+      "Ctrl+F5 : Recharger sans cache",
+      "F12 : Console navigateur (diagnostic)"
+    ]
+  }
+}

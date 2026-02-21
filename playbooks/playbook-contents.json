@@ -1,0 +1,252 @@
+{
+  "id": "playbook-contents",
+  "scope": "builder",
+  "title": "Contenus — pages / sections / publication / SEO",
+  "triggers": [
+    "accueil",
+    "affichage",
+    "bannière",
+    "cgu",
+    "cms",
+    "contenu",
+    "design",
+    "faq",
+    "footer",
+    "header",
+    "homepage",
+    "le site casse",
+    "lien hypertexte",
+    "menu navigation",
+    "modifier contenu",
+    "modifier la page",
+    "modifier le texte",
+    "nouvelle page",
+    "page",
+    "page blanche",
+    "page ne s'affiche pas",
+    "pages",
+    "publier",
+    "rgpd",
+    "sections",
+    "sous-menu",
+    "widget",
+    "éditeur"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer une page (/content-management) :\n• Contenus → 'Créer page'\n• Choisissez modèle/structure (Accueil, CGU, RGPD, FAQ, Page personnalisée)\n• Ajoutez sections via l'éditeur (glisser-déposer des widgets)\n• Configurez chaque section (texte, images, liens)\n• Complétez SEO : Titre (30-60 car.), Meta description (70-160 car.), Slug unique, Mots-clés (≥3)\n• Prévisualisez puis 'Publier'\n\nQuelle page voulez-vous créer (Accueil, À propos, Contact, autre) ?",
+      "actions": [
+        "create_page",
+        "add_sections",
+        "configure_page_seo"
+      ],
+      "success_indicator": "Page créée, publiée et accessible sur le site via son URL",
+      "common_errors": [
+        "Titre ou slug manquant → champs requis",
+        "Slug déjà utilisé → modifier pour unicité",
+        "Sections vides → ajouter au moins un widget/contenu"
+      ],
+      "step_id": "SOLVE_01_CR_ER_UNE_PAGE_CON_CD010C"
+    },
+    {
+      "kind": "solve",
+      "response": "Changements non visibles sur le site :\n✓ Vérifiez que la page est 'Publiée' (statut brouillon = invisible)\n✓ Rechargez avec Ctrl+F5 (vide le cache navigateur)\n✓ Testez en navigation privée / incognito\n✓ Vérifiez que vous modifiez la bonne marque/boutique (si multi-marques)\n✓ Attendez 1-2 minutes pour la propagation du cache CDN\n✓ Vérifiez que la page est bien associée au menu de navigation\n\nLa page est-elle bien publiée ? Quel navigateur utilisez-vous ?",
+      "actions": [
+        "check_published_status",
+        "clear_cache",
+        "verify_brand_context"
+      ],
+      "success_indicator": "Modifications visibles après rafraîchissement cache",
+      "time_estimate": "Visible immédiatement après publication + vidage cache (max 2 min)",
+      "step_id": "SOLVE_02_CHANGEMENTS_NON_VI_BE0185"
+    },
+    {
+      "kind": "solve",
+      "response": "Le site casse après modification :\n⚠️ ARRÊTEZ immédiatement les modifications\n✓ Identifiez la dernière section/widget ajouté AVANT le bug\n✓ Revenez en mode édition et supprimez cette section\n✓ Republiez et vérifiez que le site fonctionne\n✓ Si le problème persiste : revenez au brouillon, retirez les 2-3 dernières modifications\n✓ Testez avec un template/structure standard pour isoler le problème\n✓ Vérifiez la console navigateur (F12) pour voir les erreurs JavaScript/CSS\n\nQuel élément avez-vous ajouté juste avant le bug (bannière, formulaire, widget produits, autre) ?",
+      "actions": [
+        "rollback_last_change",
+        "check_browser_console",
+        "test_with_default_template"
+      ],
+      "success_indicator": "Site fonctionne à nouveau après retrait de l'élément problématique",
+      "escalation_criteria": "Site reste cassé même après retrait des dernières modifications + retour template standard",
+      "step_id": "SOLVE_03_LE_SITE_CASSE_APR__4DF75F"
+    },
+    {
+      "kind": "solve",
+      "response": "Éditeur de sections (PageContentBuilder + FormViewer) :\n• Glissez-déposez des widgets depuis la bibliothèque via le tiroir 'Ajouter une section'\n• Types de widgets disponibles :\n  - Texte (titre, label) — TextFieldComponent\n  - Zone de texte (paragraphe) — TextareaFieldComponent\n  - Éditeur HTML riche (WYSIWYG) — HtmlEditorFieldComponent\n  - Image (bannière, photo, logo) — ImageFieldComponent\n  - Widget Produits (grille, carrousel) — ProductsWidgetFieldComponent\n  - Widget Liens/Boutons CTA — LinkWidgetFieldComponent\n  - Tableau de données — TableWidgetFieldComponent\n  - Sélection, Cases à cocher, Toggle On/Off\n  - Alignement (gauche, centre, droite)\n• Configurez chaque widget via le panneau SectionConfigPanel\n• Réorganisez l'ordre par drag & drop (DnD Kit) ou boutons flèches\n• Dupliquez une section pour réutiliser sa configuration\n• Supprimez les sections inutilisées\n• Prévisualisez régulièrement (Desktop/Tablette/Mobile)\n\n⚠️ Si le drag & drop ne marche pas : essayer navigation privée, utiliser les boutons flèches, ou mettre à jour le navigateur.\n\nQuel type de section voulez-vous ajouter ?",
+      "actions": [
+        "add_widget",
+        "configure_widget",
+        "reorder_sections",
+        "open_section_config_panel"
+      ],
+      "success_indicator": "Sections organisées comme souhaité dans la prévisualisation",
+      "step_id": "SOLVE_04_DITEUR_DE_SECTIONS_FF37A9"
+    },
+    {
+      "kind": "solve",
+      "response": "SEO des pages :\n✓ Titre SEO : 30-60 caractères (mot-clé principal en début)\n✓ Meta description : 70-160 caractères (inclure appel à l'action)\n✓ Slug URL : court, descriptif, mots séparés par tirets\n✓ Mots-clés : minimum 3, pertinents pour la page\n✓ Vérifiez le score SEO et suivez les conseils affichés\n✓ Utilisez les balises H1, H2, H3 dans le contenu\n\nVotre score SEO est-il inférieur à 70% ? Quels éléments manquent ?",
+      "actions": [
+        "optimize_page_seo",
+        "check_seo_score"
+      ],
+      "success_indicator": "Score SEO > 70%, tous les indicateurs au vert",
+      "step_id": "SOLVE_05_SEO_DES_PAGES_TITR_2E73EA"
+    },
+    {
+      "kind": "solve",
+      "response": "Pages statiques principales :\n• Accueil : page principale du site (structure libre)\n• CGU (Conditions Générales d'Utilisation) : termes légaux\n• RGPD / Confidentialité : politique de données\n• FAQ : questions fréquentes\n• À propos : présentation de l'entreprise\n• Contact : formulaire et coordonnées\n\nCréez ces pages avec l'éditeur puis associez-les au menu de navigation.",
+      "actions": [
+        "create_standard_pages",
+        "link_to_navigation_menu"
+      ],
+      "success_indicator": "Pages accessibles depuis le menu et conformes légalement",
+      "step_id": "SOLVE_06_PAGES_STATIQUES_PR_1E27B4"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Site cassé persistant après retrait modifications + test template standard, ou problème technique empêchant la publication",
+      "required_info": [
+        "URL de la page concernée",
+        "Capture écran de l'erreur visible sur le site",
+        "Dernière modification effectuée avant le bug",
+        "Capture écran de la console navigateur (F12 → onglet Console)",
+        "Navigateur + version",
+        "Template utilisé",
+        "Liste des sections/widgets ajoutés"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_C36EA8",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Site cassé persistant après retrait modifications + test template standard, ou problème technique empêchant la publication",
+        "repro_steps": [],
+        "evidence": [
+          "URL de la page concernée",
+          "Capture écran de l'erreur visible sur le site",
+          "Dernière modification effectuée avant le bug",
+          "Capture écran de la console navigateur (F12 → onglet Console)",
+          "Navigateur + version",
+          "Template utilisé",
+          "Liste des sections/widgets ajoutés"
+        ],
+        "suspected_component": "builder",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : URL page + capture erreur site + capture console navigateur (F12) + dernière modification + template + navigateur.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_09_POUR_ESCALADER_URL_886B4B",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Contenus — pages / sections / publication / SEO",
+        "repro_steps": [],
+        "evidence": [
+          "page_or_section",
+          "what_fails",
+          "url",
+          "screenshot"
+        ],
+        "suspected_component": "builder",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/content-management - Module CMS",
+    "Éditeur par sections + SEO (titre, meta, slug, mots-clés, conseils)",
+    "Pages statiques : Accueil, CGU, RGPD, FAQ..."
+  ],
+  "common_workflows": [
+    "Création page → ajout sections → configuration SEO → prévisualisation → publication",
+    "Modification page existante → édition sections → republication → vérification site"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Page blanche / page ne s'affiche pas",
+      "cause": "Statut brouillon, slug non défini, ou sections vides",
+      "solution": "Activer le switch Statut, vérifier le slug URL, ajouter au moins une section de contenu"
+    },
+    {
+      "symptom": "Erreur 404 après modification du slug",
+      "cause": "Ancien lien encore utilisé ou cache navigateur",
+      "solution": "Mettre à jour les menus/liens internes avec le nouveau slug, vider cache"
+    },
+    {
+      "symptom": "Conflit de slug (URL déjà prise)",
+      "cause": "Deux pages avec le même slug",
+      "solution": "Donner un slug unique ou renommer la page existante"
+    },
+    {
+      "symptom": "Sections/widgets ne s'affichent pas correctement",
+      "cause": "Incompatibilité template ou widget mal configuré, ou champ obligatoire non rempli dans le FormViewer",
+      "solution": "Cliquer sur la section → vérifier tous les champs requis dans le SectionConfigPanel. Pour widget Produits : vérifier que des produits sont sélectionnés via ProductDrawer. Pour éditeur HTML : vérifier contenu non vide. Sinon retirer le widget, tester avec template standard, vérifier console F12"
+    },
+    {
+      "symptom": "Menu/navigation ne montre pas la nouvelle page",
+      "cause": "Page non associée au menu de navigation",
+      "solution": "Associer la page au menu depuis l'éditeur de navigation"
+    },
+    {
+      "symptom": "Le site casse après modification",
+      "cause": "Widget/section incompatible ajouté",
+      "solution": "Identifier la dernière section ajoutée, la supprimer, republier. Vérifier console F12"
+    },
+    {
+      "symptom": "Score SEO faible (alerte rouge)",
+      "cause": "Titre ou meta description hors longueurs, pas assez de mots-clés",
+      "solution": "Titre 30-60 car, Meta 70-160 car, 3+ mots-clés"
+    },
+    {
+      "symptom": "Contenu non visible après publication",
+      "cause": "Cache CDN ou cache navigateur",
+      "solution": "Ctrl+F5, navigation privée, attendre 2 min propagation CDN"
+    },
+    {
+      "symptom": "Suppression de page refusée",
+      "cause": "Page système (Accueil) ou liée au menu obligatoire",
+      "solution": "Dépublier au lieu de supprimer. L'Accueil ne peut pas être supprimé"
+    }
+  ],
+  "best_practices": [
+    "Prévisualisez TOUJOURS avant de publier",
+    "Ajoutez les sections une par une et testez après chaque ajout",
+    "Gardez une sauvegarde/copie des configurations complexes",
+    "Respectez les longueurs SEO pour un meilleur référencement",
+    "Testez sur mobile ET desktop après publication"
+  ],
+  "canonical_scope": "builder",
+  "required_fields": [
+    {
+      "key": "page_or_section",
+      "question": "Quelle page/section (home, produit, panier, etc.) ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu’est-ce qui ne marche pas (affichage, publication, template, menu) ?"
+    },
+    {
+      "key": "url",
+      "question": "Avez-vous un lien ou capture ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

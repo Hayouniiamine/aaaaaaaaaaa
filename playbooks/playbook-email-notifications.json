@@ -1,0 +1,213 @@
+{
+  "id": "playbook-email-notifications",
+  "scope": "settings",
+  "title": "Email & Notifications — SMTP / Spam / Templates / Livraison",
+  "triggers": [
+    "email",
+    "mail",
+    "notification",
+    "smtp",
+    "spam",
+    "courrier",
+    "confirmation",
+    "ne reçoit pas",
+    "not receiving",
+    "boite",
+    "inbox",
+    "noreply"
+  ],
+  "description": "Diagnostic et résolution des problèmes d'emails: configuration SMTP, emails en spam, templates cassés, notifications non reçues (commande, expédition, mot de passe).",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Email / Notifications : (1) Quel type d'email n'est pas reçu (confirmation commande / expédition / mot de passe / autre) ? (2) L'email arrive-t-il en SPAM ? (3) Utilisez-vous un domaine personnalisé (@votreentreprise.com) ?",
+      "step_id": "ASK_01_EMAIL_NOTIFICATION_B2C881",
+      "field": "email_type"
+    },
+    {
+      "kind": "solve",
+      "title": "Vérifier l'adresse email dans le compte client",
+      "response": "Première vérification côté TikTak PRO :\n\n✓ 1. ACCÉDER AU CLIENT\n  • Back-office → Clients (/customers)\n  • Rechercher par nom/téléphone\n  • Ouvrir la fiche client\n\n✓ 2. VÉRIFIER L'EMAIL\n  • Email bien orthographié ?\n  • Pas d'espace avant/après ?\n  • Format valide (contient @) ?\n  • Domaine valide (.com, .tn, etc.) ?\n\n✓ 3. TESTER L'ENVOI\n  • Bouton 'Renvoyer email de confirmation'\n  • Demander au client de vérifier réception\n  • Vérifier boîte normale ET spam\n\n⚠️ Erreurs courantes :\n• Email mal saisi (typo, espace)\n• Email sans @ ou domaine invalide\n• Email temporaire/jetable bloqué\n• Email désactivé\n\nL'email du client est-il correct ? Format valide ?",
+      "actions": [
+        "verify_email_address",
+        "resend_confirmation",
+        "check_email_format"
+      ],
+      "success_indicator": "Email correctement formé, client confirme avoir vérifié boîte + spam",
+      "time_estimate": "2-3 minutes",
+      "step_id": "SOLVE_02_V_RIFIER_L_ADRESSE_5368A4"
+    },
+    {
+      "kind": "solve",
+      "title": "Vérifier dans SPAM / Courrier indésirable",
+      "response": "Les emails TikTak PRO peuvent être filtrés comme spam :\n\n✓ DEMANDER AU CLIENT :\n  1. Vérifier dossier SPAM / Courrier indésirable\n  2. Chercher expéditeur: noreply@tiktak.space\n  3. Si trouvé:\n     - Marquer comme 'Non spam' / 'Pas indésirable'\n     - Ajouter noreply@tiktak.space aux contacts\n  4. Vérifier à nouveau boîte de réception\n\n📧 FOURNISSEURS EMAIL PROBLÉMATIQUES :\n• Yahoo Mail: filtre très agressif\n• Outlook/Hotmail: bloque parfois\n• Orange/Free TN: configuration stricte\n• Gmail: généralement OK mais vérifier \"Promotions\"\n\n💡 SOLUTION PERMANENTE :\n• Whitelister noreply@tiktak.space\n• Ajouter aux contacts\n• Si problème persiste: tester avec Gmail\n\nLe client a-t-il vérifié son dossier spam ? Quel fournisseur email ?",
+      "actions": [
+        "check_spam_folder",
+        "whitelist_sender",
+        "add_to_contacts",
+        "suggest_gmail"
+      ],
+      "success_indicator": "Email trouvé dans spam et marqué comme légitime, ou fournisseur identifié",
+      "common_fixes": [
+        "Vérifier spam avant tout",
+        "Ajouter noreply@tiktak.space aux contacts",
+        "Tester avec un autre email (Gmail)",
+        "Vérifier onglet Promotions (Gmail)"
+      ],
+      "troubleshooting": {
+        "Email en spam systématiquement": "Whitelister noreply@tiktak.space + ajouter aux contacts",
+        "Aucun email (même spam)": "Vérifier validité email ou tester autre adresse",
+        "Gmail onglet Promotions": "Normal, déplacer vers Principal si souhaité"
+      },
+      "step_id": "SOLVE_03_V_RIFIER_DANS_SPAM_5CF3E3"
+    },
+    {
+      "kind": "solve",
+      "title": "Configuration SMTP personnalisée (domaine custom)",
+      "response": "Si vous utilisez un email personnalisé (@votreentreprise.com) :\n\n✓ CONFIGURATION SMTP DANS TIKTAKPRO :\n  1. Paramètres → Notifications / Email\n  2. Mode: SMTP personnalisé\n  3. Renseigner :\n     • Serveur SMTP: smtp.votrefournisseur.com\n     • Port: 587 (TLS) ou 465 (SSL)\n     • Utilisateur: votre@email.com\n     • Mot de passe SMTP: (fourni par hébergeur)\n  4. Tester l'envoi\n\n📧 FOURNISSEURS SMTP TUNISIE :\n• Topnet: smtp.topnet.tn (port 25 ou 587)\n• Orange TN: smtp.orange.tn (port 587)\n• GlobalNet: smtp.gnet.tn (port 587)\n• Google Workspace: smtp.gmail.com (port 587)\n• Office 365: smtp.office365.com (port 587)\n\n⚠️ ERREURS COURANTES :\n• Connection refused → Vérifier firewall + port autorisé\n• Authentication failed → Vérifier username/password\n• Relay denied → Activer 'Allow relay' chez le fournisseur\n• TLS error → Changer de port (587 ↔ 465)\n\nQuel serveur SMTP utilisez-vous ? Port configuré ?",
+      "actions": [
+        "configure_custom_smtp",
+        "test_smtp_connection",
+        "verify_smtp_credentials",
+        "check_firewall_ports"
+      ],
+      "success_indicator": "Test SMTP réussi, emails envoyés depuis domaine personnalisé",
+      "time_estimate": "10-15 minutes avec accès aux credentials SMTP",
+      "escalation_criteria": "SMTP configuré correctement (credentials vérifiés) mais envoi échoue",
+      "step_id": "SOLVE_04_CONFIGURATION_SMTP_8AFC62"
+    },
+    {
+      "kind": "solve",
+      "title": "Templates email manquants ou cassés",
+      "response": "Si les emails arrivent vides ou mal formatés :\n\n✓ VÉRIFIER TEMPLATES EMAIL :\n  1. Paramètres → Templates Email / Notifications\n  2. Vérifier templates existants:\n     • Confirmation commande\n     • Expédition / Tracking\n     • Annulation\n     • Réinitialisation mot de passe\n  3. Chaque template doit avoir:\n     • Sujet (non vide)\n     • Corps du message (non vide)\n     • Variables valides\n\n✓ RÉINITIALISER SI CASSÉ :\n  • Bouton 'Restaurer par défaut' sur le template\n  • Ou recréer le template manuellement\n\n✓ VARIABLES DISPONIBLES :\n  • {{customer_name}} - Nom du client\n  • {{order_number}} - Numéro commande\n  • {{order_total}} - Montant total\n  • {{tracking_link}} - Lien suivi colis\n  • {{shop_name}} - Nom boutique\n  • {{order_date}} - Date commande\n\n✓ TESTER :\n  • Créer commande test\n  • Vérifier email reçu\n  • Variables remplacées correctement ?\n\nLe template existe-t-il ? Variables correctes ?",
+      "actions": [
+        "check_email_templates",
+        "reset_default_templates",
+        "test_template_variables",
+        "create_test_order"
+      ],
+      "success_indicator": "Template présent, variables valides, email reçu correctement formaté",
+      "common_errors": [
+        "Template vide → Restaurer par défaut",
+        "Variables non remplacées → Syntaxe {{variable}}",
+        "Sujet manquant → Ajouter sujet au template"
+      ],
+      "step_id": "SOLVE_05_TEMPLATES_EMAIL_MA_78A2D6"
+    },
+    {
+      "kind": "solve",
+      "title": "Types d'emails et leurs déclencheurs",
+      "response": "EMAILS AUTOMATIQUES TIKTAKPRO :\n\n1️⃣ CONFIRMATION COMMANDE\n   • Envoyé à: Client\n   • Quand: Création commande (statut 'Confirmée')\n   • Contient: Numéro, produits, montant, adresse\n\n2️⃣ EXPÉDITION / TRACKING\n   • Envoyé à: Client\n   • Quand: Statut passe à 'Expédiée'\n   • Contient: Numéro tracking, lien suivi\n\n3️⃣ ANNULATION\n   • Envoyé à: Client\n   • Quand: Statut passe à 'Annulée'\n   • Contient: Raison annulation\n\n4️⃣ MOT DE PASSE\n   • Envoyé à: Client\n   • Quand: Demande réinitialisation\n   • Contient: Lien sécurisé\n\n✓ VÉRIFIER DÉCLENCHEUR :\n  • Email non reçu → Statut commande correct ?\n  • Tracking non envoyé → Commande bien 'Expédiée' ?\n  • Annulation non envoyée → Statut bien 'Annulée' ?\n\nQuel type d'email n'est pas reçu ? Statut de la commande ?",
+      "actions": [
+        "verify_order_status",
+        "check_email_triggers",
+        "manually_trigger_email"
+      ],
+      "success_indicator": "Statut correct, déclencheur identifié",
+      "step_id": "SOLVE_06_TYPES_D_EMAILS_ET__A4FCAD"
+    },
+    {
+      "kind": "solve",
+      "title": "Aucun email reçu (vérifications avancées)",
+      "response": "Si AUCUN email n'arrive (ni normal ni spam) :\n\n✓ 1. VÉRIFIER PARAMÈTRES GLOBAUX\n  • Paramètres → Notifications\n  • Envoi emails: Activé ?\n  • Adresse expéditeur configurée ?\n\n✓ 2. TESTER AVEC AUTRE EMAIL\n  • Créer commande test avec Gmail\n  • Vérifier réception → isole si problème client\n\n✓ 3. VÉRIFIER LOGS (si accès admin)\n  • Paramètres → Logs / Historique\n  • Rechercher envois email\n  • Erreurs SMTP ?\n\n✓ 4. QUOTA / LIMITES\n  • Certains fournisseurs: limite envois/jour\n  • Vérifier quota chez fournisseur SMTP\n  • Attendre 24h si quota atteint\n\n⚠️ CAUSES RARES :\n• Domaine blacklisté (liste noire spam)\n• IP serveur bloquée\n• DNS SPF/DKIM mal configuré\n• Service email TikTak temporairement down\n\nTous les clients concernés ou juste certains ?",
+      "actions": [
+        "verify_global_settings",
+        "test_with_different_email",
+        "check_smtp_logs",
+        "verify_email_quota"
+      ],
+      "success_indicator": "Cause identifiée (settings, quota, ou incident global)",
+      "escalation_criteria": "Emails activés, SMTP OK, test autres emails OK, mais client spécifique ne reçoit rien",
+      "step_id": "SOLVE_07_AUCUN_EMAIL_RE_U_V_F82DC5"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces vérifications, le client reçoit-il maintenant les emails ? Si non, fournissez : type email attendu, adresse email exacte (caviardée si sensible), fournisseur email, résultat test spam.",
+      "step_id": "VERIFY_08_APR_S_CES_V_RIFICA_6BB58E"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Configuration email vérifiée (adresse valide, SMTP OK, templates présents) mais emails non reçus, ou problème infrastructure (IP blacklistée, SPF/DKIM, serveur email down)",
+      "required_info": [
+        "Type d'email concerné (commande/expédition/password)",
+        "Adresse email du client (derniers caractères suffisent)",
+        "Fournisseur email client (Gmail/Yahoo/Outlook/Orange/etc)",
+        "Résultat vérification spam (trouvé/pas trouvé)",
+        "Mode SMTP (défaut TikTak ou personnalisé)",
+        "Si personnalisé: fournisseur SMTP utilisé",
+        "Tous clients affectés ou un seul ?",
+        "Capture écran config SMTP (si personnalisé)"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_1A3A71",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Configuration email vérifiée (adresse valide, SMTP OK, templates présents) mais emails non reçus, ou problème infrastructure (IP blacklistée, SPF/DKIM, serveur email down)",
+        "repro_steps": [],
+        "evidence": [
+          "Type d'email concerné (commande/expédition/password)",
+          "Adresse email du client (derniers caractères suffisent)",
+          "Fournisseur email client (Gmail/Yahoo/Outlook/Orange/etc)",
+          "Résultat vérification spam (trouvé/pas trouvé)",
+          "Mode SMTP (défaut TikTak ou personnalisé)",
+          "Si personnalisé: fournisseur SMTP utilisé",
+          "Tous clients affectés ou un seul ?",
+          "Capture écran config SMTP (si personnalisé)"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/settings - Configuration SMTP et templates email",
+    "/customers - Gestion adresses email clients"
+  ],
+  "best_practices": [
+    "Toujours vérifier spam AVANT d'escalader",
+    "Ajouter noreply@tiktak.space aux contacts",
+    "Tester avec Gmail si doute sur fournisseur client",
+    "Vérifier format email avant de sauvegarder",
+    "Pour SMTP personnalisé: noter les credentials en lieu sûr",
+    "Tester envoi après chaque changement config"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Email systématiquement en spam",
+      "cause": "Domaine TikTak pas en whitelist chez le client",
+      "solution": "Client ajoute noreply@tiktak.space aux contacts et marque comme non spam"
+    },
+    {
+      "symptom": "Aucun email reçu (même spam)",
+      "cause": "Email invalide, désactivé, ou fournisseur bloque",
+      "solution": "Vérifier format email, tester avec autre adresse (Gmail)"
+    },
+    {
+      "symptom": "Email vide ou variables non remplacées",
+      "cause": "Template cassé ou syntaxe variables incorrecte",
+      "solution": "Restaurer template par défaut, vérifier syntaxe {{variable}}"
+    },
+    {
+      "symptom": "SMTP Connection refused",
+      "cause": "Port bloqué ou serveur SMTP incorrect",
+      "solution": "Vérifier port (587 vs 465), tester autre port, vérifier firewall"
+    }
+  ],
+  "canonical_scope": "notifications",
+  "required_fields": [
+    {
+      "key": "email_type",
+      "question": "Quel type d'email n'est pas reçu (commande / expédition / mot de passe) ?"
+    },
+    {
+      "key": "customer_email",
+      "question": "Quelle est l'adresse email du client ?"
+    },
+    {
+      "key": "spam_checked",
+      "question": "Le client a-t-il vérifié son dossier spam ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

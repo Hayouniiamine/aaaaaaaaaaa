@@ -1,0 +1,84 @@
+{
+  "id": "playbook-tickets",
+  "scope": "general",
+  "title": "Tickets — création / suivi",
+  "triggers": [
+    "assigner",
+    "créer ticket",
+    "escalade",
+    "incident",
+    "open ticket",
+    "priorité",
+    "réclamation",
+    "statut ticket",
+    "support",
+    "ticket"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer un ticket :\n• Ouvrez Tickets → “Créer”\n• Renseignez Sujet + description claire + URL concernée\n• Ajoutez pièces jointes (captures, logs, code erreur)\n• Définissez priorité si disponible\n\nQuel est le sujet du ticket et l’URL concernée ?",
+      "actions": [
+        "create_ticket"
+      ],
+      "step_id": "SOLVE_01_CR_ER_UN_TICKET_OU_0CF42B"
+    },
+    {
+      "kind": "solve",
+      "response": "Si vous ne voyez pas le ticket :\n• Vérifiez filtres (statut, date, assigné)\n• Essayez recherche par mot-clé / ID\n• Rechargez la page\n\nQuel filtre / statut est sélectionné ?",
+      "actions": [
+        "check_ticket_filters"
+      ],
+      "step_id": "SOLVE_02_SI_VOUS_NE_VOYEZ_P_3EE4DA"
+    },
+    {
+      "kind": "solve",
+      "response": "Si la création échoue :\n• Vérifiez champs obligatoires (sujet, description)\n• Testez un autre navigateur / navigation privée\n• Vérifiez droits du compte (rôle)\n\nQuelle erreur s’affiche exactement ?",
+      "actions": [
+        "check_permissions"
+      ],
+      "step_id": "SOLVE_03_SI_LA_CR_ATION_CHO_219BBD"
+    },
+    {
+      "kind": "escalate",
+      "reason": "ticket_module_failure",
+      "step_id": "ESCALATE_04_ESCALATE_0E6BEF",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "ticket_module_failure",
+        "repro_steps": [],
+        "evidence": [
+          "ticket_id",
+          "what_needed"
+        ],
+        "suspected_component": "general",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_05_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "ask",
+      "question": "Donnez-moi : capture de l’erreur + rôle utilisateur + URL (/tickets) + heure du test.",
+      "step_id": "ASK_06_DONNEZ_MOI_CAPTURE_D76FC1",
+      "field": "what_needed"
+    }
+  ],
+  "canonical_scope": "support",
+  "required_fields": [
+    {
+      "key": "ticket_id",
+      "question": "Quel ticket (ID) ?"
+    },
+    {
+      "key": "what_needed",
+      "question": "Qu’est-ce que vous voulez faire (créer, suivre, répondre) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

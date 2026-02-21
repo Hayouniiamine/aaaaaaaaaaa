@@ -1,0 +1,188 @@
+{
+  "id": "playbook-customers",
+  "scope": "customers",
+  "title": "Clients — gestion / recherche / doublons / fidélité / WhatsApp / blocage",
+  "triggers": [
+    "appel",
+    "bloquer numéro",
+    "client",
+    "client vérifié",
+    "clients",
+    "création auto",
+    "customers",
+    "doublon",
+    "duplicate customer",
+    "email",
+    "fiche client",
+    "fidélité",
+    "historique commandes",
+    "numéro bloqué",
+    "points",
+    "statut vérifié",
+    "suppression",
+    "téléphone",
+    "whatsapp"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Rechercher un client (/customers) :\n• Clients → utilisez la barre de recherche\n• Recherchez par :\n  - Nom ou prénom\n  - Téléphone (format exact)\n  - Email\n  - ID client\n• Utilisez les filtres actifs si disponibles (statut, date création, statut vérifié)\n• Vérifiez que les filtres ne limitent pas les résultats\n\nQuel identifiant avez-vous (téléphone/email/nom) ? Le numéro est-il au format international (+216...) ou local ?",
+      "actions": [
+        "search_customer",
+        "check_active_filters"
+      ],
+      "success_indicator": "Client trouvé avec fiche complète affichée",
+      "common_errors": [
+        "Format téléphone différent (+216 vs 0 vs sans préfixe)",
+        "Espaces dans le numéro",
+        "Email avec casse différente",
+        "Filtres actifs masquant le client"
+      ],
+      "step_id": "SOLVE_01_RECHERCHER_UN_CLIE_2ACA4E"
+    },
+    {
+      "kind": "solve",
+      "response": "Doublons / même numéro de téléphone :\n⚠️ Problème fréquent : téléphone principal vs secondaire\n✓ Recherchez le téléphone exact → notez tous les résultats\n✓ Comparez :\n  - Téléphone principal vs téléphone secondaire\n  - Format (avec/sans +216, avec/sans espaces)\n  - Dates de création (gardez le plus ancien généralement)\n  - Nombre de commandes sur chaque fiche\n  - Total dépensé\n✓ Consolidez les infos importantes sur une seule fiche\n✓ Si outil de fusion existe : fusionnez les doublons\n✓ Sinon : notez l'ID correct et utilisez-le pour les commandes futures, supprimez l'autre\n\nAvez-vous trouvé 2+ fiches avec le même téléphone ? Donnez les IDs et nombre de commandes de chaque.",
+      "actions": [
+        "handle_duplicates",
+        "merge_customers",
+        "consolidate_customer_data"
+      ],
+      "success_indicator": "Un seul client actif avec historique consolidé",
+      "best_practice": "Uniformisez le format téléphone dès la saisie (ex: +216XXXXXXXX) pour éviter les doublons futurs",
+      "step_id": "SOLVE_02_DOUBLONS_M_ME_NUM__76A8D0"
+    },
+    {
+      "kind": "solve",
+      "response": "Fiche client — informations :\n• Création automatique à chaque nouvelle commande (si téléphone/email nouveau)\n• Informations stockées :\n  - Nom, prénom, téléphone*, email\n  - Adresses (plusieurs possibles)\n  - Compteur commandes\n  - Total dépensé\n  - Statut vérifié (Oui/Non)\n  - Points fidélité (si système activé)\n  - Historique commandes\n  - Historique réclamations\n• Édition/suppression possible depuis la liste\n\nQuelle information voulez-vous consulter ou modifier ?",
+      "actions": [
+        "view_customer_profile",
+        "edit_customer_info"
+      ],
+      "success_indicator": "Fiche client à jour avec toutes les informations",
+      "step_id": "SOLVE_03_FICHE_CLIENT_INFOR_AB9F48"
+    },
+    {
+      "kind": "solve",
+      "response": "Si les infos client ne s'enregistrent pas :\n✓ Vérifiez champs requis : Téléphone* obligatoire (au minimum)\n✓ Vérifiez format téléphone (chiffres uniquement ou format international)\n✓ Vérifiez format email (si fourni)\n✓ Rafraîchissez la page (Ctrl+F5) et réessayez\n✓ Testez en navigation privée\n✓ Vérifiez vos permissions utilisateur\n✓ Testez avec données minimales d'abord (juste téléphone)\n\nQuel champ exactement refuse l'enregistrement ? Quel message d'erreur ?",
+      "actions": [
+        "update_customer",
+        "verify_required_fields",
+        "check_user_permissions"
+      ],
+      "success_indicator": "Informations enregistrées sans erreur",
+      "escalation_criteria": "Erreur persiste avec champs valides + navigation privée + permissions OK",
+      "step_id": "SOLVE_04_SI_LES_INFOS_CLIEN_5D47D1"
+    },
+    {
+      "kind": "solve",
+      "response": "Statut vérifié & Points fidélité :\n• Statut vérifié : marque les clients confirmés/validés (usage selon votre process)\n• Points fidélité (si activé) :\n  - Cumul automatique selon montant dépensé\n  - Utilisation au POS ou en ligne (selon config)\n  - Consultables dans la fiche client\n  - Gérables manuellement si besoin (ajout/retrait points)\n• Association client au POS importante pour paiements différés et fidélité\n\nVoulez-vous activer/gérer la fidélité ou marquer un client comme vérifié ?",
+      "actions": [
+        "manage_loyalty_points",
+        "set_verified_status"
+      ],
+      "success_indicator": "Points fidélité à jour, statut vérifié enregistré",
+      "step_id": "SOLVE_05_STATUT_V_RIFI_POIN_4734FD"
+    },
+    {
+      "kind": "solve",
+      "response": "Bloquer un numéro (spam/abus) :\n• Depuis la fiche commande : ouvrez vue latérale (œil) → 'Bloquer ce numéro'\n• Ou depuis la fiche client si option disponible\n• Confirmez le blocage\n• Comportement : empêche nouvelles commandes selon configuration\n• Visible dans la liste des numéros bloqués (paramètres sécurité)\n\nPourquoi voulez-vous bloquer ce numéro (spam, abus, impayés) ?",
+      "actions": [
+        "block_phone_number",
+        "manage_blocked_numbers"
+      ],
+      "success_indicator": "Numéro bloqué et visible dans la liste de sécurité",
+      "note": "Utilisez avec précaution, vérifiez bien avant de bloquer définitivement",
+      "step_id": "SOLVE_06_BLOQUER_UN_NUM_RO__7B2375"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Problème technique empêchant modification/recherche client, ou doublons complexes nécessitant fusion manuelle",
+      "required_info": [
+        "ID(s) client concerné(s)",
+        "Capture écran de l'erreur ou du problème",
+        "Étapes exactes effectuées",
+        "Navigateur + version",
+        "Rôle utilisateur",
+        "Pour doublons : IDs, téléphones, nombre de commandes de chaque"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_82A84D",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Problème technique empêchant modification/recherche client, ou doublons complexes nécessitant fusion manuelle",
+        "repro_steps": [],
+        "evidence": [
+          "ID(s) client concerné(s)",
+          "Capture écran de l'erreur ou du problème",
+          "Étapes exactes effectuées",
+          "Navigateur + version",
+          "Rôle utilisateur",
+          "Pour doublons : IDs, téléphones, nombre de commandes de chaque"
+        ],
+        "suspected_component": "customers",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : ID client(s) + capture + étapes + navigateur + rôle. Pour doublons : IDs + téléphones + nb commandes.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_09_POUR_ESCALADER_ID__73C3F5",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Clients — gestion / recherche / doublons / fidélité / WhatsApp / blocage",
+        "repro_steps": [],
+        "evidence": [
+          "customer_identifier",
+          "what_fails"
+        ],
+        "suspected_component": "customers",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/customers - Module de gestion clients",
+    "Création auto à chaque commande, édition/suppression, compteur commandes, total dépensé, statut vérifié",
+    "Points fidélité (si activé), blocage numéros"
+  ],
+  "common_workflows": [
+    "Recherche client → consultation fiche → vérification historique → modification si besoin",
+    "Détection doublon → vérification infos → fusion ou suppression → uniformisation future",
+    "Gestion fidélité → consultation points → utilisation POS → cumul automatique"
+  ],
+  "best_practices": [
+    "Uniformisez le format téléphone dès la saisie (+216XXXXXXXX sans espaces)",
+    "Vérifiez doublons régulièrement via recherche téléphone",
+    "Associez toujours un client au POS pour paiements différés et fidélité",
+    "Utilisez le statut vérifié pour marquer les clients validés/fiables",
+    "Ne bloquez un numéro qu'après vérification (spam avéré, abus répété)"
+  ],
+  "canonical_scope": "customers",
+  "required_fields": [
+    {
+      "key": "customer_identifier",
+      "question": "Quel client (email/tél) ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu’est-ce qui ne marche pas (création, doublon, login) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

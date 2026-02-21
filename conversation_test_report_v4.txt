@@ -1,0 +1,577 @@
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ TIKTAK PRO AI — CONVERSATION ACCURACY TEST v4                                                     ║
+║ Grounded in: detection.ts · governance.ts · helpers.ts · routes.ts · prompt.ts                    ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  📊 Test Results:     1000 conversations
+  ⏱️  Duration:        2589s (43.2 min)  |  Avg: 2.6s/conv
+  🔗 Endpoint:         https://tiktak-rag-worker.hayouniamine11.workers.dev/chat
+  🌱 Seed:            2026
+  📅 Date:            2026-02-21 20:33:39
+
+
+  AUTO-LABELER VALIDATION (Gate B/A measurement error)
+  Module: 100%  |  Verdict: 100%  |  Gov-Escalate: 100% (4 deterministic cases)
+  ✓  Labeler quality acceptable
+
+****************************************************************************************************
+  PRIMARY KPI — RESOLVED WITHOUT HUMAN INTERVENTION
+****************************************************************************************************
+  Resolved:        0 / 1000  (0.0%)
+  Needs Human:  1000 / 1000  (100.0%)
+
+  Resolution by verdict:
+    user_side          3 tickets |    0 resolved (0.0%)
+    ?                997 tickets |    0 resolved (0.0%)
+
+----------------------------------------------------------------------------------------------------
+  PASS/FAIL GATES
+----------------------------------------------------------------------------------------------------
+  Gate A — Verdict (tiktak_side/user_side/unclear)       3/1000  (0.3%)
+  Gate B — Category (correct module)                   161/1000  (16.1%)
+  Gate C — No Hallucination                           1000/1000  (100.0%)  [excl. governed=None]
+  Gate D — Actionable (semantic v3)                      0/1000  (0.0%)
+  Gate E — Governance Compliance (governed tickets only)     0/19  (0.0%)
+  Gate F — Ticket Type (bug/question/demand/incident)     2/1000  (0.2%)
+  Gate G — next_question when verdict=unclear            3/3  (100.0%)
+  Gate H — escalate ↔ verdict consistent              1000/1000  (100.0%)
+  Gate I — Language detection (fr/ar/darija/en)          3/1000  (0.3%)
+
+  All core gates (A+B+C+D) pass: 0/1000 (0.0%)
+
+----------------------------------------------------------------------------------------------------
+  GOVERNANCE COMPLIANCE (deterministic override accuracy)
+----------------------------------------------------------------------------------------------------
+  Source: governance.ts decision table — P0=false_positive, P1=5xx, P3=site_down, emotion
+
+  Gov Tag                   N  Must-Esc  AI-Esc%  Compliant%   Resolved%
+  ────────────────────── ──── ───────── ──────── ─────────── ───────────
+  http_5xx                  6       6/6     0.0%        0.0%        0.0%
+  site_down                12     12/12     0.0%        0.0%        0.0%
+  emotion                   1       1/1     0.0%        0.0%        0.0%
+  none                    981     0/981     0.0%        0.0%        0.0%
+
+----------------------------------------------------------------------------------------------------
+  CONFIDENCE CALIBRATION  (signals.confidence — FIXED PATH vs v3)
+----------------------------------------------------------------------------------------------------
+  Conversations with confidence > 0: 3/1000
+  Avg confidence: 1.000  |  Min: 1.000  |  Max: 1.000
+  ECE: 0.9500  (0=perfect, >0.15=misleading)
+  ⚠  Poor calibration
+
+       Bin      N     Acc%   AvgConf      Cal?
+  ────────  ─────  ───────  ────────  ────────
+   80-100%      3     0.0%      1.00     UNDER
+
+----------------------------------------------------------------------------------------------------
+  VERDICT & MODE DISTRIBUTION
+----------------------------------------------------------------------------------------------------
+  Verdict             Count       %
+  ────────────────── ────── ───────
+  ?                     997   99.7%
+  user_side               3    0.3%
+
+----------------------------------------------------------------------------------------------------
+  MODULE DETECTION (Gate B)
+----------------------------------------------------------------------------------------------------
+  Correct:  161  Wrong: 839  Neutral (accept-any): 0
+  Accuracy (excl neutral): 16.1%
+
+  Detected Category       Count       %
+  ────────────────────── ────── ───────
+  general                     3    0.3%
+
+  Top Module Mismatches:
+  Description                                             Count
+  ─────────────────────────────────────────────────────── ─────
+  Commande → exp:orders got:general                          82
+  Autre → exp:settings got:general                           77
+  Paramétrages → exp:settings got:general                    68
+  Produits → exp:products got:general                        54
+  Page produits → exp:products got:general                   45
+  Page d'accueil → exp:builder got:general                   36
+  Website builder → exp:builder got:general                  31
+  Paiement en ligne → exp:payments got:general               27
+  Applications → exp:apps got:general                        22
+  Website builder → exp:settings got:general                 22
+  Intégration d'un livreur → exp:shipping got:general        22
+  Checkout → exp:orders got:general                          18
+  Page produits → exp:builder got:general                    15
+  Navigation → exp:builder got:general                       13
+  Navigation → exp:settings got:general                      13
+
+----------------------------------------------------------------------------------------------------
+  LANGUAGE DETECTION (Gate I)
+----------------------------------------------------------------------------------------------------
+  Overall accuracy: 3/1000 (0.3%)
+
+    Expected      N   Correct%  Detected (wrong ones)
+  ──────────  ─────  ─────────  ─────────────────────────
+          fr    942       0.3%  
+          ar     14       0.0%  
+      darija     28       0.0%  
+          en     16       0.0%  
+
+----------------------------------------------------------------------------------------------------
+  TICKET TYPE DETECTION (Gate F)
+----------------------------------------------------------------------------------------------------
+  Overall accuracy: 2/1000 (0.2%)
+
+  Detected Type     Count        %
+  ───────────────  ──────  ───────
+  question              3     0.3%
+
+----------------------------------------------------------------------------------------------------
+  RESULTS BY TICKET SUBJECT
+----------------------------------------------------------------------------------------------------
+  Subject                         N   Res%    GA%    GB%    GD%  Score%
+  ──────────────────────────── ──── ────── ────── ────── ────── ───────
+  Autre                         257   0.0%   0.0%  62.6%   0.0%   38.4%
+  Paramétrages                  112   0.0%   0.9%   0.0%   0.0%   27.9%
+  Commande                      106   0.0%   0.0%   0.0%   0.0%   27.1%
+  Page produits                  74   0.0%   0.0%   0.0%   0.0%   27.4%
+  Website builder                71   0.0%   0.0%   0.0%   0.0%   27.4%
+  Produits                       69   0.0%   0.0%   0.0%   0.0%   27.7%
+  Page d'accueil                 52   0.0%   1.9%   0.0%   0.0%   27.3%
+  Navigation                     43   0.0%   0.0%   0.0%   0.0%   27.0%
+  Applications                   42   0.0%   0.0%   0.0%   0.0%   27.7%
+  Intégration d'un livreur       37   0.0%   0.0%   0.0%   0.0%   27.3%
+  Paiement en ligne              37   0.0%   2.7%   0.0%   0.0%   28.1%
+  Checkout                       28   0.0%   0.0%   0.0%   0.0%   27.1%
+  Vente                          19   0.0%   0.0%   0.0%   0.0%   28.1%
+  Stock                          14   0.0%   0.0%   0.0%   0.0%   27.4%
+  Landing page                   11   0.0%   0.0%   0.0%   0.0%   25.4%
+  Statistique                    11   0.0%   0.0%   0.0%   0.0%   27.0%
+  Clients                         7   0.0%   0.0%   0.0%   0.0%   28.2%
+  Attributs                       5   0.0%   0.0%   0.0%   0.0%   28.0%
+  Devis                           5   0.0%   0.0%   0.0%   0.0%   27.2%
+
+----------------------------------------------------------------------------------------------------
+  RESULTS BY TICKET TYPE
+----------------------------------------------------------------------------------------------------
+  Type             N    Res%   EscOK%   GovOK%   Score%
+  ──────────── ───── ─────── ──────── ──────── ────────
+  Critical        89    0.0%   100.0%     0.0%    29.9%
+  Blocking       102    0.0%   100.0%     0.0%    29.9%
+  Problem        465    0.0%   100.0%     0.0%    30.0%
+  Question       235    0.0%   100.0%     0.0%    30.7%
+  Demande        109    0.0%   100.0%     0.0%    31.3%
+
+----------------------------------------------------------------------------------------------------
+  GATE D FAILURE REASONS (actionability)
+----------------------------------------------------------------------------------------------------
+  Empty answer                                                                  997
+  numbered=False, bullets=False, nav=False, actions=0                             3
+
+----------------------------------------------------------------------------------------------------
+  HALLUCINATION REPORT
+----------------------------------------------------------------------------------------------------
+  Conversations with hallucinations: 0/1000 (0.0%)
+  Total hallucination instances:     0
+
+----------------------------------------------------------------------------------------------------
+  SEVERITY DISTRIBUTION
+----------------------------------------------------------------------------------------------------
+  Severity accuracy: 3/1000 (0.3%)
+  low            3 (0.3%)
+  ?            997 (99.7%)
+
+----------------------------------------------------------------------------------------------------
+  RESPONSE TIME (server-side processing_time_ms)
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+  FOLLOW-UP CONTEXT RETENTION
+----------------------------------------------------------------------------------------------------
+  Tested: 313  |  Context kept: 0 (0.0%)
+
+----------------------------------------------------------------------------------------------------
+  MOST COMMON ISSUES
+----------------------------------------------------------------------------------------------------
+  Not actionable: Empty answer                                                  997
+  Verdict '' (mode='') not in expected ['user_side', 'unclear']                 973
+  Language '' != expected 'fr'                                                  939
+  ticket_type '' not in expected ['bug']                                        462
+  ticket_type '' not in expected ['question']                                   234
+  Category ''→'general' WRONG, expected ['settings']                            144
+  Category ''→'general' WRONG, expected ['orders']                              111
+  ticket_type '' not in expected ['demand', 'question']                         107
+  Category ''→'general' WRONG, expected ['products']                            102
+  ticket_type '' not in expected ['bug', 'incident']                            100
+  ticket_type '' not in expected ['incident', 'bug']                             88
+  Category ''→'general' WRONG, expected ['builder']                              87
+  Category ''→'general' WRONG, expected ['settings', 'builder']                  39
+  Category ''→'general' WRONG, expected ['apps']                                 34
+  Language '' != expected 'darija'                                               28
+  Category ''→'general' WRONG, expected ['payments']                             28
+  Category ''→'general' WRONG, expected ['shipping']                             26
+  Category ''→'general' WRONG, expected ['builder', 'products']                  20
+  Verdict '' (mode='') not in expected ['tiktak_side']                           19
+  Category ''→'general' WRONG, expected ['shipping', 'orders']                   18
+  Category ''→'general' WRONG, expected ['technical']                            18
+  Category ''→'general' WRONG, expected ['orders', 'products']                   16
+  Language '' != expected 'en'                                                   16
+  Category ''→'general' WRONG, expected ['products', 'builder']                  14
+  Language '' != expected 'ar'                                                   14
+
+----------------------------------------------------------------------------------------------------
+  WEIGHTED SCORES (Greeting 5%, Problem 80-95%, Follow-up 15%)
+----------------------------------------------------------------------------------------------------
+  Average: 30.3%  |  Median: 28.8%
+  Excellent (≥80%):    0 (0.0%)
+  Good     (60-79%):    0 (0.0%)
+  Fair     (40-59%):  163 (16.3%)
+  Poor     (<40%):    837 (83.7%)
+
+----------------------------------------------------------------------------------------------------
+  WORST 30 CONVERSATIONS (regression candidates)
+----------------------------------------------------------------------------------------------------
+
+  #1 T4182 [Autre] [Critical] [GOV:site_down]
+     Score:16% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour
+
+Nous rencontrons un problème de performance sur notre site web lorsqu’il est visité via l
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #2 T5087 [Commande] [Problem] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour l’équipe,
+Concernant la recherche des informations clients déjà saisies lors de précédentes
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders']
+       ▸ Not actionable: Empty answer
+
+  #3 T1505 [Intégration d'un livreur] [Problem] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: il a un problème d'affichage de bordereau colis chez collicom quand le texte est un peu long 
+exemp
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders', 'shipping']
+       ▸ Not actionable: Empty answer
+
+  #4 T3425 [Navigation] [Question] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: comment faire une remboursement 9.900
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders', 'builder']
+       ▸ Not actionable: Empty answer
+
+  #5 T4259 [Commande] [Problem] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour,
+Je souhaite signaler un problème concernant la non-conformité entre les commandes affichée
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders']
+       ▸ Not actionable: Empty answer
+
+  #6 T2652 [Page d'accueil] [Question] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour , 
+est ce que possible de m'aider comment fragmenter le Navigation Header de notre site web
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['builder']
+       ▸ Not actionable: Empty answer
+
+  #7 T713 [Page d'accueil] [Problem] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: la baniere doit avoir un bouton qui nous mene a la page choisis , sans bouton il ne seras pas clair 
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['customers', 'builder']
+       ▸ Not actionable: Empty answer
+
+  #8 T5067 [Commande] [Problem] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: 1 - Le mail que nous recevons pour nous annoncer une commande ne mentionne pas la taille
+Il y a qua
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders']
+       ▸ Not actionable: Empty answer
+
+  #9 T3209 [Landing page] [Critical] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Le site web ne s'affiche pas
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['builder']
+       ▸ Not actionable: Empty answer
+
+  #10 T4328 [Landing page] [Problem] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonsoir
+j'ai trouve mon site n'est pas activé !!
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['builder']
+       ▸ Not actionable: Empty answer
+
+  #11 T1455 [Autre] [Question] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour 
+Svp j ai un nom de domaine de la part d ooredoo host je veux le lier avec boutique tiktak
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['settings']
+       ▸ Not actionable: Empty answer
+
+  #12 T4294 [Page produits] [Blocking] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: https://hammami-mall.tn/product/71989/%C3%A9lectrom%C3%A9nager-tn/66465/discover-purificateur-d'air-
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['products']
+       ▸ Not actionable: Empty answer
+
+  #13 T3459 [Website builder] [Question] 
+     Score:20% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: je veux utiliser la template  Timevo
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['builder']
+       ▸ Not actionable: Empty answer
+
+  #14 T3182 [Navigation] [Problem] [GOV:http_5xx]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour
+Je rencontre un problème avec ma boutique en ligne concernant l’affichage des produits dans
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #15 T4287 [Page d'accueil] [Blocking] [GOV:site_down]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour , le site web est bloqué .https://palmarescollection.com/blocked
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #16 T1631 [Autre] [Problem] [GOV:http_5xx]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour, je souhaite que vous avez bien. voici quelques probleme que j'ai trouver au cours de concep
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #17 T1771 [Landing page] [Problem] [GOV:site_down]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: bllhy khouya site ki zedet domaine maadch yheb yet7al ki nenzel visualiser wki nekteb domaine fi goo
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #18 T4871 [Website builder] [Problem] [GOV:site_down]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: le site ne marche pas
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #19 T1206 [Checkout] [Problem] [GOV:site_down]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour  pourquoi la traduction due la boutique ne marche  pas en arabe
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['technical']
+       ▸ Not actionable: Empty answer
+
+  #20 T2552 [Navigation] [Problem] [GOV:emotion]
+     Score:21% Resolved:N | A:F B:F C:P D:F E:F
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour 
+Suite à une faute  technique mon site ne fonctionne plus 
+merci
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['tiktak_side']
+       ▸ Category ''→'general' WRONG, expected ['builder']
+       ▸ Not actionable: Empty answer
+
+  #21 T2281 [Checkout] [Question] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour
+J'aimerais savoir comment afficher le prix de livraison à chachout et aussi après avoir pas
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders']
+       ▸ Not actionable: Empty answer
+
+  #22 T3659 [Page d'accueil] [Problem] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour j ai un problème sur page d accueille  tetela3li Kima waritek f pieces jointe et svp nom de 
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['builder']
+       ▸ Not actionable: Empty answer
+
+  #23 T3031 [Autre] [Problem] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: je vais acheter un nom de domaine de  Oxahost  il m'annonce que mon domaine est activé . mais je le 
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['settings']
+       ▸ Not actionable: Empty answer
+
+  #24 T1715 [Autre] [Problem] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Asslema brabi site mta3i http w not secure kima f secreenshot
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['settings']
+       ▸ Not actionable: Empty answer
+
+  #25 T5719 [Paramétrages] [Problem] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour,
+j'ai un problème dans la connexion api conversion et j'ai un message d'erreur dans le meta
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['apps', 'settings']
+       ▸ Not actionable: Empty answer
+
+  #26 T3647 [Applications] [Question] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: salut 
+Je veux s'avoir si vous avez un module d'email marketing efficace pour la fidélisation de me
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['apps']
+       ▸ Not actionable: Empty answer
+
+  #27 T5686 [Page produits] [Problem] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: fel resumé mtaa commande mafamech el remise
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders', 'products']
+       ▸ Not actionable: Empty answer
+
+  #28 T4983 [Produits] [Problem] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Le stock sur Tiktak PRO est compétemnt différent de celui dans SHIPPER même aprés actualiser la conn
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['inventory', 'products']
+       ▸ Not actionable: Empty answer
+
+  #29 T3564 [Commande] [Question] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour,
+Pour les commandes de teste, je vois qu'il n'y a pas moyen de les supprimer à travers l'in
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['orders']
+       ▸ Not actionable: Empty answer
+
+  #30 T1195 [Checkout] [Blocking] 
+     Score:24% Resolved:N | A:F B:F C:P D:F E:N
+     Detected: verdict= cat= esc=None conf=0.00
+     User: Bonjour,
+J'ai créé un compte sur Konnect et j'ai fais la configuration du wallet ID et de la clé co
+     AI:   
+     D-reason: Empty answer
+       ▸ Verdict '' (mode='') not in expected ['user_side', 'unclear']
+       ▸ Category ''→'general' WRONG, expected ['payments', 'orders']
+       ▸ Not actionable: Empty answer
+
+----------------------------------------------------------------------------------------------------
+  PHASE 1-3 ENHANCEMENT METRICS
+----------------------------------------------------------------------------------------------------
+  Phase 1 (Playbook Scoring) active:      0/1000 (0.0%)
+  Phase 2 (Pattern Matching) active:      0/1000 (0.0%)
+  Phase 3 (Facts Confirmation) active:    0/1000 (0.0%)
+
+
+====================================================================================================
+  FINAL GRADE
+====================================================================================================
+  Grade:               D
+  Resolution Rate:     0.0%
+  Weighted Score:      30.3%
+  Module Accuracy:     16.1%
+  Governance Compliant:0.0%  (19 governed tickets)
+  Hallucination-Free:  100.0%
+  Language Acc:        0.3%
+  ECE (calibration):   0.9500
+  Verdict: Poor — fundamental issues
+
+  Methodology Notes:
+  - Resolution requires all 4 core gates: verdict(A) + module(B) + no-halluc(C) + actionable(D)
+  - If governance-triggered (5xx/site_down): additionally requires Gate E
+  - Confidence read from signals.confidence (FIXED from v3 which read wrong field)
+  - Governance patterns replicated exactly from governance.ts decision table
+  - Category normalised via toCoarseModule() — 'domains'→'settings', etc.
+  - Gate G: next_question must be present when verdict=unclear (structural requirement from prompt.ts)
+  - Gate H: escalate boolean must be consistent with verdict (tiktak_side↔true)
+  - Follow-up selection is hash-based (stable across runs with same seed)
+====================================================================================================

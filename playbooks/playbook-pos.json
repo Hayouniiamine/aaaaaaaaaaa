@@ -1,0 +1,216 @@
+{
+  "id": "playbook-pos",
+  "scope": "pos",
+  "title": "POS — Caisse boutique / vente / scan / fidélité / facture / TVA",
+  "triggers": [
+    "acompte",
+    "avoir",
+    "caisse",
+    "code barre",
+    "facture pos",
+    "facturer",
+    "fidélité",
+    "imprimante",
+    "multi boutique",
+    "multi magasin",
+    "paiement partiel",
+    "paiement pos",
+    "points",
+    "pos",
+    "remise pos",
+    "rendu monnaie",
+    "scan",
+    "ticket caisse",
+    "timbre fiscal",
+    "tva pos",
+    "vente"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Démarrer une vente POS (/pos) :\n• Choisissez la boutique (si multi-magasins)\n• Recherchez produit par nom ou cliquez 'Scanner' + code-barres\n• Ajustez quantité (+/−)\n• Répétez pour tous les articles\n• Produits s'ajoutent au panier avec prix, stock, SKU\n\nÀ quelle étape ça bloque (choix boutique, ajout produit, scan, paiement) ?",
+      "actions": [
+        "start_pos_sale",
+        "scan_product",
+        "search_product"
+      ],
+      "success_indicator": "Articles dans panier, prix affichés, stock mis à jour",
+      "step_id": "SOLVE_01_D_MARRER_UNE_VENTE_90B62D"
+    },
+    {
+      "kind": "solve",
+      "response": "Scanner ne fonctionne pas :\n✓ Cliquez dans le champ de recherche avant de scanner\n✓ Configurez douchette mode clavier + suffixe Enter\n✓ Testez scan dans bloc-notes (doit écrire code + Enter)\n✓ Vérifiez code-barres dans fiche produit (doit correspondre)\n✓ Si pas de code-barres : ajoutez-le dans /products\n\nLa douchette écrit-elle dans un bloc-notes ? Le code-barres existe-t-il dans le produit ?",
+      "actions": [
+        "configure_scanner",
+        "add_barcode_to_product",
+        "test_scanner"
+      ],
+      "success_indicator": "Scan ajoute produit automatiquement",
+      "step_id": "SOLVE_02_SCANNER_NE_FONCTIO_BC2C4B"
+    },
+    {
+      "kind": "solve",
+      "response": "Produit introuvable au POS :\n✓ Vérifiez que le produit est actif\n✓ Vérifiez stock disponible sur la boutique sélectionnée\n✓ Vérifiez code-barres/SKU exact\n✓ Testez recherche par nom complet\n✓ Le produit doit être visible dans /products\n\nLe produit est-il actif dans la liste produits ? Stock disponible ?",
+      "actions": [
+        "verify_product_active",
+        "check_stock_pos",
+        "update_product_barcode"
+      ],
+      "success_indicator": "Produit trouvé et ajouté",
+      "step_id": "SOLVE_03_PRODUIT_INTROUVABL_FF5C2A"
+    },
+    {
+      "kind": "solve",
+      "response": "Remises et client fidélité :\n• Remise ligne article : cliquez % sur la ligne → saisissez % ou montant\n• Remise panier : bouton 'Remise' en haut\n• Associer client : bouton 'Client' → recherche/sélection\n• Points fidélité (si activé) :\n  - Affichés après sélection client\n  - Utiliser ou cumuler selon politique\n  - Mis à jour automatiquement après vente\n• Paiement différé/partiel nécessite client associé\n\nVoulez-vous appliquer une remise ou associer un client ?",
+      "actions": [
+        "apply_pos_discount",
+        "associate_customer",
+        "manage_loyalty_points"
+      ],
+      "success_indicator": "Remise appliquée ou client associé avec points",
+      "step_id": "SOLVE_04_REMISES_ET_CLIENT__FBA3A9"
+    },
+    {
+      "kind": "solve",
+      "response": "Paiement POS (Espèces/Carte/Chèque/Différé) :\n• Vérifiez montant à encaisser (panneau vert)\n• Saisissez montant reçu en espèces ou utilisez raccourci (45/50/60)\n• Mode paiement :\n  - Espèces : saisie montant → calcul rendu automatique\n  - Carte : validation directe\n  - Chèque : validation + numéro si demandé\n  - Différé : CLIENT obligatoire, solde reste dû\n• Paiement partiel : activez option → encaissez acompte\n• Validez paiement\n\nQuelle méthode utilisez-vous ? Client sélectionné pour différé/partiel ?",
+      "actions": [
+        "process_payment_cash",
+        "process_payment_card",
+        "process_deferred_payment",
+        "process_partial_payment"
+      ],
+      "success_indicator": "Paiement enregistré, ticket prêt",
+      "step_id": "SOLVE_05_PAIEMENT_POS_ESP_C_240A94"
+    },
+    {
+      "kind": "solve",
+      "response": "Ticket et gestion panier :\n• Imprimer ticket : reçu pour client\n• Mettre en attente : suspend panier (client absent, article à chercher)\n• Charger commande : reprend panier en attente ou commande web à encaisser\n• Vider panier : annule vente en cours\n• L'imprimante doit être configurée (format ticket thermal ou A4)\n\nTicket n'imprime pas ou panier en attente perdu ?",
+      "actions": [
+        "print_receipt",
+        "park_sale",
+        "load_order",
+        "clear_cart"
+      ],
+      "success_indicator": "Ticket imprimé ou panier sauvegardé/récupéré",
+      "troubleshooting": "Imprimante : vérifier pilote, format ticket, imprimante par défaut",
+      "step_id": "SOLVE_06_TICKET_ET_GESTION__808E64"
+    },
+    {
+      "kind": "solve",
+      "response": "Échange/retour depuis POS :\n• Charger commande → recherchez ticket/commande origine\n• Sélectionnez article à retourner → remise en stock\n• Ajoutez nouveaux produits si échange\n• POS calcule différence :\n  - Supplément → encaissez\n  - Trop-perçu → générez avoir ou remboursez\n• Vente tracée, stocks maj automatiquement\n\nÉchange simple ou avec remboursement ?",
+      "actions": [
+        "load_original_order",
+        "process_exchange",
+        "generate_store_credit"
+      ],
+      "success_indicator": "Échange terminé, stocks corrects, transaction tracée",
+      "step_id": "SOLVE_07_CHANGE_RETOUR_DEPU_CBA30D"
+    },
+    {
+      "kind": "solve",
+      "response": "Facture / TVA depuis le POS :\n• Le ticket POS peut servir de reçu client\n• Pour une facture complète avec TVA :\n  - Configurez les informations fiscales dans /settings → Paramétrage global (code TVA, taux %)\n  - Activez les taxes pertinentes dans /settings → Taxes & TVA\n  - Le timbre fiscal (si requis) : ajoutez-le comme taxe type Fixe\n  - Les calculs TVA/TTC sont automatiques sur les lignes produits\n\n✓ Impression facture :\n  - Le ticket POS inclut par défaut : articles, quantités, prix, remises, TVA, total\n  - Pour facture détaillée : exportez la commande POS depuis /orders → imprimer\n  - Vérifiez format imprimante : thermique (ticket) ou A4 (facture)\n\n✓ Problèmes fréquents :\n  - TVA incorrecte sur ticket → vérifier taux par défaut dans /settings\n  - Timbre fiscal non inclus → ajouter taxe fixe dans /settings → Taxes\n  - Logo absent du ticket → téléverser dans /settings → Branding\n  - Facture non générée → accéder via /orders et imprimer depuis la commande\n\nVoulez-vous configurer la TVA sur les tickets ou imprimer une facture complète ?",
+      "actions": [
+        "configure_pos_taxes",
+        "print_pos_invoice",
+        "setup_fiscal_info"
+      ],
+      "success_indicator": "Facture/ticket avec TVA correcte et informations fiscales",
+      "common_errors": [
+        {
+          "symptom": "TVA manquante sur ticket POS",
+          "fix": "Activer le taux TVA dans /settings → Taxes & TVA"
+        },
+        {
+          "symptom": "Timbre fiscal absent",
+          "fix": "Ajouter taxe type Fixe dans /settings → Taxes"
+        },
+        {
+          "symptom": "Logo non imprimé",
+          "fix": "Téléverser logo dans /settings → Paramétrage global → Branding"
+        },
+        {
+          "symptom": "Montant TTC incorrect",
+          "fix": "Vérifier type taxe (Fixe vs %) et valeur"
+        }
+      ],
+      "step_id": "SOLVE_08_FACTURE_TVA_DEPUIS_644F7C"
+    },
+    {
+      "kind": "solve",
+      "response": "Multi-boutiques et stock par magasin :\n• Sélectionnez la boutique active AVANT de commencer une vente\n• Les stocks décrémentent sur la boutique/entrepôt choisi\n• Changez de boutique pour encaisser sur un autre point de vente\n• Chaque boutique a son propre inventaire\n\n✓ Configuration multi-boutiques :\n  - /settings → Marques : créez une marque par boutique si nécessaire\n  - /stock-management : gérez les stocks par emplacement\n  - Au POS : sélecteur de boutique en haut\n\n✓ Problèmes fréquents :\n  - Stock incorrect → vérifier la boutique sélectionnée\n  - Produit indisponible → stock épuisé sur CETTE boutique (peut être dispo ailleurs)\n  - Stock négatif après échange → vérifier que le retour est validé sur la bonne boutique\n\nQuelle boutique utilisez-vous ? Combien de points de vente avez-vous ?",
+      "actions": [
+        "select_store",
+        "check_store_stock",
+        "manage_multi_store"
+      ],
+      "success_indicator": "Bonne boutique sélectionnée, stocks cohérents",
+      "step_id": "SOLVE_09_MULTI_BOUTIQUES_ET_F462C0"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_10_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Scanner configuré mais ne fonctionne pas, paiement impossible malgré vérifications, ou ticket n'imprime jamais",
+      "required_info": [
+        "Capture module POS",
+        "Étape bloquée",
+        "Navigateur/appareil",
+        "Marque douchette si scan",
+        "Modèle imprimante si ticket",
+        "Message erreur",
+        "Heure"
+      ],
+      "step_id": "ESCALATE_11_ESCALATE_D32125",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Scanner configuré mais ne fonctionne pas, paiement impossible malgré vérifications, ou ticket n'imprime jamais",
+        "repro_steps": [],
+        "evidence": [
+          "Capture module POS",
+          "Étape bloquée",
+          "Navigateur/appareil",
+          "Marque douchette si scan",
+          "Modèle imprimante si ticket",
+          "Message erreur",
+          "Heure"
+        ],
+        "suspected_component": "pos",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/pos - Vente magasin avec scan, remises, échanges, acomptes, fidélité",
+    "/settings → Taxes & TVA - Configuration TVA et timbre fiscal pour tickets POS",
+    "/settings → Paramétrage global - Logo, signature, code TVA pour documents",
+    "/settings → Marques - Multi-boutiques / multi-brand",
+    "/stock-management - Gestion stock par boutique"
+  ],
+  "best_practices": [
+    "Associez client pour différé/fidélité",
+    "Scanner mode clavier + Enter",
+    "Testez imprimante format avant rush",
+    "Mettez en attente si client s'absente",
+    "Vérifiez stock boutique active",
+    "Configurez TVA et timbre fiscal AVANT premier ticket",
+    "Téléversez logo pour tickets professionnels",
+    "Choisissez la bonne boutique avant chaque vente multi-magasin"
+  ],
+  "canonical_scope": "pos",
+  "required_fields": [
+    {
+      "key": "device",
+      "question": "Quel appareil (scanner/caisse) ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Quel problème exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

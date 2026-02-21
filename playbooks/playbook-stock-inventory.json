@@ -1,0 +1,238 @@
+{
+  "id": "playbook-stock-inventory",
+  "scope": "products",
+  "title": "Stock & Inventaire — Quantité / Synchronisation / Rupture / Import",
+  "triggers": [
+    "stock",
+    "inventaire",
+    "inventory",
+    "quantité",
+    "quantity",
+    "rupture",
+    "épuisé",
+    "out of stock",
+    "en stock",
+    "in stock",
+    "stock ne se met pas à jour",
+    "étiquette épuisé"
+  ],
+  "description": "Gestion et résolution des problèmes de stock: quantités ne se mettent pas à jour, label 'Épuisé' n'apparaît pas, stock négatif, synchronisation entre POS et online, import stock en masse.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Stock/Inventaire : (1) Problème (stock ne se met pas à jour après vente / label 'Épuisé' ne s'affiche pas / stock négatif / sync POS-Online / import en masse) ? (2) Gestion stock activée pour le produit ? (3) Statut commande ?",
+      "step_id": "ASK_01_STOCK_INVENTAIRE_1_03F4BA",
+      "field": "stock_management_enabled"
+    },
+    {
+      "kind": "solve",
+      "title": "Activer la gestion du stock",
+      "response": "Configuration de base pour gérer le stock :\n\n✓ 1. ACTIVER PAR PRODUIT\n  • Produits → [Produit] → Inventaire\n  • ☑ 'Gérer le stock' → Cocher\n  • Champs disponibles:\n    - Quantité en stock: [nombre]\n    - Seuil d'alerte: [ex: 5]\n    - Autoriser commandes si stock=0: Oui/Non\n  • Enregistrer\n\n✓ 2. PARAMÈTRES GLOBAUX\n  • Paramètres → Inventaire (/settings)\n  • Configuration globale:\n    - Mode déduction: Automatique ✓ (recommandé)\n    - Déduction manuelle: Désactivé (sauf cas spécial)\n    - Afficher 'Épuisé' si stock=0: ✓ Oui\n    - Autoriser backorder: Oui/Non\n    - Unité de mesure: Pièces/Kg/Litres/etc\n\n✓ 3. STOCK PAR VARIANTE\n  Si produit a variantes (taille/couleur):\n  • Chaque variante = son propre stock\n  • Gérer individuellement:\n    - Produits → [Produit] → Variantes\n    - [Variante] → Stock: [quantité]\n  • Stock total produit = somme variantes\n  • Variante épuisée = masquée au checkout\n\n✓ 4. STOCK INITIAL\n  • Première fois:\n    - Inventaire physique complet\n    - Compter tout le stock\n    - Saisir quantités exactes\n  • Puis: système gère automatiquement\n\nGestion du stock activée pour ce produit ?",
+      "actions": [
+        "enable_stock_tracking",
+        "set_initial_quantity",
+        "configure_global_settings",
+        "setup_variant_stock"
+      ],
+      "success_indicator": "Stock géré, quantité définie, déduction automatique activée",
+      "time_estimate": "5 minutes par produit, 15 minutes pour paramètres globaux",
+      "step_id": "SOLVE_02_ACTIVER_LA_GESTION_6CAF13"
+    },
+    {
+      "kind": "solve",
+      "title": "Stock Ne Se Met Pas à Jour Après Vente",
+      "response": "Si stock reste identique après commande :\n\n✓ 1. VÉRIFIER MODE DÉDUCTION\n  • Paramètres → Inventaire\n  • Mode déduction:\n    - Automatique ✓ → Stock déduit auto\n    - Manuelle ❌ → Vous devez déduire\n  • Si Manuelle: changer en Automatique\n  • Sauvegarder\n\n✓ 2. VÉRIFIER STATUT COMMANDE\n  Stock déduit seulement si statut:\n  • ✓ 'Confirmée'\n  • ✓ 'Payée'\n  • ✓ 'En préparation'\n  • ✓ 'Expédiée'\n  \n  Stock PAS déduit si:\n  • ❌ 'En attente'\n  • ❌ 'Brouillon'\n  • ❌ 'Annulée'\n  \n  Solution:\n  • Commandes → [Commande]\n  • Changer statut → 'Confirmée'\n  • Stock se met à jour\n\n✓ 3. STOCK NON GÉRÉ\n  • Produit → Inventaire\n  • 'Gérer le stock' DOIT être ☑\n  • Si ☐ décoché:\n    - Stock jamais déduit\n    - Système ignore quantité\n  • Cocher + définir quantité\n\n✓ 4. DÉLAI SYNCHRONISATION\n  • Déduction pas instantanée toujours\n  • Attendre 1-2 minutes\n  • Rafraîchir page produit (F5)\n  • Vérifier à nouveau\n\n✓ 5. MULTI-SOURCES (POS + Online)\n  Si ventes à la fois:\n  • Point de vente (POS)\n  • Boutique en ligne\n  \n  Problème sync possible:\n  • Vérifier sync POS activée\n  • Paramètres → POS → Synchronisation\n  • Délai sync: jusqu'à 5 minutes\n  • Forcer sync manuelle si disponible\n\n✓ 6. BUG SYNCHRONISATION\n  Si tout configuré mais pas de déduction:\n  • Désactiver/réactiver gestion stock\n  • Déduire cette fois manuellement:\n    - Produit → Stock: [quantité actuelle - vendue]\n  • Surveiller prochaines ventes\n  • Si persiste: escalade\n\nLe mode de déduction est-il Automatique ?",
+      "actions": [
+        "verify_auto_deduction_enabled",
+        "change_order_status_confirmed",
+        "enable_stock_management",
+        "wait_sync_delay",
+        "force_manual_sync_pos",
+        "manual_stock_deduction"
+      ],
+      "success_indicator": "Stock déduit automatiquement à chaque vente confirmée",
+      "troubleshooting": {
+        "Stock déduit 2x": "Commande comptée 2 fois, vérifier doublons",
+        "Stock déduit mais commande annulée": "Restaurer stock manuellement +quantité",
+        "POS déduit mais pas online": "Sync POS désactivée, vérifier paramètres",
+        "Stock négatif": "Survente, désactiver ventes si stock=0"
+      },
+      "step_id": "SOLVE_03_STOCK_NE_SE_MET_PA_DDD5C6"
+    },
+    {
+      "kind": "solve",
+      "title": "Label 'Épuisé' N'Apparaît Pas",
+      "response": "Si stock=0 mais produit pas marqué épuisé sur site :\n\n✓ 1. PARAMÈTRE GLOBAL\n  • Paramètres → Inventaire\n  • ☑ 'Afficher épuisé quand stock=0'\n  • Si ☐ décoché:\n    - Produit reste visible\n    - Pas de label épuisé\n  • Cocher + Sauvegarder\n\n✓ 2. COMPORTEMENT SI STOCK=0\n  Options disponibles:\n  • Masquer produit (invisible)\n  • Afficher 'Épuisé' (visible + label)\n  • Autoriser backorder (commande possible)\n  \n  Configuration recommandée:\n  • Afficher 'Épuisé' ✓\n  • Masquer produit ❌ (sauf si souhaité)\n  • Backorder selon stratégie\n\n✓ 3. VÉRIFIER STOCK RÉEL\n  • Produit → Inventaire\n  • Stock = 0 ?\n  • Si stock > 0: normal pas d'épuisé\n  • Si stock = 0 mais affiché > 0:\n    - Cache problème\n    - Ctrl+F5 rafraîchir\n\n✓ 4. TEMPLATE/THÈME\n  • Certains templates masquent label\n  • Templates → [Votre template]\n  • Section 'Produits' → 'Stock Status'\n  • Vérifier code template:\n    ```\n    {% if product.stock == 0 %}\n      <span class=\"out-of-stock\">Épuisé</span>\n    {% endif %}\n    ```\n  • Si manquant: ajouter ou changer template\n\n✓ 5. CSS PERSONNALISÉ\n  • CSS custom peut masquer label\n  • Inspecter élément (F12)\n  • Chercher classe 'out-of-stock'\n  • Vérifier:\n    ```css\n    .out-of-stock {\n      display: none; /* ← Problème! */\n    }\n    ```\n  • Si trouvé: changer en display: block;\n\n✓ 6. CACHE SITE\n  • Vider cache Cloudflare (admin)\n  • Ctrl+F5 sur page produit\n  • Attendre 2-3 minutes\n  • Tester navigation privée\n\nLe paramètre 'Afficher épuisé' est-il activé ?",
+      "actions": [
+        "enable_out_of_stock_display",
+        "verify_actual_stock_zero",
+        "check_template_code",
+        "inspect_css_hiding",
+        "clear_site_cache"
+      ],
+      "success_indicator": "Label 'Épuisé' visible sur produits stock=0",
+      "common_errors": [
+        "Paramètre désactivé → Activer affichage épuisé",
+        "Template ne supporte pas → Ajouter code ou changer template",
+        "CSS masque label → Vérifier display: none",
+        "Cache → Ctrl+F5 rafraîchir"
+      ],
+      "step_id": "SOLVE_04_LABEL_PUIS_N_APPAR_6B240F"
+    },
+    {
+      "kind": "solve",
+      "title": "Stock Négatif (Survente)",
+      "response": "Si stock affiche -1, -5, etc. (survente) :\n\n⚠️ CAUSES SURVENTE:\n  • Ventes simultanées (2 clients même produit)\n  • Délai synchronisation POS ↔ Online\n  • Stock mal initialisé (trop bas)\n  • Bug déduction multiple\n\n✓ 1. CORRECTION IMMÉDIATE\n  • Produits → [Produit] → Stock\n  • Mettre à 0 (minimum)\n  • Ou quantité réelle si réappro\n  • Enregistrer\n\n✓ 2. DÉSACTIVER SURVENTE\n  • Produit → Inventaire\n  • ☐ 'Autoriser commandes si stock=0'\n  • Décocher cette option\n  • Résultat:\n    - Stock=0 → 'Ajouter au panier' désactivé\n    - Impossible survendre\n    - Label 'Épuisé' affiché\n\n✓ 3. VÉRIFIER COMMANDES RÉCENTES\n  • Commandes → Filtrer par produit\n  • Compter ventes période suspecte\n  • Vérifier doublons (même client 2x)\n  • Annuler doublon si erreur\n\n✓ 4. SYNCHRONISATION POS\n  Si POS + Online:\n  • Paramètres → POS → Sync temps réel\n  • Activer 'Sync stock instantanée'\n  • Réduire délai sync (< 1 min)\n  • Évite ventes croisées\n\n✓ 5. STOCK DE SÉCURITÉ\n  Stratégie recommandée:\n  • Stock réel: 50 unités\n  • Stock affiché online: 45 unités\n  • Marge sécurité: 5 unités (POS)\n  • Réduit risque survente\n  \n  Configuration:\n  • Stock physique: 50\n  • Seuil alerte: 10\n  • Buffer: 5 (ne pas vendre online)\n\nLe stock est-il maintenant corrigé (>= 0) ?",
+      "actions": [
+        "reset_stock_to_zero",
+        "disable_overselling",
+        "verify_recent_orders",
+        "enable_realtime_pos_sync",
+        "implement_safety_buffer"
+      ],
+      "success_indicator": "Stock >= 0, survente impossible, sync temps réel activée",
+      "note": "Survente = mauvaise expérience client (commande annulée après paiement)",
+      "step_id": "SOLVE_05_STOCK_N_GATIF_SURV_22AAB5"
+    },
+    {
+      "kind": "solve",
+      "title": "Import Stock en Masse (CSV/Excel)",
+      "response": "Mettre à jour stock de 100+ produits rapidement :\n\n✓ 1. EXPORTER STOCK ACTUEL\n  • Produits → Actions\n  • Exporter vers Excel\n  • Fichier contient:\n    - SKU (référence)\n    - Nom produit\n    - Stock actuel\n    - Prix\n    - Autres infos\n  • Sauvegarder: stock-export.xlsx\n\n✓ 2. MODIFIER DANS EXCEL\n  • Ouvrir fichier Excel\n  • Modifier colonne 'Stock' ou 'Quantité'\n  • Ne PAS modifier:\n    - SKU (identifiant)\n    - Colonnes système\n  • Nouvelles quantités:\n    - 50 → nouveau stock\n    - +10 → ajouter 10 (si supporté)\n  • Sauvegarder CSV UTF-8\n\n✓ 3. IMPORTER\n  • Produits → Importer\n  • Choisir fichier CSV/Excel\n  • Mapper colonnes:\n    - SKU → SKU (obligatoire)\n    - Stock → Quantité\n  • Mode:\n    - Mise à jour (pas création)\n  • Valider import\n\n✓ 4. VÉRIFIER IMPORT\n  • Consulter rapport import:\n    - X produits mis à jour\n    - Y erreurs (SKU inconnu)\n  • Filtrer produits modifiés\n  • Vérifier 5-10 exemples aléatoires\n  • Stock correct ?\n\n✓ 5. FORMAT CSV REQUIS\n  • Encodage: UTF-8\n  • Séparateur: virgule (,) ou point-virgule (;)\n  • Colonnes minimum:\n    - SKU (obligatoire, unique)\n    - Stock (nombre entier >= 0)\n  • Exemple:\n    ```\n    SKU,Stock\n    PROD-001,50\n    PROD-002,0\n    PROD-003,125\n    ```\n\n✓ 6. ERREURS COURANTES\n  • SKU inconnu → Vérifier existence produit\n  • Stock négatif → Corriger en >= 0\n  • Format invalide → UTF-8, entiers\n  • Séparateur → Essayer ; au lieu de ,\n\nCombien de produits à mettre à jour ?",
+      "actions": [
+        "export_current_stock",
+        "edit_stock_in_excel",
+        "import_stock_csv",
+        "verify_import_report",
+        "validate_sample_products"
+      ],
+      "success_indicator": "Stock mis à jour en masse, rapport import sans erreur",
+      "time_estimate": "10-15 minutes pour 500 produits",
+      "best_practices": [
+        "Toujours exporter avant modifier (backup)",
+        "Tester sur 10 produits d'abord",
+        "SKU unique absolu (clé)",
+        "UTF-8 pour éviter erreurs caractères",
+        "Vérifier échantillon après import"
+      ],
+      "step_id": "SOLVE_06_IMPORT_STOCK_EN_MA_D52706"
+    },
+    {
+      "kind": "solve",
+      "title": "Synchronisation POS ↔ Online",
+      "response": "Gérer stock entre point de vente physique et boutique en ligne :\n\n✓ 1. CONFIGURATION SYNC\n  • Paramètres → POS (/settings)\n  • Section 'Synchronisation stock'\n  • Options:\n    - Sync temps réel: ✓ Activé\n    - Délai sync: Instantané (< 30s)\n    - Sens sync:\n      * Bidirectionnel ✓ (recommandé)\n      * POS → Online uniquement\n      * Online → POS uniquement\n\n✓ 2. STOCK PARTAGÉ vs DÉDIÉ\n  Option A - Stock partagé:\n  • 1 seul stock pour POS + Online\n  • Vente POS déduit stock online\n  • Vente online déduit stock POS\n  • ✓ Simple, temps réel\n  • ⚠️ Risque survente si lag\n  \n  Option B - Stock dédié:\n  • Stock POS: 30 unités\n  • Stock Online: 20 unités\n  • Total physique: 50 unités\n  • ✓ Pas de survente\n  • ⚠️ Gestion manuelle répartition\n\n✓ 3. RÉSOLUTION CONFLITS\n  Si vente simultanée POS + Online:\n  • Priorité: Configurée (POS ou Online)\n  • Recommandé: POS prioritaire\n    - Client en magasin = immédiat\n    - Client online = peut attendre\n  • Si conflit:\n    - Annuler commande online\n    - Notifier client\n    - Proposer alternative\n\n✓ 4. VÉRIFIER SYNC\n  Test rapide:\n  • Vendre 1 unité au POS\n  • Attendre 30-60 secondes\n  • Vérifier stock online\n  • Stock déduit ?\n  • Si oui: sync OK\n  • Si non: problème config\n\n✓ 5. HISTORIQUE SYNC\n  • Paramètres → POS → Logs sync\n  • Vérifier dernière sync\n  • Erreurs récentes ?\n  • Connexion internet POS stable ?\n\nLa sync temps réel est-elle activée ?",
+      "actions": [
+        "enable_realtime_sync",
+        "configure_sync_direction",
+        "choose_shared_vs_dedicated",
+        "test_sync_pos_to_online",
+        "check_sync_logs"
+      ],
+      "success_indicator": "Vente POS déduit stock online en < 1 minute",
+      "troubleshooting": {
+        "Sync lente (>5 min)": "Vérifier connexion internet POS",
+        "Sync unidirectionnelle": "Vérifier config bidirectionnelle",
+        "Stock désynchronisé": "Forcer sync complète, ou réinitialiser",
+        "Survente fréquente": "Passer en stock dédié avec buffer"
+      },
+      "step_id": "SOLVE_07_SYNCHRONISATION_PO_70A3D5"
+    },
+    {
+      "kind": "verify",
+      "question": "Stock se met-il à jour correctement maintenant ? Si non, précisez : gestion stock activée (oui/non), mode déduction (auto/manuel), statut commande, résultat après vente test.",
+      "step_id": "VERIFY_08_STOCK_SE_MET_IL_JO_F19E3D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Stock configuré correctement (gestion activée, mode auto, statut correct) mais ne se met pas à jour après vente, OU synchronisation POS-Online ne fonctionne pas après configuration, OU problème technique import stock",
+      "required_info": [
+        "Gestion stock activée ? (oui/non)",
+        "Mode déduction (automatique/manuel)",
+        "Statut commande test (Confirmée/En attente/autre)",
+        "Stock avant vente",
+        "Stock après vente (attendu vs réel)",
+        "POS utilisé ? (oui/non)",
+        "Sync POS activée ? (oui/non)",
+        "Délai observé depuis vente",
+        "SKU produit concerné",
+        "Capture config inventaire",
+        "Message erreur import (si import en masse)"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_888524",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Stock configuré correctement (gestion activée, mode auto, statut correct) mais ne se met pas à jour après vente, OU synchronisation POS-Online ne fonctionne pas après configuration, OU problème technique import stock",
+        "repro_steps": [],
+        "evidence": [
+          "Gestion stock activée ? (oui/non)",
+          "Mode déduction (automatique/manuel)",
+          "Statut commande test (Confirmée/En attente/autre)",
+          "Stock avant vente",
+          "Stock après vente (attendu vs réel)",
+          "POS utilisé ? (oui/non)",
+          "Sync POS activée ? (oui/non)",
+          "Délai observé depuis vente",
+          "SKU produit concerné",
+          "Capture config inventaire",
+          "Message erreur import (si import en masse)"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/products - Gestion stock par produit",
+    "/settings - Configuration globale inventaire",
+    "/pos - Synchronisation POS"
+  ],
+  "best_practices": [
+    "Mode déduction: Automatique (évite oublis)",
+    "Seuil alerte: 10-20% du stock moyen",
+    "Désactiver vente si stock=0 (évite survente)",
+    "Inventaire physique: Trimestriel minimum",
+    "Buffer sécurité: 5-10% si POS + Online",
+    "Import masse: Tester sur 10 produits d'abord",
+    "Backup: Exporter stock avant modifications",
+    "Sync temps réel: Toujours activer si POS"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Stock pas déduit après vente",
+      "cause": "Mode manuel ou statut commande 'En attente'",
+      "solution": "Activer mode auto, changer statut 'Confirmée'"
+    },
+    {
+      "symptom": "Label épuisé ne s'affiche pas",
+      "cause": "Paramètre désactivé ou template ne supporte pas",
+      "solution": "Activer 'Afficher épuisé', vérifier template"
+    },
+    {
+      "symptom": "Stock négatif (survente)",
+      "cause": "Ventes simultanées ou sync lente POS",
+      "solution": "Corriger à 0, désactiver vente si stock=0, activer sync temps réel"
+    },
+    {
+      "symptom": "Import échoue (SKU inconnu)",
+      "cause": "SKU mal orthographié ou produit n'existe pas",
+      "solution": "Vérifier SKU exacts, créer produits manquants d'abord"
+    }
+  ],
+  "canonical_scope": "inventory",
+  "required_fields": [
+    {
+      "key": "stock_management_enabled",
+      "question": "Gestion du stock activée pour ce produit (oui/non) ?"
+    },
+    {
+      "key": "deduction_mode",
+      "question": "Mode de déduction (automatique/manuel) ?"
+    },
+    {
+      "key": "order_status",
+      "question": "Statut de la commande concernée ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

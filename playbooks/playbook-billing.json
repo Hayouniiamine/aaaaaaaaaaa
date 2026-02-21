@@ -1,0 +1,201 @@
+{
+  "id": "playbook-billing",
+  "scope": "billing",
+  "title": "Facturation — factures / TVA / abonnement / renouvellement / timbre fiscal",
+  "triggers": [
+    "abonnement",
+    "comptabilité",
+    "devis",
+    "facture",
+    "facturation",
+    "fiscal",
+    "forfait",
+    "frais",
+    "matricule",
+    "montant",
+    "pack",
+    "paiement abonnement",
+    "plan",
+    "prix",
+    "proforma",
+    "reçu",
+    "renouvellement",
+    "renouveler",
+    "tarif",
+    "timbre",
+    "timbre fiscal",
+    "tva",
+    "upgrade"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Facturation : (1) Facture manquante / incorrecte, (2) TVA / timbre fiscal, (3) Abonnement / renouvellement / upgrade, (4) Frais domaine ou template ?",
+      "step_id": "ASK_01_FACTURATION_1_FACT_66CF4E",
+      "field": "billing_type"
+    },
+    {
+      "kind": "solve",
+      "response": "Factures & documents comptables :\n• Vos factures sont disponibles dans votre espace client TikTak\n• Documents générés : factures, proformas, reçus de paiement\n• Chaque facture contient : nom entreprise, devise, code TVA, taux TVA (configurés dans /settings)\n• Le logo et la signature sont appliqués si configurés dans Paramètres → Paramétrage global\n\n✓ Vérifications :\n  - Logo/signature non affichés → compresser image (<2 Mo), format PNG/JPG/WebP, Ctrl+F5\n  - TVA incorrecte sur facture → vérifier Paramètres → Config fiscale (code TVA + taux %)\n  - Devise incorrecte → vérifier Paramètres → Identité entreprise → Devise\n  - Adresse incorrecte → mettre à jour Paramètres → Coordonnées\n\nQuel document avez-vous besoin (facture, proforma, reçu) ? Quel est le problème exact ?",
+      "actions": [
+        "check_invoice",
+        "verify_fiscal_config",
+        "download_invoice"
+      ],
+      "success_indicator": "Facture correcte avec TVA, logo et coordonnées",
+      "related_settings": "/settings → Paramétrage global (identité, coordonnées, config fiscale, branding)",
+      "step_id": "SOLVE_02_FACTURES_DOCUMENTS_C60787"
+    },
+    {
+      "kind": "solve",
+      "response": "TVA et timbre fiscal :\n• Configuration TVA : Paramètres → Taxes & TVA\n• Taux disponibles : 19%, 13%, 7%, 0% — activez ceux que vous utilisez\n• Taxes additionnelles : Timbre fiscal, FODEC — type Fixe ou Pourcentage\n• Code TVA (matricule fiscal) : Paramètres → Config fiscale\n\n✓ Problèmes fréquents :\n  - TVA calculée deux fois → vérifier qu'une taxe additionnelle n'est pas active en plus du taux TVA\n  - Prix HT/TTC incohérent → vérifier le type (Fixe vs %) et la valeur\n  - Timbre fiscal non appliqué → ajouter comme taxe additionnelle type Fixe\n  - Facture sans TVA → vérifier que le taux est activé + code TVA renseigné\n\nQuel taux TVA utilisez-vous ? Le timbre fiscal doit-il apparaître sur vos factures ?",
+      "actions": [
+        "configure_vat",
+        "add_stamp_tax",
+        "verify_tax_calculation"
+      ],
+      "success_indicator": "TVA correcte sur commandes et factures, timbre fiscal appliqué si requis",
+      "common_errors": [
+        {
+          "symptom": "TVA calculée deux fois",
+          "fix": "Désactiver la taxe additionnelle en doublon"
+        },
+        {
+          "symptom": "Prix HT/TTC incohérent",
+          "fix": "Corriger type Fixe vs % et valeur"
+        },
+        {
+          "symptom": "Timbre fiscal absent",
+          "fix": "Ajouter taxe type Fixe avec montant du timbre"
+        },
+        {
+          "symptom": "Code TVA non imprimé",
+          "fix": "Renseigner dans Paramètres → Config fiscale"
+        }
+      ],
+      "step_id": "SOLVE_03_TVA_ET_TIMBRE_FISC_A5F1CC"
+    },
+    {
+      "kind": "solve",
+      "response": "Abonnement et renouvellement :\n• Votre pack TikTak PRO définit les modules et fonctionnalités disponibles\n• Renouvellement : depuis votre espace client ou contacter le support\n• Upgrade de pack : pour débloquer des modules supplémentaires\n• Modules selon pack : Expédition, Retours, Manifestes, POS, Stock, Comptabilité, Tracking auto, Facebook Leads\n\n✓ Vérifications :\n  - Module non disponible → vérifier si inclus dans votre pack actuel\n  - Accès refusé (403) → pack expiré ou insuffisant\n  - Pour connaître votre pack actuel : /settings ou contacter support\n\n⚠️ Actions nécessitant le support :\n  - Renouvellement d'abonnement\n  - Changement de forfait/pack\n  - Demande de tarification\n  - Facturation abonnement\n\nQuel est votre pack actuel ? Souhaitez-vous renouveler ou upgrader ?",
+      "actions": [
+        "check_subscription",
+        "request_renewal",
+        "request_upgrade"
+      ],
+      "success_indicator": "Pack/abonnement clarifié, modules accessibles",
+      "escalation_criteria": "Tout changement d'abonnement, demande de tarif ou renouvellement nécessite l'intervention du support",
+      "step_id": "SOLVE_04_ABONNEMENT_ET_RENO_875073"
+    },
+    {
+      "kind": "solve",
+      "response": "Frais de liaison domaine et templates :\n• Liaison domaine externe : frais de 29 TND\n  - Payable dans /domains → Activer la liaison\n  - Inclut configuration SSL\n• Templates payants : prix variable selon le thème\n  - Paiement par carte bancaire (immédiat) ou virement bancaire (24-48h)\n  - Après paiement confirmé → installation depuis 'Mes templates'\n\n✓ Problèmes fréquents :\n  - Paiement template refusé → essayer autre carte, vérifier 3DS, ou choisir virement\n  - Template non disponible après achat → vérifier confirmation paiement, attendre si virement (24-48h)\n  - Frais domaine non clairs → 29 TND unique pour la liaison du domaine externe\n\nQuel frais concerne votre question (domaine 29 TND ou template) ?",
+      "actions": [
+        "check_domain_fee",
+        "check_template_purchase",
+        "verify_payment"
+      ],
+      "success_indicator": "Frais compris et paiement effectué",
+      "step_id": "SOLVE_05_FRAIS_DE_LIAISON_D_87DA6C"
+    },
+    {
+      "kind": "solve",
+      "response": "Paramètres comptables et étapes comptabilisables :\n• Paramètres → Étapes de commande → switch 'Comptable'\n• Les étapes marquées 'Comptable' sont prises en compte dans les rapports/exports comptables\n• Module Comptabilité (/accounting) : disponible selon pack\n• Exports : les données comptables reflètent les étapes marquées\n\n✓ Problèmes fréquents :\n  - Rapports comptables incomplets → vérifier que les étapes sont marquées 'Comptable'\n  - Chiffres incohérents → vérifier les étapes actives et comptables\n  - Module comptabilité absent → vérifier activation dans ⚙️ → Personnaliser le menu\n\nVoulez-vous configurer les étapes comptables ou accéder aux exports ?",
+      "actions": [
+        "configure_accounting_steps",
+        "enable_accounting_module",
+        "verify_reports"
+      ],
+      "success_indicator": "Étapes comptables correctement marquées, rapports complets",
+      "step_id": "SOLVE_06_PARAM_TRES_COMPTAB_8B4548"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Demande de facturation, renouvellement, changement d'abonnement, tarification, ou erreur de facturation nécessitant correction manuelle",
+      "required_info": [
+        "Numéro de facture ou référence",
+        "Pack actuel (si connu)",
+        "Type de demande (facture, renouvellement, upgrade, correction)",
+        "Capture écran du problème",
+        "Montant attendu vs montant affiché"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_115572",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Demande de facturation, renouvellement, changement d'abonnement, tarification, ou erreur de facturation nécessitant correction manuelle",
+        "repro_steps": [],
+        "evidence": [
+          "Numéro de facture ou référence",
+          "Pack actuel (si connu)",
+          "Type de demande (facture, renouvellement, upgrade, correction)",
+          "Capture écran du problème",
+          "Montant attendu vs montant affiché"
+        ],
+        "suspected_component": "billing",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : référence facture/abonnement + pack + type de demande + capture + montants.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_09_POUR_ESCALADER_R_F_1C565C",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Facturation — factures / TVA / abonnement / renouvellement / timbre fiscal",
+        "repro_steps": [],
+        "evidence": [
+          "billing_type",
+          "what_fails",
+          "reference"
+        ],
+        "suspected_component": "billing",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/settings → Paramétrage global : identité, coordonnées, config fiscale, branding",
+    "/settings → Taxes & TVA : taux TVA (19/13/7/0%), taxes additionnelles (timbre fiscal, FODEC)",
+    "/settings → Étapes de commande : marquage 'Comptable' pour exports",
+    "/accounting → Module comptabilité (selon pack)"
+  ],
+  "best_practices": [
+    "Configurez identité + config fiscale dès le démarrage (nom, TVA, devise)",
+    "Activez uniquement les taux TVA utilisés",
+    "Marquez 'Comptable' les étapes pertinentes (Confirmées, Livrées)",
+    "Téléversez logo et signature pour des factures professionnelles",
+    "Conservez vos factures/reçus de paiement TikTak"
+  ],
+  "canonical_scope": "billing",
+  "required_fields": [
+    {
+      "key": "billing_type",
+      "question": "Facture, TVA, abonnement ou frais ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Quel est le problème exact ?"
+    },
+    {
+      "key": "reference",
+      "question": "Numéro de facture ou référence ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

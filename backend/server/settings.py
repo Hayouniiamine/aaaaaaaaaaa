@@ -121,12 +121,15 @@ CF_WORKER_URL = os.getenv(
 # Widget shared secret (Nuxt widget auth)
 WIDGET_SHARED_SECRET = os.getenv("WIDGET_SHARED_SECRET", "").strip()
 
+import sys
+print(f"[DJANGO INIT] WIDGET_SHARED_SECRET loaded: '{WIDGET_SHARED_SECRET}'", file=sys.stderr)
+
 # --------------------------------------------------
 # CORS (IMPORTANT)
 # --------------------------------------------------
 CORS_ALLOWED_ORIGINS = [
     o.strip()
-    for o in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+    for o in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001").split(",")
     if o.strip()
 ]
 

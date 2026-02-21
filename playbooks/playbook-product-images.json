@@ -1,0 +1,222 @@
+{
+  "id": "playbook-product-images",
+  "scope": "products",
+  "title": "Images Produits — Upload / Affichage / Format / Galerie",
+  "triggers": [
+    "image produit",
+    "photo produit",
+    "image ne s'affiche pas",
+    "upload image",
+    "télécharger image",
+    "image ne charge pas",
+    "plusieurs images",
+    "galerie produit",
+    "image principale"
+  ],
+  "description": "Résolution des problèmes liés aux images produits: upload échoue, images ne s'affichent pas, format/taille incorrects, gestion de plusieurs images, image principale.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Images produits : (1) Problème (upload échoue / image ne s'affiche pas / mauvaise qualité / plusieurs images) ? (2) Format image (JPG/PNG/WebP) ? (3) Taille fichier approximative ?",
+      "step_id": "ASK_01_IMAGES_PRODUITS_1__671A73",
+      "field": "file_size"
+    },
+    {
+      "kind": "solve",
+      "title": "Formats et tailles acceptés",
+      "response": "Spécifications techniques images TikTak PRO :\n\n✓ FORMATS ACCEPTÉS\n  • JPG / JPEG ✓ (recommandé)\n  • PNG ✓ (pour transparence)\n  • WebP ✓ (moderne, léger)\n  • GIF ✓ (limité, éviter animations)\n  \n  ❌ FORMATS NON ACCEPTÉS\n  • BMP (trop lourd)\n  • TIFF (professionnel, trop lourd)\n  • SVG (vectoriel, pas supporté produits)\n  • PDF (document, pas image)\n\n✓ TAILLE FICHIER\n  • Maximum: 5 MB par image\n  • Recommandé: 500 KB - 2 MB\n  • Si > 5 MB → Compression requise\n\n✓ DIMENSIONS RECOMMANDÉES\n  • Optimale: 1000 x 1000 px (carré)\n  • Minimum: 500 x 500 px\n  • Maximum: 4000 x 4000 px\n  • Ratio: Carré préféré (1:1)\n  • Acceptable: 4:3 ou 16:9\n\n✓ QUALITÉ\n  • JPG: Qualité 80-90%\n  • PNG: Compression modérée\n  • Résolution: 72 DPI (web)\n  • Couleurs: RVB (pas CMYK)\n\nVotre image respecte-t-elle ces critères ?",
+      "actions": [
+        "verify_image_format",
+        "check_file_size",
+        "verify_dimensions",
+        "compress_if_needed"
+      ],
+      "success_indicator": "Format JPG/PNG, < 5MB, dimensions 1000x1000px environ",
+      "note": "Images trop grandes ralentissent le site",
+      "step_id": "SOLVE_02_FORMATS_ET_TAILLES_2164CD"
+    },
+    {
+      "kind": "solve",
+      "title": "Erreur Upload Image",
+      "response": "Si upload échoue ou erreur s'affiche :\n\n✓ 1. VÉRIFIER TAILLE FICHIER\n  • Clic droit image → Propriétés\n  • Taille > 5 MB ?\n  • → Compresser avant upload\n  \n  Compression rapide:\n  • Windows: Paint → Enregistrer (qualité 80%)\n  • Mac: Aperçu → Exporter (qualité réduite)\n  • En ligne: tinypng.com, compressor.io\n  • Photoshop: Enregistrer pour le web\n\n✓ 2. VÉRIFIER FORMAT\n  • Extension .jpg, .png, .webp ?\n  • Si .bmp, .tiff → Convertir en JPG\n  • Renommer extension si besoin\n\n✓ 3. VIDER CACHE NAVIGATEUR\n  • Ctrl+Shift+Delete → Cache\n  • Rafraîchir page produit\n  • Retenter upload\n\n✓ 4. TESTER AUTRE IMAGE\n  • Image spécifique problème ?\n  • Tester avec image simple/petite\n  • Si OK: problème image originale\n  • Si KO: problème upload général\n\n✓ 5. CONNEXION INTERNET\n  • Upload lent si connexion faible\n  • Attendre fin upload complet\n  • Pas de timeout/interruption\n  • Tester depuis 4G si WiFi instable\n\n✓ 6. BROWSER/DEVICE\n  • Tester autre navigateur\n  • Tester depuis desktop si mobile\n  • Désactiver VPN si actif\n\nQuel message d'erreur exact s'affiche ?",
+      "actions": [
+        "compress_image_file",
+        "convert_image_format",
+        "clear_cache_retry",
+        "test_different_image",
+        "verify_internet_stable",
+        "try_different_browser"
+      ],
+      "success_indicator": "Image uploadée et visible dans galerie produit",
+      "common_errors": [
+        "File too large → Compresser < 5MB",
+        "Invalid format → Convertir en JPG/PNG",
+        "Upload timeout → Vérifier connexion, réessayer",
+        "Forbidden → Vérifier permissions utilisateur"
+      ],
+      "troubleshooting": {
+        "Upload bloque à 50%": "Connexion instable ou timeout, réessayer",
+        "Erreur 'File too large'": "Compresser image < 5MB",
+        "Erreur 'Invalid file type'": "Format non supporté, convertir en JPG",
+        "Aucune erreur mais image pas visible": "Cache, Ctrl+F5 rafraîchir"
+      },
+      "step_id": "SOLVE_03_ERREUR_UPLOAD_IMAG_D9EEDF"
+    },
+    {
+      "kind": "solve",
+      "title": "Image Ne S'Affiche Pas (sur site)",
+      "response": "Si image uploadée mais pas visible sur site :\n\n✓ 1. VIDER CACHE SITE\n  • Ctrl+F5 (rafraîchir force)\n  • Attendre 2-3 minutes (propagation cache)\n  • Tester navigation privée\n  • Si visible en privé: cache problème\n\n✓ 2. VÉRIFIER IMAGE PRINCIPALE\n  • Produits → [Produit] → Images\n  • Image principale définie ?\n  • Première image = image principale\n  • Réordonner si besoin (drag & drop)\n\n✓ 3. VÉRIFIER VISIBILITÉ PRODUIT\n  • Produit → Paramètres\n  • 'Visible sur le site' ✓ ?\n  • 'Actif' ✓ ?\n  • Si décoché: produit masqué (image aussi)\n\n✓ 4. VÉRIFIER URL IMAGE\n  • Clic droit image (back-office) → Copier lien\n  • Coller dans navigateur\n  • Image s'ouvre ?\n  • Si 404: image corrompue, re-upload\n  • Si OK: problème affichage template\n\n✓ 5. VÉRIFIER TEMPLATE SITE\n  • Templates → [Votre template]\n  • Section produit configurée ?\n  • Image produit activée dans template ?\n  • Tester autre template pour isoler\n\n✓ 6. CLOUDFLARE CACHE\n  Admin avancé:\n  • Outils → Vider cache Cloudflare\n  • Attendre 5 minutes\n  • Retester\n\nL'image est-elle visible en back-office ?",
+      "actions": [
+        "clear_site_cache_ctrl_f5",
+        "set_main_image",
+        "verify_product_visibility",
+        "verify_image_url",
+        "check_template_config",
+        "clear_cloudflare_cache"
+      ],
+      "success_indicator": "Image visible sur page produit site",
+      "time_estimate": "Cache: 2-5 minutes, Template: 10-15 minutes",
+      "step_id": "SOLVE_04_IMAGE_NE_S_AFFICHE_7C1259"
+    },
+    {
+      "kind": "solve",
+      "title": "Gérer Plusieurs Images (Galerie)",
+      "response": "Ajouter et organiser plusieurs images produit :\n\n✓ 1. UPLOAD MULTIPLE\n  • Produits → [Produit] → Images\n  • Cliquer 'Ajouter images'\n  • Sélectionner PLUSIEURS fichiers:\n    - Windows: Ctrl+clic fichiers\n    - Mac: Cmd+clic fichiers\n  • Ou drag & drop plusieurs ensemble\n  • Upload simultané (max 10 recommandé)\n\n✓ 2. ORDRE DES IMAGES\n  • Première image = Image principale\n  • Réordonner:\n    - Drag & drop (si interface le permet)\n    - Ou numéroter: image-01.jpg, image-02.jpg\n  • Image principale apparaît:\n    - Liste produits (vignette)\n    - Page produit (grande image)\n    - Panier\n\n✓ 3. GALERIE PRODUIT\n  • Site affiche galerie automatiquement\n  • Clients peuvent:\n    - Cliquer pour agrandir\n    - Naviguer entre images (flèches)\n    - Zoom (si template le supporte)\n  • Toutes images uploadées visibles\n\n✓ 4. IMAGES PAR VARIANTE\n  • Si produit a variantes (couleurs):\n    - Chaque variante peut avoir son image\n    - Variantes → [Variante] → Image spécifique\n    - Site change image selon sélection couleur\n  • Image variante prioritaire sur image produit\n\n✓ 5. SUPPRIMER IMAGE\n  • Survoler image → Icône poubelle\n  • Confirmer suppression\n  • Ne supprime pas de l'espace médias\n  • Juste lien produit ↔ image\n\nCombien d'images souhaitez-vous ajouter ?",
+      "actions": [
+        "upload_multiple_images",
+        "reorder_images_drag_drop",
+        "set_primary_image",
+        "assign_variant_images",
+        "delete_unwanted_images"
+      ],
+      "success_indicator": "Galerie complète, ordre correct, image principale définie",
+      "best_practices": [
+        "3-5 images par produit (optimal)",
+        "Angles différents (face, profil, détails)",
+        "Fond blanc ou neutre (professionnel)",
+        "Même format/taille pour cohérence",
+        "Image principale = meilleur angle"
+      ],
+      "step_id": "SOLVE_05_G_RER_PLUSIEURS_IM_A50603"
+    },
+    {
+      "kind": "solve",
+      "title": "Qualité Image (trop floue / pixelisée)",
+      "response": "Si image floue ou basse qualité sur site :\n\n✓ 1. RÉSOLUTION ORIGINALE\n  • Vérifier image source:\n    - Dimensions: minimum 800x800px\n    - Recommandé: 1000x1000px ou plus\n  • Si trop petite: impossible améliorer\n  • Re-photographier en haute résolution\n\n✓ 2. COMPRESSION EXCESSIVE\n  • JPG qualité < 70%: trop compressé\n  • Re-exporter avec qualité 80-90%\n  • Éviter sauvegardes multiples (perte qualité)\n  • PNG si besoin qualité max (mais plus lourd)\n\n✓ 3. ZOOM / RECADRAGE\n  • Image agrandie = pixelisée\n  • Ne pas zoomer sur petite image\n  • Utiliser image haute résolution\n  • Recadrer AVANT upload, pas après\n\n✓ 4. FORMAT ADAPTÉ\n  • Photo: JPG (80-90% qualité)\n  • Logo/texte: PNG (sans perte)\n  • Moderne: WebP (meilleur compression)\n\n✓ 5. TEMPLATE RESIZE\n  • Certains templates redimensionnent mal\n  • Tester autre template\n  • Ou uploader dimensions exactes template\n  • Vérifier CSS template (image-rendering)\n\nL'image source est-elle haute résolution (>1000px) ?",
+      "actions": [
+        "verify_source_resolution",
+        "re_export_higher_quality",
+        "use_higher_resolution_source",
+        "test_different_template",
+        "check_css_image_rendering"
+      ],
+      "success_indicator": "Image nette et claire sur toutes tailles écran",
+      "note": "Impossible améliorer image basse résolution, re-photographier requis",
+      "step_id": "SOLVE_06_QUALIT_IMAGE_TROP__F66537"
+    },
+    {
+      "kind": "solve",
+      "title": "Outils Compression/Optimisation Recommandés",
+      "response": "OUTILS GRATUITS POUR OPTIMISER IMAGES :\n\n🌐 EN LIGNE (sans installation):\n  • TinyPNG: tinypng.com\n    - Compression intelligente PNG/JPG\n    - Jusqu'à 70% réduction taille\n    - Qualité préservée\n  \n  • Compressor.io: compressor.io\n    - 4 formats supportés\n    - Comparaison avant/après\n  \n  • Squoosh: squoosh.app (Google)\n    - WebP conversion\n    - Contrôle avancé qualité\n\n💻 LOGICIELS:\n  • Photoshop: Fichier → Enregistrer pour le web\n  • GIMP (gratuit): Export → Qualité 80-85%\n  • Paint (Windows): Enregistrer → JPG qualité\n  • Aperçu (Mac): Exporter → Réduire taille\n\n📱 APPLICATIONS MOBILE:\n  • Photo Compress (Android)\n  • Image Size (iOS)\n  • Compress Image (iOS)\n\n⚡ BATCH (plusieurs images):\n  • ILoveIMG: iloveimg.com/compress-image\n  • Bulk Resize Photos: bulkresizephotos.com\n\nPROCESSUS RECOMMANDÉ:\n1. Photographier haute résolution\n2. Recadrer/éditer\n3. Redimensionner 1000x1000px\n4. Compresser (80% qualité)\n5. Upload TikTak\n\nQuel outil préférez-vous utiliser ?",
+      "note": "Compression avant upload = site plus rapide + meilleure expérience",
+      "step_id": "SOLVE_07_OUTILS_COMPRESSION_6A3E67"
+    },
+    {
+      "kind": "verify",
+      "question": "Images uploadées et visibles ? Si non, précisez : format image, taille fichier, message erreur, visible en back-office (oui/non), visible sur site (oui/non).",
+      "step_id": "VERIFY_08_IMAGES_UPLOAD_ES_E_84FA9B"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Images uploadées avec succès en back-office (format correct, taille OK) mais ne s'affichent pas sur site après cache vidé et attente 30 minutes, OU erreurs upload persistantes malgré format/taille corrects",
+      "required_info": [
+        "Format image (JPG/PNG/WebP)",
+        "Taille fichier (MB)",
+        "Dimensions image (largeur x hauteur px)",
+        "Message erreur upload (si applicable)",
+        "Image visible en back-office ? (oui/non)",
+        "Image visible sur site ? (oui/non)",
+        "Produit 'Visible sur site' activé ? (oui/non)",
+        "Cache vidé (Ctrl+F5) ? (oui/non)",
+        "Testé navigation privée ? (oui/non)",
+        "Navigateur utilisé",
+        "URL produit concerné"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_9DCD5C",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Images uploadées avec succès en back-office (format correct, taille OK) mais ne s'affichent pas sur site après cache vidé et attente 30 minutes, OU erreurs upload persistantes malgré format/taille corrects",
+        "repro_steps": [],
+        "evidence": [
+          "Format image (JPG/PNG/WebP)",
+          "Taille fichier (MB)",
+          "Dimensions image (largeur x hauteur px)",
+          "Message erreur upload (si applicable)",
+          "Image visible en back-office ? (oui/non)",
+          "Image visible sur site ? (oui/non)",
+          "Produit 'Visible sur site' activé ? (oui/non)",
+          "Cache vidé (Ctrl+F5) ? (oui/non)",
+          "Testé navigation privée ? (oui/non)",
+          "Navigateur utilisé",
+          "URL produit concerné"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/products - Création et gestion produits",
+    "/products/new - Ajout images lors création"
+  ],
+  "best_practices": [
+    "Format: JPG pour photos, PNG pour logos/transparence",
+    "Taille: < 1 MB par image (site rapide)",
+    "Dimensions: 1000x1000px (carré optimal)",
+    "Qualité: 80-90% (bon compromis poids/qualité)",
+    "Nombre: 3-5 images par produit",
+    "Fond: Blanc ou neutre pour produits",
+    "Noms: Descriptifs (produit-rouge-face.jpg)",
+    "Compression: Avant upload pour performance"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Upload échoue à 100%",
+      "cause": "Fichier > 5MB ou format non supporté",
+      "solution": "Compresser < 5MB ou convertir en JPG/PNG"
+    },
+    {
+      "symptom": "Image uploadée mais pas sur site",
+      "cause": "Cache ou produit masqué",
+      "solution": "Ctrl+F5 rafraîchir, vérifier 'Visible sur site' actif"
+    },
+    {
+      "symptom": "Image floue sur site",
+      "cause": "Résolution trop basse ou compression excessive",
+      "solution": "Uploader image > 1000px avec qualité 80%+"
+    },
+    {
+      "symptom": "Plusieurs images ne s'ordonnent pas",
+      "cause": "Interface drag & drop ou numérotation",
+      "solution": "Nommer images avec numéros: 01, 02, 03..."
+    }
+  ],
+  "canonical_scope": "products",
+  "required_fields": [
+    {
+      "key": "image_format",
+      "question": "Quel format d'image (JPG/PNG/autre) ?"
+    },
+    {
+      "key": "file_size",
+      "question": "Taille du fichier approximative (MB) ?"
+    },
+    {
+      "key": "upload_success",
+      "question": "Upload réussi en back-office (oui/non) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

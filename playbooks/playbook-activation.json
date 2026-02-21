@@ -1,0 +1,183 @@
+{
+  "id": "playbook-activation",
+  "scope": "general",
+  "title": "Activation de boutique — compte / onboarding / premiers pas / pack",
+  "description": "Guide pour activer une nouvelle boutique TikTak PRO, configurer les premiers paramètres, comprendre les packs et réussir l'onboarding.",
+  "triggers": [
+    "activer boutique",
+    "activer compte",
+    "activer mon compte",
+    "activation",
+    "activation boutique",
+    "activation compte",
+    "comment commencer",
+    "créer boutique",
+    "créer ma boutique",
+    "cree boutique",
+    "demande de liaison",
+    "dupliquer site",
+    "duplication",
+    "essai gratuit",
+    "first steps",
+    "lancer ma boutique",
+    "mise en ligne",
+    "nouvelle boutique",
+    "onboarding",
+    "ouvrir boutique",
+    "pack",
+    "plan",
+    "premiers pas",
+    "configurer boutique",
+    "changer nom boutique",
+    "nom boutique",
+    "nom de la boutique",
+    "changer le nom",
+    "changement nom",
+    "changer email",
+    "modifier email",
+    "vérification email",
+    "liaison",
+    "confirmation de la liaison",
+    "retard de confirmation",
+    "hallt boutique",
+    "halit boutique",
+    "7alit boutique",
+    "n7el boutique"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Bienvenue ! Que souhaitez-vous faire ?\n(1) Activer ma nouvelle boutique / premiers pas\n(2) Changer le nom de ma boutique\n(3) Modifier l'email de mon compte\n(4) Comprendre les packs / forfaits\n(5) Dupliquer mon site\n(6) Problème de liaison domaine lors de l'activation",
+      "step_id": "ASK_01_BIENVENUE_QUE_SOUH_1AF72F",
+      "field": "details"
+    },
+    {
+      "kind": "solve",
+      "title": "Activer et configurer une nouvelle boutique",
+      "response": "Pour activer et lancer votre boutique TikTak PRO, suivez ces étapes dans l'ordre :\n\n1. Paramètres généraux (dash.tiktak.space/settings) :\n   • Nom de l'entreprise + devise (Dinar Tunisien)\n   • Coordonnées : adresse, ville, gouvernorat, téléphone, email\n   • Logo + signature (pour bons de livraison et factures)\n   • Config fiscale : Code TVA + taux TVA\n\n2. Produits et catégories :\n   • Créez vos catégories (dash.tiktak.space/categories)\n   • Ajoutez vos produits avec images, prix, variantes (dash.tiktak.space/products/new)\n   • Activez les produits (switch Actif + Visible)\n\n3. Site web :\n   • Choisissez un template (dash.tiktak.space/templates)\n   • Personnalisez le contenu (dash.tiktak.space/content-management)\n   • Configurez le SEO (titre, description, mots-clés)\n\n4. Domaine :\n   • Achetez ou liez votre domaine (dash.tiktak.space/domains)\n   • DNS : A record @ → 102.211.211.10\n\n5. Activez les modules nécessaires :\n   • ⚙️ près du logo → Personnaliser le menu → activez les modules\n\n6. Commencez à vendre !\n\nOù en êtes-vous dans ces étapes ?",
+      "success_indicator": "Boutique active avec produits, template installé et domaine configuré",
+      "ui": {
+        "label": "Ouvrir Paramètres",
+        "route": "/settings"
+      },
+      "step_id": "SOLVE_02_ACTIVER_ET_CONFIGU_8DA615"
+    },
+    {
+      "kind": "solve",
+      "title": "Changer le nom de la boutique",
+      "response": "Pour changer le nom de votre boutique :\n1. Allez dans Paramètres (dash.tiktak.space/settings)\n2. Section 'Paramétrage global' → 'Identité entreprise'\n3. Modifiez le champ 'Nom de l'entreprise'\n4. Cliquez 'Enregistrer'\n5. Le nouveau nom apparaîtra sur :\n   • Les bons de livraison\n   • Les factures\n   • Les emails automatiques\n   • Le dashboard\n\nNote : le nom affiché sur votre site web se configure séparément dans le Builder (Gestion de contenu).\n\nQuel nom souhaitez-vous mettre ?",
+      "success_indicator": "Nom modifié visible sur les documents et le dashboard",
+      "ui": {
+        "label": "Ouvrir Paramètres",
+        "route": "/settings"
+      },
+      "step_id": "SOLVE_03_CHANGER_LE_NOM_DE__09B35B"
+    },
+    {
+      "kind": "solve",
+      "title": "Modifier l'email du compte",
+      "response": "Pour modifier votre email :\n1. Allez dans Paramètres → Équipe\n2. Trouvez votre compte dans la liste\n3. Cliquez l'icône crayon (modifier)\n4. Changez l'email\n5. Sauvegardez\n\nImportant :\n• L'email doit être valide et unique (pas déjà utilisé par un autre compte)\n• Les futures notifications iront au nouvel email\n• Utilisez le nouvel email pour vous connecter\n• Format attendu : nom@domaine.tld (sans espaces)\n\nSi vous changez l'email de connexion, reconnectez-vous avec le nouvel email.\n\nQuel est le nouvel email souhaité ?",
+      "success_indicator": "Email modifié, connexion réussie avec le nouvel email",
+      "step_id": "SOLVE_04_MODIFIER_L_EMAIL_D_EE8D1F"
+    },
+    {
+      "kind": "solve",
+      "title": "Comprendre les packs / forfaits TikTak",
+      "response": "Les packs TikTak PRO :\n• Chaque pack donne accès à un ensemble de modules et fonctionnalités\n• Les modules grisés dans le menu = non inclus dans votre pack\n• Pour voir les modules disponibles : ⚙️ près du logo → Personnaliser le menu\n• Les modules marqués comme indisponibles nécessitent un upgrade de pack\n\nPour changer de pack / forfait :\n• Cette opération est gérée par l'équipe TikTak\n• Un changement de pack peut activer ou désactiver des modules\n\nQuels modules avez-vous besoin qui ne sont pas dans votre pack actuel ?",
+      "success_indicator": "Compréhension claire du pack actuel et des modules accessibles",
+      "step_id": "SOLVE_05_COMPRENDRE_LES_PAC_B3231C"
+    },
+    {
+      "kind": "solve",
+      "title": "Dupliquer un site",
+      "response": "La duplication de site TikTak :\n• La duplication crée une copie de votre boutique (produits, paramètres, contenu)\n• Cette opération est effectuée par l'équipe TikTak\n• Les données copiées incluent : produits, catégories, paramètres, contenu du site\n• Les données NON copiées : commandes, clients, historique\n\nPour demander une duplication, fournissez :\n1. Le nom de la boutique source\n2. Le nom souhaité pour la nouvelle boutique\n3. Ce que vous souhaitez copier (tout ou partie)\n\nVoulez-vous que j'escalade cette demande à l'équipe ?",
+      "success_indicator": "Demande de duplication transmise à l'équipe TikTak",
+      "step_id": "SOLVE_06_DUPLIQUER_UN_SITE_DABBBC"
+    },
+    {
+      "kind": "solve",
+      "title": "Liaison domaine lors de l'activation",
+      "response": "Problème de liaison de domaine lors de l'activation :\n1. Allez dans Domaines (dash.tiktak.space/domains)\n2. Deux options :\n   a) Acheter un domaine via TikTak → SSL automatique, attendre propagation (jusqu'à 24h)\n   b) Lier un domaine externe → configurez les DNS chez votre registrar :\n      • A record @ → 102.211.211.10\n      • A record www → 102.211.211.10 (ou CNAME www → @)\n      • Supprimez les enregistrements AAAA\n      • TTL : 3600\n3. Activez la liaison dans le dashboard (frais de liaison : 29 TND pour domaine externe)\n4. Vérifiez la propagation sur whatsmydns.net\n5. SSL se provisionne automatiquement après propagation DNS\n\nAttention : ne pas activer le proxy Cloudflare avant que le SSL TikTak soit actif.\n\nQuel domaine essayez-vous de lier ?",
+      "success_indicator": "Domaine lié, SSL actif, site accessible",
+      "common_errors": [
+        "DNS non propagé — attendre jusqu'à 24h",
+        "Enregistrement AAAA restant — supprimer chez le registrar",
+        "Proxy Cloudflare activé trop tôt — désactiver, attendre SSL",
+        "Frais de liaison non payés — 29 TND pour domaine externe"
+      ],
+      "step_id": "SOLVE_07_LIAISON_DOMAINE_LO_3BCF45"
+    },
+    {
+      "kind": "verify",
+      "question": "Votre boutique est-elle activée et opérationnelle ? Si non, à quelle étape êtes-vous bloqué ?",
+      "step_id": "VERIFY_08_VOTRE_BOUTIQUE_EST_F3AC88"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Activation impossible malgré les étapes suivies, problème de pack/forfait, duplication de site, ou liaison domaine bloquée",
+      "required_info": [
+        "Nom de la boutique",
+        "Étape de blocage",
+        "Capture écran",
+        "Pack actuel",
+        "Domaine concerné (si applicable)",
+        "Email du compte"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_B2A4C6",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Activation impossible malgré les étapes suivies, problème de pack/forfait, duplication de site, ou liaison domaine bloquée",
+        "repro_steps": [],
+        "evidence": [
+          "Nom de la boutique",
+          "Étape de blocage",
+          "Capture écran",
+          "Pack actuel",
+          "Domaine concerné (si applicable)",
+          "Email du compte"
+        ],
+        "suspected_component": "general",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Boutique créée mais rien ne s'affiche sur le site",
+      "cause": "Aucun template installé ou aucun produit actif",
+      "solution": "Installer un template + ajouter au moins un produit actif et visible"
+    },
+    {
+      "symptom": "Modules manquants dans le menu",
+      "cause": "Modules non activés ou pack insuffisant",
+      "solution": "⚙️ → Personnaliser le menu → activer les modules. Si grisé = upgrade pack requis"
+    },
+    {
+      "symptom": "Nom de boutique incorrect sur les documents",
+      "cause": "Nom non modifié dans Paramètres",
+      "solution": "Paramètres → Paramétrage global → modifier nom → Enregistrer"
+    }
+  ],
+  "best_practices": [
+    "Compléter TOUS les paramètres généraux avant d'ajouter des produits",
+    "Ajouter au moins 5-10 produits avec images de qualité avant de lancer",
+    "Configurer le SEO sur chaque page et catégorie",
+    "Tester une commande factice avant de lancer en production",
+    "Configurer le domaine en dernier (après contenu et produits prêts)"
+  ],
+  "related_playbooks": [
+    "playbook-settings",
+    "playbook-domains",
+    "playbook-templates",
+    "playbook-auth"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "details",
+      "question": "Pouvez-vous donner plus de détails (capture, message exact) ?"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "playbook-categories",
+  "scope": "products",
+  "title": "Catégories — création / affichage / ordre / SEO",
+  "triggers": [
+    "404 catégorie",
+    "arborescence",
+    "categories",
+    "category",
+    "catégorie",
+    "menu",
+    "navigation",
+    "ordre catégories",
+    "seo categorie",
+    "sous-catégorie"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer/éditer une catégorie :\n• Catégories → 'Nouvelle catégorie'\n• Nom* + slug (auto-généré ou personnalisé) + image (optionnel)\n• Choisir catégorie parent si sous-catégorie\n• Compléter SEO : titre (30-60 car.), meta description (70-160 car.), mots-clés\n• Sauvegarder puis vérifier dans la liste\n\nQuelle catégorie essayez-vous de créer (nom) et s'agit-il d'une catégorie principale ou sous-catégorie ?",
+      "actions": [
+        "create_category"
+      ],
+      "success_indicator": "La catégorie apparaît dans la liste avec le statut actif",
+      "common_errors": [
+        "Nom manquant (champ requis)",
+        "Slug déjà utilisé → modifier pour rendre unique",
+        "Catégorie parent non sélectionnée pour une sous-catégorie"
+      ],
+      "step_id": "SOLVE_01_CR_ER_DITER_UNE_CA_6F10D6"
+    },
+    {
+      "kind": "solve",
+      "response": "Catégorie non visible sur le site :\n✓ Vérifiez statut : Actif = Oui, Visible web = Oui\n✓ Vérifiez qu'elle contient au moins un produit actif et visible\n✓ Vérifiez qu'elle est associée au bon menu/contenu\n✓ Videz cache navigateur (Ctrl+F5) ou testez en navigation privée\n✓ Vérifiez que le template affiche bien les catégories\n\nLa catégorie est-elle marquée active/visible web ? Contient-elle des produits actifs ?",
+      "actions": [
+        "check_visibility",
+        "check_products_in_category"
+      ],
+      "success_indicator": "La catégorie apparaît dans le menu du site et sa page charge correctement",
+      "time_estimate": "Changements visibles immédiatement après rafraîchissement (cache navigateur ~5 min)",
+      "step_id": "SOLVE_02_CAT_GORIE_NON_VISI_CB9837"
+    },
+    {
+      "kind": "solve",
+      "response": "Erreur 404 sur une catégorie :\n✓ Vérifiez le slug / URL de la catégorie (ne doit contenir que lettres, chiffres, tirets)\n✓ Évitez caractères spéciaux, espaces, accents dans le slug\n✓ Vérifiez qu'il n'y a pas de conflit avec une autre catégorie/page\n✓ Re-sauvegardez la catégorie pour régénérer l'URL\n✓ Testez avec /categories/votre-slug et /categories/ID-categorie\n\nPouvez-vous copier l'URL exacte qui renvoie 404 et le slug configuré dans la catégorie ?",
+      "actions": [
+        "check_slug",
+        "verify_url_pattern"
+      ],
+      "success_indicator": "La page catégorie charge avec l'URL correcte",
+      "escalation_criteria": "404 persiste après correction du slug et re-sauvegarde",
+      "step_id": "SOLVE_03_ERREUR_404_SUR_UNE_C82815"
+    },
+    {
+      "kind": "solve",
+      "response": "Ordre/arborescence des catégories :\n• Utilisez le drag & drop (glisser-déposer) dans la liste pour réorganiser\n• Pour créer une sous-catégorie : sélectionnez la catégorie parent lors de la création/édition\n• L'ordre d'affichage sur le site dépend de l'ordre dans la liste + configuration du template\n• Enregistrez après chaque modification\n\nÀ quel niveau voulez-vous modifier l'ordre (catégories principales ou sous-catégories) ?",
+      "actions": [
+        "reorder_categories"
+      ],
+      "success_indicator": "L'ordre sur le site reflète l'ordre dans le back-office après rafraîchissement",
+      "step_id": "SOLVE_04_ORDRE_ARBORESCENCE_9CD8E5"
+    },
+    {
+      "kind": "solve",
+      "response": "SEO catégorie :\n✓ Titre SEO : 30-60 caractères (inclure mot-clé principal)\n✓ Meta description : 70-160 caractères (texte accrocheur avec appel à l'action)\n✓ Slug URL : court, descriptif, sans caractères spéciaux\n✓ Mots-clés : minimum 3, séparés par virgules\n✓ Vérifiez le score SEO affiché et suivez les conseils\n\nVotre score SEO est-il en dessous de 70% ? Quels champs sont incomplets ?",
+      "actions": [
+        "optimize_category_seo"
+      ],
+      "success_indicator": "Score SEO > 70%, tous les champs verts dans l'indicateur",
+      "step_id": "SOLVE_05_SEO_CAT_GORIE_TITR_E6FE87"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Catégorie 404 persistante après vérification slug + re-sauvegarde, ou problème de visibilité après activation + vérification produits + cache vidé",
+      "required_info": [
+        "URL exacte qui renvoie 404",
+        "Slug configuré dans la catégorie",
+        "Capture écran de la fiche catégorie (statuts actif/visible)",
+        "Capture écran de l'erreur 404",
+        "Nom de la catégorie + ID si disponible",
+        "Navigateur utilisé"
+      ],
+      "step_id": "ESCALATE_06_ESCALATE_EF6306",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Catégorie 404 persistante après vérification slug + re-sauvegarde, ou problème de visibilité après activation + vérification produits + cache vidé",
+        "repro_steps": [],
+        "evidence": [
+          "URL exacte qui renvoie 404",
+          "Slug configuré dans la catégorie",
+          "Capture écran de la fiche catégorie (statuts actif/visible)",
+          "Capture écran de l'erreur 404",
+          "Nom de la catégorie + ID si disponible",
+          "Navigateur utilisé"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_07_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader, fournissez : URL 404 + capture fiche catégorie (statuts) + capture erreur + slug configuré + navigateur.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_08_POUR_ESCALADER_FOU_31CDF7",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Catégories — création / affichage / ordre / SEO",
+        "repro_steps": [],
+        "evidence": [
+          "product_identifier",
+          "action",
+          "error_message"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/categories - Module de gestion des catégories",
+    "Arborescence catégories/sous-catégories avec SEO dédié"
+  ],
+  "common_workflows": [
+    "Création catégorie principale → ajout produits → vérification visibilité site",
+    "Création sous-catégories → organisation arborescence → optimisation SEO"
+  ],
+  "canonical_scope": "products",
+  "required_fields": [
+    {
+      "key": "product_identifier",
+      "question": "Quel produit (nom/SKU) ?"
+    },
+    {
+      "key": "action",
+      "question": "Qu’est-ce que vous essayez de faire (import, ajout, modification, affichage) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

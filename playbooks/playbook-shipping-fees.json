@@ -1,0 +1,167 @@
+{
+  "id": "playbook-shipping-fees",
+  "scope": "shipping",
+  "title": "Frais de livraison — tarifs / livraison gratuite / zones / gouvernorats / frais incorrects",
+  "description": "Configure et résout les problèmes de frais de livraison : tarification par zone/gouvernorat, livraison gratuite, frais incorrects sur le site ou dans les commandes.",
+  "triggers": [
+    "frais de livraison",
+    "frais livraison",
+    "livraison gratuite",
+    "free shipping",
+    "tarif livraison",
+    "prix livraison",
+    "coût livraison",
+    "cout livraison",
+    "gouvernorat",
+    "zone livraison",
+    "zone de livraison",
+    "frais incorrects",
+    "frais mauvais",
+    "livraison trop cher",
+    "livraison pas gratuite",
+    "livraison 0 dinars",
+    "configurer livraison",
+    "modifier frais",
+    "changer frais",
+    "frais transporteur",
+    "frais custom",
+    "frais personnalisé",
+    "frais par produit",
+    "lfrais",
+    "llivraison"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel est votre problème avec les frais de livraison ?\n(1) Configurer les frais de livraison par transporteur/zone\n(2) Activer la livraison gratuite\n(3) Les frais affichés sont incorrects sur le site\n(4) Les frais dans une commande sont mauvais\n(5) Configurer des frais personnalisés par produit",
+      "step_id": "ASK_01_QUEL_EST_VOTRE_PRO_63B8AC",
+      "field": "expected_behavior"
+    },
+    {
+      "kind": "solve",
+      "title": "Configurer les frais par transporteur et zone",
+      "response": "Configuration des frais de livraison (Paramètres → Transporteurs) :\n\n1. Allez dans Paramètres (dash.tiktak.space/settings) → section Transporteurs\n2. Pour chaque transporteur :\n   • Nom du transporteur\n   • Frais de base (montant par défaut)\n   • Zones couvertes : sélectionnez les gouvernorats\n   • Pour chaque zone/gouvernorat, vous pouvez définir un tarif spécifique\n\n3. Options de chaque transporteur :\n   • Actif : le transporteur est disponible pour les commandes\n   • Visible web : affiché comme option de livraison sur le site\n   • Par défaut : transporteur sélectionné automatiquement\n\n4. Pour des frais différents par zone :\n   • Certains transporteurs ont des tarifs variables par gouvernorat\n   • Configurez les montants par zone dans les détails du transporteur\n\n5. Sauvegardez et testez :\n   • Créez une commande test avec différents gouvernorats\n   • Vérifiez que les frais s'affichent correctement\n\nQuel transporteur voulez-vous configurer et quels gouvernorats couvrir ?",
+      "success_indicator": "Frais correctement configurés par transporteur et zone, visibles sur le site",
+      "ui": {
+        "label": "Ouvrir Paramètres",
+        "route": "/settings"
+      },
+      "step_id": "SOLVE_02_CONFIGURER_LES_FRA_CBC8F4"
+    },
+    {
+      "kind": "solve",
+      "title": "Activer la livraison gratuite",
+      "response": "Configurer la livraison gratuite :\n\nOption 1 — Livraison gratuite globale :\n• Lors de la création d'une commande (dash.tiktak.space/orders/new)\n• Cochez l'option 'Livraison gratuite'\n• Les frais passent à 0\n\nOption 2 — Livraison gratuite via coupon :\n• Créez un coupon (dash.tiktak.space/coupons)\n• Configurez une condition 'Valeur d'achat minimale'\n• Appliquez une remise sur les frais de livraison\n\nOption 3 — Frais à 0 pour un transporteur :\n• Paramètres → Transporteurs → éditez le transporteur\n• Mettez les frais de base à 0\n• Les commandes via ce transporteur seront sans frais\n\nOption 4 — Frais gratuits par produit :\n• Lors de la création/édition d'un produit\n• Onglet Tarification → 'Frais de livraison personnalisé'\n• Mettez le montant à 0\n\nQuelle méthode préférez-vous pour la livraison gratuite ?",
+      "success_indicator": "Livraison gratuite active, frais à 0 sur les commandes/site",
+      "step_id": "SOLVE_03_ACTIVER_LA_LIVRAIS_02E689"
+    },
+    {
+      "kind": "solve",
+      "title": "Frais incorrects affichés sur le site",
+      "response": "Frais de livraison incorrects sur le site :\n\n1. Vérifiez la configuration transporteur :\n   • Paramètres → Transporteurs\n   • Vérifiez le montant des frais de base\n   • Vérifiez les zones/gouvernorats et tarifs associés\n\n2. Vérifiez les frais personnalisés par produit :\n   • Éditez le produit → onglet Tarification\n   • Si 'Frais de livraison personnalisé' est activé, ce montant remplace les frais transporteur\n   • Désactivez si non souhaité\n\n3. Vérifiez le coupon appliqué :\n   • Un coupon avec condition transporteur peut modifier les frais\n\n4. Vérifiez le cache :\n   • Videz le cache navigateur (Ctrl+F5)\n   • Testez en navigation privée\n   • Le site peut afficher d'anciens tarifs en cache\n\n5. Vérifiez la visibilité web du transporteur :\n   • Si 'Visible web' est désactivé, le transporteur n'apparaît pas sur le site\n   • Seuls les transporteurs 'Visible web = Oui' sont proposés au checkout\n\nQuels frais sont affichés et quels frais attendez-vous ?",
+      "success_indicator": "Frais corrects affichés sur le site et dans les commandes",
+      "step_id": "SOLVE_04_FRAIS_INCORRECTS_A_7932B3"
+    },
+    {
+      "kind": "solve",
+      "title": "Frais incorrects dans une commande",
+      "response": "Frais incorrects dans une commande existante :\n\n1. Ouvrez la commande (dash.tiktak.space/orders)\n2. Vérifiez le transporteur sélectionné et ses frais configurés\n3. Causes possibles :\n   • Transporteur changé après création → les frais ne se recalculent pas toujours\n   • Coupon appliqué avec remise livraison\n   • Frais personnalisé sur le produit qui remplace les frais transporteur\n   • Livraison gratuite cochée par erreur\n\n4. Pour corriger :\n   • Éditez la commande → modifiez le transporteur ou les frais\n   • Les frais peuvent être ajustés manuellement dans certains cas\n   • Si la commande est déjà synchronisée avec le transporteur, les frais ne peuvent plus être modifiés\n\n5. Prévention :\n   • Vérifiez le récapitulatif avant de confirmer la commande\n   • Assurez-vous que le bon transporteur est sélectionné\n\nQuel est le numéro de la commande et quels frais figurent ?",
+      "success_indicator": "Frais corrigés dans la commande",
+      "step_id": "SOLVE_05_FRAIS_INCORRECTS_D_B2E5FA"
+    },
+    {
+      "kind": "solve",
+      "title": "Frais personnalisés par produit",
+      "response": "Configurer des frais de livraison personnalisés par produit :\n\n1. Allez dans Produits (dash.tiktak.space/products)\n2. Éditez le produit concerné (icône crayon)\n3. Allez dans l'onglet 'Tarification'\n4. Activez 'Frais de livraison personnalisé'\n5. Saisissez le montant de livraison pour ce produit\n6. Sauvegardez\n\nComportement :\n• Ce frais REMPLACE les frais du transporteur pour ce produit\n• Si le panier contient plusieurs produits avec frais personnalisés, les frais sont cumulés\n• Mise à 0 = livraison gratuite pour ce produit spécifique\n\nCas d'usage courant :\n• Produits volumineux avec livraison plus chère\n• Produits légers avec livraison gratuite\n• Produits sur mesure avec frais de livraison fixe\n\nQuels produits souhaitent des frais personnalisés ?",
+      "success_indicator": "Frais personnalisés configurés sur les produits, visibles au checkout",
+      "step_id": "SOLVE_06_FRAIS_PERSONNALIS__E1A3A6"
+    },
+    {
+      "kind": "verify",
+      "question": "Les frais de livraison sont-ils maintenant corrects ? Testez en créant une commande avec différents gouvernorats. Si non, envoyez une capture des frais affichés.",
+      "step_id": "VERIFY_07_LES_FRAIS_DE_LIVRA_2FF411"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Frais de livraison incorrects malgré configuration correcte des transporteurs et zones, ou incohérence entre back-office et site",
+      "required_info": [
+        "Transporteur concerné",
+        "Gouvernorat de livraison",
+        "Frais attendus vs frais affichés",
+        "Capture écran (site + config transporteur)",
+        "Coupon actif (si applicable)",
+        "Produits dans la commande (frais personnalisés ?)"
+      ],
+      "step_id": "ESCALATE_08_ESCALATE_442156",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Frais de livraison incorrects malgré configuration correcte des transporteurs et zones, ou incohérence entre back-office et site",
+        "repro_steps": [],
+        "evidence": [
+          "Transporteur concerné",
+          "Gouvernorat de livraison",
+          "Frais attendus vs frais affichés",
+          "Capture écran (site + config transporteur)",
+          "Coupon actif (si applicable)",
+          "Produits dans la commande (frais personnalisés ?)"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Frais à 0 alors que livraison payante",
+      "cause": "Livraison gratuite cochée ou frais personnalisé à 0 sur le produit",
+      "solution": "Décocher livraison gratuite, vérifier frais personnalisé produit"
+    },
+    {
+      "symptom": "Transporteur non proposé sur le site",
+      "cause": "Visible web désactivé ou gouvernorat non couvert",
+      "solution": "Activer Visible web + définir les zones/gouvernorats"
+    },
+    {
+      "symptom": "Frais différents entre dashboard et site",
+      "cause": "Cache navigateur ou frais personnalisé produit",
+      "solution": "Vider cache (Ctrl+F5), vérifier frais personnalisés produit"
+    },
+    {
+      "symptom": "Frais ne changent pas après modification",
+      "cause": "Cache ou commande déjà synchronisée",
+      "solution": "Vider cache, pour commandes sync il faut annuler synchro d'abord"
+    }
+  ],
+  "best_practices": [
+    "Tester les frais avec des commandes test avant mise en production",
+    "Définir un transporteur par défaut pour éviter les oublis",
+    "Vérifier les frais personnalisés produit si les frais globaux ne s'appliquent pas",
+    "Documenter les tarifs par zone pour référence"
+  ],
+  "related_playbooks": [
+    "playbook-carrier-integration",
+    "playbook-settings",
+    "playbook-checkout-cart"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "carrier",
+      "question": "Quel transporteur (ex: Aramex, Intigo, etc.) ?"
+    },
+    {
+      "key": "shipping_zone",
+      "question": "Quelle zone/pays/ville est concerné(e) ?"
+    },
+    {
+      "key": "expected_behavior",
+      "question": "Quel résultat attendu (frais, délais, synchro) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact (si affiché) ?"
+    }
+  ]
+}

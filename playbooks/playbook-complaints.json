@@ -1,0 +1,161 @@
+{
+  "id": "playbook-complaints",
+  "scope": "general",
+  "title": "Réclamations — création / traitement / suivi",
+  "triggers": [
+    "client mécontent",
+    "complaint",
+    "litige",
+    "plainte",
+    "remboursement",
+    "retour",
+    "réclamation",
+    "sav",
+    "service après-vente"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer une réclamation (/reclamations ou /complaints) :\n• Réclamations → 'Créer'\n• Renseignez client/commande + type de réclamation + intervention requise + responsable\n• Ajoutez description détaillée\n• Joignez pièces justificatives (photos produit, captures échanges)\n• Définissez le statut initial (Ouverte/En cours)\n• Enregistrez\n\nAvez-vous l'ID commande, le téléphone ou l'email du client ?",
+      "actions": [
+        "create_complaint"
+      ],
+      "success_indicator": "Réclamation créée avec un ID unique et visible dans la liste",
+      "common_errors": [
+        "Client non trouvé → vérifier téléphone/email exact",
+        "Commande non trouvée → vérifier ID ou référence",
+        "Type/intervention non sélectionné → champs requis"
+      ],
+      "step_id": "SOLVE_01_CR_ER_UNE_R_CLAMAT_ACF8FD"
+    },
+    {
+      "kind": "solve",
+      "response": "Suivre une réclamation :\n• Utilisez la recherche par ID réclamation, nom client, téléphone ou référence commande\n• Filtrez par statut (Ouverte / En cours / Clôturée)\n• Filtrez par date de création pour retrouver les réclamations récentes\n• Filtrez par type ou responsable assigné\n• Ouvrez la fiche pour voir historique complet et commentaires\n\nQuel statut cherchez-vous (ouverte/en cours/clôturée) et quelle période ?",
+      "actions": [
+        "filter_complaints",
+        "view_complaint_history"
+      ],
+      "success_indicator": "Liste filtrée affiche uniquement les réclamations correspondantes",
+      "time_estimate": "Traitement indicatif : ~24-48h selon type et complexité",
+      "step_id": "SOLVE_02_SUIVRE_UNE_R_CLAMA_6F0A60"
+    },
+    {
+      "kind": "solve",
+      "response": "Réclamation ne se sauvegarde pas :\n✓ Vérifiez champs obligatoires : Client*, Commande, Type*, Description\n✓ Vérifiez que la commande existe et est associée au bon client\n✓ Rafraîchissez la page (Ctrl+F5) et réessayez\n✓ Testez avec un autre navigateur (Chrome/Firefox en navigation privée)\n✓ Vérifiez vos permissions (rôle utilisateur)\n\nQuelle erreur exacte s'affiche ? Copiez le message complet.",
+      "actions": [
+        "complaint_save_error",
+        "check_user_permissions"
+      ],
+      "success_indicator": "Réclamation enregistrée sans erreur",
+      "escalation_criteria": "Erreur persiste après vérification champs + rafraîchissement + test autre navigateur",
+      "step_id": "SOLVE_03_R_CLAMATION_NE_SE__CB5211"
+    },
+    {
+      "kind": "solve",
+      "response": "Traiter/mettre à jour une réclamation :\n• Ouvrez la fiche réclamation\n• Ajoutez des commentaires pour tracer les actions entreprises\n• Changez le statut (Ouverte → En cours → Clôturée)\n• Assignez à un responsable si besoin\n• Ajoutez des documents complémentaires\n• Liez à une commande d'échange/retour si applicable\n• Enregistrez les modifications\n\nÀ quelle étape du traitement êtes-vous (analyse/résolution/clôture) ?",
+      "actions": [
+        "update_complaint_status",
+        "add_complaint_comment",
+        "link_exchange_order"
+      ],
+      "success_indicator": "Statut et historique mis à jour, visible dans la chronologie de la réclamation",
+      "step_id": "SOLVE_04_TRAITER_METTRE_JOU_26D95D"
+    },
+    {
+      "kind": "solve",
+      "response": "Réclamation liée à un retour/échange :\n• Depuis la réclamation, vérifiez si une commande de retour existe\n• Si besoin, créez un retour via le module Retours (scan) ou échange via Échange Commande\n• Liez la réclamation à la commande de retour/échange pour le suivi\n• Mettez à jour le statut de la réclamation selon l'avancement\n\nLa commande originale a-t-elle déjà été expédiée ? Le client veut-il un remboursement ou un échange ?",
+      "actions": [
+        "create_return_from_complaint",
+        "create_exchange_from_complaint"
+      ],
+      "success_indicator": "Retour/échange créé et lié à la réclamation",
+      "step_id": "SOLVE_05_R_CLAMATION_LI_E_U_E57984"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Erreur technique empêchant la création/modification de réclamation après vérifications, ou besoin d'arbitrage sur une réclamation complexe",
+      "required_info": [
+        "ID réclamation (si existe) ou ID commande",
+        "Capture écran de l'erreur exacte",
+        "Étapes effectuées avant l'erreur",
+        "Navigateur + version",
+        "Rôle de l'utilisateur",
+        "Type de réclamation et intervention demandée"
+      ],
+      "step_id": "ESCALATE_06_ESCALATE_EC2984",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Erreur technique empêchant la création/modification de réclamation après vérifications, ou besoin d'arbitrage sur une réclamation complexe",
+        "repro_steps": [],
+        "evidence": [
+          "ID réclamation (si existe) ou ID commande",
+          "Capture écran de l'erreur exacte",
+          "Étapes effectuées avant l'erreur",
+          "Navigateur + version",
+          "Rôle de l'utilisateur",
+          "Type de réclamation et intervention demandée"
+        ],
+        "suspected_component": "general",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_07_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : ID réclamation/commande + capture erreur + étapes + navigateur + rôle utilisateur.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_08_POUR_ESCALADER_ID__F8858F",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Réclamations — création / traitement / suivi",
+        "repro_steps": [],
+        "evidence": [
+          "ticket_id",
+          "what_needed"
+        ],
+        "suspected_component": "general",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/reclamations ou /complaints - Module de gestion des réclamations",
+    "Saisie réclamation liée à commande avec type/intervention/responsable et suivi statut"
+  ],
+  "common_workflows": [
+    "Création réclamation → assignation responsable → traitement → clôture",
+    "Réclamation → création retour/échange → remboursement/renvoi → clôture"
+  ],
+  "best_practices": [
+    "1 réclamation = 1 sujet (éviter de mélanger plusieurs problèmes)",
+    "Joindre toujours des preuves (photos, captures) pour accélérer le traitement",
+    "Utiliser les commentaires pour tracer toutes les actions et communications",
+    "Clôturer uniquement quand le client a confirmé la résolution"
+  ],
+  "canonical_scope": "support",
+  "required_fields": [
+    {
+      "key": "ticket_id",
+      "question": "Quel ticket (ID) ?"
+    },
+    {
+      "key": "what_needed",
+      "question": "Qu’est-ce que vous voulez faire (créer, suivre, répondre) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

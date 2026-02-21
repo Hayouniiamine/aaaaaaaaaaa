@@ -1,0 +1,158 @@
+{
+  "id": "playbook-accounting",
+  "scope": "billing",
+  "title": "Comptabilité — exports / rapports / étapes comptables / journal",
+  "triggers": [
+    "accounting",
+    "bilan",
+    "chiffre d'affaires",
+    "compta",
+    "comptabilité",
+    "export comptable",
+    "journal",
+    "rapport",
+    "rapports comptables",
+    "statistiques",
+    "calcul",
+    "export excel",
+    "données comptables",
+    "résultat",
+    "ventes",
+    "recette"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Comptabilité : (1) Module comptabilité non accessible, (2) Exports/rapports, (3) Étapes comptables, (4) Chiffres incorrects ?",
+      "step_id": "ASK_01_COMPTABILIT_1_MODU_E9AC05",
+      "field": "accounting_issue"
+    },
+    {
+      "kind": "solve",
+      "response": "Activer le module Comptabilité :\n• Module : /accounting — disponible selon votre pack\n• Activation : ⚙️ près du logo → 'Personnaliser le menu' → activer 'Comptabilité'\n• Sauvegarder et rafraîchir la page (Ctrl+F5)\n• Si non visible : votre pack ne l'inclut pas → contacter support pour upgrade\n\n✓ Vérifications :\n  - Module activé dans 'Personnaliser le menu'\n  - Rôle utilisateur : permissions suffisantes\n  - Se déconnecter/reconnecter si toujours invisible\n\nLe module Comptabilité est-il visible dans votre menu ?",
+      "actions": [
+        "enable_accounting",
+        "verify_pack",
+        "check_permissions"
+      ],
+      "success_indicator": "Module Comptabilité accessible dans le menu latéral",
+      "step_id": "SOLVE_02_ACTIVER_LE_MODULE__685A0C"
+    },
+    {
+      "kind": "solve",
+      "response": "Exports et rapports comptables :\n• Depuis /accounting ou /orders : export Excel des commandes\n• Les données exportées incluent les commandes des étapes marquées 'Comptable'\n• Filtrez par période, statut, transporteur avant d'exporter\n\n✓ Configuration préalable :\n  - /settings → Étapes de commande → activer 'Comptable' sur les étapes pertinentes\n  - Étapes recommandées : Confirmées, Livrées (celles qui doivent apparaître en comptabilité)\n  - Vérifiez Config fiscale (/settings → Paramétrage global → Code TVA, Taux TVA)\n\n✓ Problèmes fréquents :\n  - Export vide → vérifier filtres et période sélectionnée\n  - Données incomplètes → vérifier que les bonnes étapes sont marquées 'Comptable'\n  - TVA incorrecte dans export → vérifier config fiscale globale\n  - Export Excel bloqué → rafraîchir, essayer autre navigateur\n\nQuelle période et quelles données voulez-vous exporter ?",
+      "actions": [
+        "export_accounting_data",
+        "configure_accounting_steps",
+        "verify_exported_data"
+      ],
+      "success_indicator": "Export téléchargé avec données complètes et TVA correcte",
+      "step_id": "SOLVE_03_EXPORTS_ET_RAPPORT_0FC20B"
+    },
+    {
+      "kind": "solve",
+      "response": "Étapes comptables (/settings → Étapes de commande) :\n• Chaque étape a un switch 'Comptable'\n• Seules les étapes marquées 'Comptable' sont prises en compte dans les rapports/exports comptables\n• Recommandation :\n  - Confirmées ✓ Comptable\n  - Livrées ✓ Comptable\n  - En attente ✗ (pas encore confirmé)\n  - Annulées ✗ (pas de chiffre d'affaires)\n\n✓ Pour modifier :\n  1. /settings → Étapes de commande\n  2. Activer/désactiver le switch 'Comptable' sur chaque étape\n  3. Enregistrer\n\n⚠️ Prudence : modifier les étapes peut impacter les rapports historiques\n\nQuelles étapes sont actuellement marquées 'Comptable' ?",
+      "actions": [
+        "review_accounting_steps",
+        "toggle_accounting_flag"
+      ],
+      "success_indicator": "Rapports comptables complets avec les bonnes étapes",
+      "step_id": "SOLVE_04_TAPES_COMPTABLES_S_701C78"
+    },
+    {
+      "kind": "solve",
+      "response": "Chiffres incorrects / incohérences :\n✓ Vérifications systématiques :\n  1. Étapes comptables : toutes les étapes pertinentes sont-elles marquées 'Comptable' ?\n  2. Période de filtrage : la bonne plage de dates est-elle sélectionnée ?\n  3. Taxes : vérifier config TVA globale et taxe par produit\n  4. Remises : les coupons/remises impactent le total\n  5. Échanges/retours : vérifier si comptabilisés\n  6. Commandes annulées : vérifier si exclues (doivent l'être)\n\n✓ Actions :\n  - Comparer export Excel avec données visibles dans /orders\n  - Filtrer par étape pour vérifier les totaux\n  - Recalculer manuellement sur un échantillon pour isoler l'écart\n\nQuelle incohérence exacte constatez-vous (quel montant attendu vs affiché) ?",
+      "actions": [
+        "verify_accounting_totals",
+        "cross_check_exports",
+        "review_tax_config"
+      ],
+      "success_indicator": "Totaux cohérents entre rapports et commandes",
+      "step_id": "SOLVE_05_CHIFFRES_INCORRECT_0CD2F4"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Module comptabilité inaccessible malgré pack valide, ou incohérences chiffrées persistantes après vérification des étapes et taxes",
+      "required_info": [
+        "Pack souscrit",
+        "Capture du module ou de l'erreur",
+        "Période concernée",
+        "Montant attendu vs montant affiché",
+        "Étapes marquées 'Comptable'"
+      ],
+      "step_id": "ESCALATE_06_ESCALATE_35E79A",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Module comptabilité inaccessible malgré pack valide, ou incohérences chiffrées persistantes après vérification des étapes et taxes",
+        "repro_steps": [],
+        "evidence": [
+          "Pack souscrit",
+          "Capture du module ou de l'erreur",
+          "Période concernée",
+          "Montant attendu vs montant affiché",
+          "Étapes marquées 'Comptable'"
+        ],
+        "suspected_component": "billing",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_07_APR_S_CES_TAPES_ES_02B92D"
+    }
+  ],
+  "related_docs": [
+    "/accounting - Module comptabilité (selon pack)",
+    "/settings → Étapes de commande - Switch 'Comptable' pour rapports",
+    "/settings → Paramétrage global - Config fiscale (Code TVA, Taux TVA)",
+    "/orders - Export Excel des commandes filtrées"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Module comptabilité absent du menu",
+      "cause": "Pack ne l'inclut pas ou module non activé",
+      "solution": "Activer dans ⚙️ → Personnaliser le menu, ou upgrader pack"
+    },
+    {
+      "symptom": "Rapports comptables incomplets",
+      "cause": "Étapes non marquées 'Comptable'",
+      "solution": "Activer 'Comptable' dans /settings → Étapes de commande"
+    },
+    {
+      "symptom": "TVA incorrecte dans exports",
+      "cause": "Taux TVA global mal configuré",
+      "solution": "Vérifier dans /settings → Paramétrage global → Config fiscale"
+    },
+    {
+      "symptom": "Export Excel vide",
+      "cause": "Filtres trop restrictifs ou mauvaise période",
+      "solution": "Élargir filtres et période, rafraîchir"
+    }
+  ],
+  "best_practices": [
+    "Configurez les étapes 'Comptable' dès la mise en place du workflow",
+    "Exportez régulièrement (hebdo/mensuel) pour vérification",
+    "Vérifiez Config fiscale avant le premier export",
+    "Comparez exports avec données /orders pour validation",
+    "Gardez les rapports archivés pour référence"
+  ],
+  "canonical_scope": "billing",
+  "required_fields": [
+    {
+      "key": "accounting_issue",
+      "question": "Quel problème comptable (accès, export, chiffres) ?"
+    },
+    {
+      "key": "period",
+      "question": "Quelle période concerne le problème ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu'est-ce qui ne correspond pas ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

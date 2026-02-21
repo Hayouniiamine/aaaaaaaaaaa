@@ -1,33 +1,272 @@
 {
   "id": "playbook-payment",
-  "scope": "billing",
-  "title": "Paiement échoué / transaction refusée",
+  "scope": "payments",
+  "title": "Paiement — échec / refus / passerelle / 3DS / checkout / Konnect / Click-to-Pay / e-Dinar / COD / virement",
   "triggers": [
+    "3d secure",
+    "3ds",
+    "400",
+    "401",
+    "403",
+    "500",
+    "carte",
+    "cb",
+    "checkout",
+    "click to pay",
+    "click-to-pay",
+    "cod",
+    "contre remboursement",
+    "e-dinar",
+    "edinar",
+    "error payment",
+    "espèces",
+    "konnect",
+    "mode paiement",
+    "moyen de paiement",
+    "paiement",
+    "paiement en ligne",
     "paiement échoué",
-    "transaction refusée",
-    "payment failed",
-    "carte refusée",
-    "erreur paiement",
-    "403 paiement",
-    "400 paiement"
+    "paiement refusé",
+    "passerelle",
+    "payment",
+    "paypal",
+    "refusé",
+    "sobflous",
+    "stripe",
+    "virement",
+    "virement bancaire"
   ],
-  "description": "Triage paiement: identifier méthode, message exact, tester autre méthode, puis escalade si incident.",
   "steps": [
     {
       "kind": "ask",
-      "question": "Quel moyen de paiement utilisez-vous (carte / virement / paiement à la livraison / passerelle) ?"
-    },
-    {
-      "kind": "ask",
-      "question": "Quel est le message d’erreur exact affiché au paiement ?"
+      "question": "Paiement : (1) Quelle méthode (carte/PayPal/virement/COD) ? (2) Quel message/code exact (400/401/500, 3DS échoué, carte refusée) ? (3) URL checkout ?",
+      "step_id": "ASK_01_PAIEMENT_1_QUELLE__0431FD",
+      "field": "checkout_url"
     },
     {
       "kind": "solve",
-      "response": "Pour diagnostiquer vite :\n\n✓ Testez avec un montant simple et un autre navigateur (ou navigation privée)\n✓ Testez une autre méthode (ex: paiement à la livraison) pour voir si c’est lié à la passerelle\n✓ Si vous avez un code (400/401/403/500), envoyez-le\n\nDites-moi le message exact + la méthode de paiement et je vous guide."
+      "response": "Diagnostic rapide paiement :\n✓ Testez navigation privée + autre navigateur (Chrome, Firefox)\n✓ Testez un petit montant (ex: commande test 1 DT)\n✓ Testez autre moyen (ex: COD au lieu de carte) pour isoler passerelle\n✓ Vérifiez que la commande se crée côté back-office même si paiement échoue\n✓ Vérifiez console navigateur (F12 → Console) pour erreurs JavaScript\n✓ Client doit essayer depuis autre appareil/réseau\n\nPouvez-vous copier le message exact affiché au client ? La commande apparaît-elle dans /orders ?",
+      "actions": [
+        "test_payment_quick",
+        "check_order_created",
+        "check_browser_console"
+      ],
+      "success_indicator": "Isolation du problème : passerelle, navigateur, réseau, ou carte",
+      "common_quick_fixes": [
+        "Navigation privée",
+        "Autre appareil",
+        "Autre réseau WiFi/4G",
+        "Vider cache"
+      ],
+      "step_id": "SOLVE_02_DIAGNOSTIC_RAPIDE__1A3625"
+    },
+    {
+      "kind": "solve",
+      "response": "Refus 3D-Secure / carte :\n⚠️ Authentification 3DS échoue ou carte refusée\n\n✓ Client doit :\n  - Réessayer avec une autre carte\n  - Vérifier OTP/code 3DS (SMS/app banque)\n  - Vérifier limite bancaire (plafond paiement en ligne)\n  - Contacter sa banque si refus persistant\n  - Essayer depuis autre réseau (WiFi → 4G)\n\n✓ Vous vérifiez :\n  - Le client reçoit-il un écran 3DS ou refus immédiat ?\n  - La passerelle de paiement est-elle configurée correctement ?\n  - Mode test vs mode production (clés API)\n\nLe client voit-il l'écran d'authentification 3DS ? Refus avant ou après 3DS ?",
+      "actions": [
+        "troubleshoot_3ds",
+        "verify_payment_gateway_keys",
+        "test_with_test_card"
+      ],
+      "success_indicator": "Paiement passe après nouvelle carte ou résolution OTP",
+      "note": "3DS = sécurité bancaire obligatoire EU, blocage souvent côté banque client",
+      "step_id": "SOLVE_03_REFUS_3D_SECURE_CA_5DCE6F"
+    },
+    {
+      "kind": "solve",
+      "response": "Erreurs 400/401/403 (passerelle) :\n• 400 Bad Request : requête malformée\n• 401 Unauthorized : clés API invalides/expirées\n• 403 Forbidden : domaine/URL non autorisée\n\n✓ Vérifications :\n  - Passerelle activée et configurée (/settings ou config paiement)\n  - Clés API correctes (publishable key, secret key)\n  - Mode test vs production (pas de mix)\n  - Domaine autorisé dans config passerelle (ex: Stripe Dashboard)\n  - URL de retour/callback configurée\n\nQuelle passerelle utilisez-vous (Stripe, PayPal, autre) ? Mode test ou production ?",
+      "actions": [
+        "verify_gateway_config",
+        "check_api_keys",
+        "verify_allowed_domains"
+      ],
+      "success_indicator": "Clés valides, domaine autorisé, paiement passe",
+      "escalation_criteria": "Config passerelle vérifiée, clés correctes, domaine autorisé mais erreur 40X persiste",
+      "step_id": "SOLVE_04_ERREURS_400_401_40_7228F2"
+    },
+    {
+      "kind": "solve",
+      "response": "Erreur 500 / site bloqué au paiement :\n⚠️ Erreur serveur lors traitement paiement\n\n✓ Vérifications immédiates :\n  - Est-ce global (tous paiements) ou un client spécifique ?\n  - Testez paiement depuis back-office si possible\n  - Vérifiez console navigateur (F12) pour erreurs\n  - Vérifiez logs serveur si accès (ou demandez à équipe tech)\n\n✓ Actions temporaires :\n  - Proposez COD au client si urgent\n  - Créez commande manuellement en back-office\n  - Notez horaire exact de l'erreur pour investigation\n\nTous les clients ont l'erreur 500 ou juste certains ? Quel horaire ?",
+      "actions": [
+        "test_payment_backoffice",
+        "check_server_logs",
+        "create_manual_order_cod"
+      ],
+      "success_indicator": "Erreur identifiée ou contournée via COD",
+      "escalation_criteria": "Erreur 500 systématique, bloque tous paiements en ligne",
+      "step_id": "SOLVE_05_ERREUR_500_SITE_BL_6AB5F0"
+    },
+    {
+      "kind": "solve",
+      "response": "PayPal spécifique :\n✓ Vérifications PayPal :\n  - Compte PayPal Business configuré\n  - API credentials valides (Client ID, Secret)\n  - Mode Sandbox vs Live correct\n  - URL de retour autorisée dans compte PayPal\n  - Devise supportée (TND peut avoir restrictions)\n\n✓ Erreurs courantes :\n  - 'Compte PayPal restreint' → vérifier compte\n  - 'Paiement annulé' → client annule sur page PayPal\n  - 'Devise non supportée' → vérifier config devise\n\nLe client arrive sur la page PayPal ? Erreur avant ou après connexion PayPal ?",
+      "actions": [
+        "verify_paypal_config",
+        "check_paypal_currency",
+        "test_paypal_sandbox"
+      ],
+      "success_indicator": "Redirection PayPal OK, paiement complété",
+      "step_id": "SOLVE_06_PAYPAL_SP_CIFIQUE__3C8451"
+    },
+    {
+      "kind": "solve",
+      "response": "Konnect / Click-to-Pay (paiement en ligne Tunisie) :\n⚠️ Passerelle locale populaire en Tunisie\n\n✓ Activation Click-to-Pay / Konnect :\n  - Vérifiez que le module de paiement en ligne est activé\n  - Configurez les identifiants Konnect (clé API / wallet ID) dans les paramètres de paiement\n  - Testez en mode sandbox avant de passer en production\n  - Le domaine du site doit être autorisé dans la config Konnect\n\n✓ Erreurs courantes :\n  - 'Transaction refusée' → vérifier solde/plafond client, essayer autre carte\n  - 'Erreur technique' → vérifier clés API Konnect, mode test vs production\n  - Page de paiement ne charge pas → vérifier URL callback, domaine autorisé\n  - Client redirigé mais commande non validée → vérifier webhook/callback URL\n\n✓ Différence avec carte bancaire classique :\n  - Konnect supporte cartes tunisiennes (Visa/MasterCard locales) + e-Dinar\n  - Le 3DS peut varier selon la banque émettrice\n\nUtilisez-vous Konnect ou Click-to-Pay ? Wallet ID configuré ?",
+      "actions": [
+        "verify_konnect_config",
+        "check_konnect_api_keys",
+        "test_konnect_sandbox"
+      ],
+      "success_indicator": "Paiement Konnect fonctionne, redirection OK, commande validée",
+      "common_errors": [
+        {
+          "symptom": "Page paiement Konnect ne charge pas",
+          "fix": "Vérifier URL callback et domaine autorisé"
+        },
+        {
+          "symptom": "Transaction refusée Konnect",
+          "fix": "Client: vérifier solde/plafond. Commerçant: vérifier clés API"
+        },
+        {
+          "symptom": "Commande non validée après paiement",
+          "fix": "Vérifier configuration webhook/callback"
+        },
+        {
+          "symptom": "Erreur clé API",
+          "fix": "Régénérer clés dans dashboard Konnect, ne pas mélanger test/prod"
+        }
+      ],
+      "step_id": "SOLVE_07_KONNECT_CLICK_TO_P_06DA18"
+    },
+    {
+      "kind": "solve",
+      "response": "e-Dinar / Carte e-Dinar :\n• Carte prépayée de La Poste Tunisienne\n• Acceptée via passerelle Konnect (si configurée)\n• Plafond limité selon type de carte\n\n✓ Problèmes fréquents :\n  - 'Solde insuffisant' → vérifier solde e-Dinar (via app ou Poste)\n  - 'Carte non acceptée' → vérifier que la passerelle supporte e-Dinar\n  - Code OTP non reçu → attendre 2-3 min, vérifier numéro associé\n  - Plafond atteint → vérifier limite mensuelle (souvent 500-2000 TND)\n\n✓ Conseils client :\n  - Vérifier solde avant achat\n  - S'assurer que le numéro de téléphone associé est correct pour OTP\n  - Utiliser le navigateur par défaut (pas navigateur in-app)\n  - Si refus persistant → essayer une autre méthode de paiement\n\nLe client utilise e-Dinar Smart ou e-Dinar classique ?",
+      "actions": [
+        "verify_edinar_support",
+        "check_edinar_limits"
+      ],
+      "success_indicator": "Paiement e-Dinar accepté et commande créée",
+      "step_id": "SOLVE_08_E_DINAR_CARTE_E_DI_257480"
+    },
+    {
+      "kind": "solve",
+      "response": "Paiement à la livraison (COD / Contre remboursement) :\n• Mode de paiement par défaut en Tunisie\n• Le client paie au livreur/transporteur\n• Disponible automatiquement si transporteur configuré\n\n✓ Configuration :\n  - Paramètres → Transporteurs : vérifier que le transporteur est actif et 'Web' activé\n  - Le COD est généralement activé par défaut pour les commandes web\n  - Les frais de livraison s'ajoutent au total\n\n✓ Problèmes fréquents :\n  - COD non proposé au checkout → vérifier config transporteur + statut 'Web'\n  - Frais de livraison incorrects → vérifier tarifs par zone/gouvernorat\n  - Commande COD non synchronisée au livreur → vérifier intégration transporteur\n\nLe COD est-il visible sur le site pour les clients ?",
+      "actions": [
+        "verify_cod_config",
+        "check_carrier_web_status",
+        "verify_shipping_fees"
+      ],
+      "success_indicator": "COD disponible au checkout avec bons frais de livraison",
+      "step_id": "SOLVE_09_PAIEMENT_LA_LIVRAI_3F8FE2"
+    },
+    {
+      "kind": "solve",
+      "response": "Virement bancaire :\n• Utilisé pour : achat templates payants, liaison domaine, paiements B2B\n• Processus :\n  1. Choisir 'Virement bancaire' comme mode de paiement\n  2. Effectuer le virement vers le RIB indiqué\n  3. Délai traitement : 24-48h (confirmation manuelle)\n  4. Après confirmation → accès au service/produit acheté\n\n✓ Problèmes fréquents :\n  - Virement effectué mais rien reçu → attendre 24-48h pour traitement\n  - Template non disponible après virement → délai normal, recharger page\n  - Preuve de virement requise → envoyer via ticket si demandé\n\nAvez-vous effectué le virement ? Depuis combien de temps ?",
+      "actions": [
+        "check_transfer_status",
+        "verify_transfer_confirmation"
+      ],
+      "success_indicator": "Virement confirmé et service/produit accessible",
+      "time_estimate": "24-48h après virement effectué",
+      "step_id": "SOLVE_10_VIREMENT_BANCAIRE__2454CD"
     },
     {
       "kind": "escalate",
-      "reason": "Paiement échoue de façon systématique sans solution côté client → escalade (vérifier intégration / passerelle / logs)."
+      "reason": "Paiements échouent systématiquement malgré tests navigateurs/appareils/cartes, OU erreur technique passerelle persistante, OU 500 bloquant tous paiements, OU Konnect/Click-to-Pay configuré mais transactions refusées",
+      "required_info": [
+        "Passerelle utilisée",
+        "Mode (test/production)",
+        "Message erreur client exact",
+        "Capture checkout",
+        "Console navigateur (F12)",
+        "URL checkout",
+        "Montant test",
+        "Heure exacte",
+        "Client affecté (tous/certains)"
+      ],
+      "step_id": "ESCALATE_11_ESCALATE_8F3193",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Paiements échouent systématiquement malgré tests navigateurs/appareils/cartes, OU erreur technique passerelle persistante, OU 500 bloquant tous paiements, OU Konnect/Click-to-Pay configuré mais transactions refusées",
+        "repro_steps": [],
+        "evidence": [
+          "Passerelle utilisée",
+          "Mode (test/production)",
+          "Message erreur client exact",
+          "Capture checkout",
+          "Console navigateur (F12)",
+          "URL checkout",
+          "Montant test",
+          "Heure exacte",
+          "Client affecté (tous/certains)"
+        ],
+        "suspected_component": "payments",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_12_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : passerelle + mode + message erreur + capture + console F12 + URL + montant + heure + portée (tous/certains).",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_13_POUR_ESCALADER_PAS_54083B",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Paiement — échec / refus / passerelle / 3DS / checkout / Konnect / Click-to-Pay / e-Dinar / COD / virement",
+        "repro_steps": [],
+        "evidence": [
+          "checkout_url",
+          "payment_method",
+          "error_message"
+        ],
+        "suspected_component": "payments",
+        "priority": "P2"
+      }
     }
-  ]
+  ],
+  "related_docs": [
+    "Passerelles paiement : Stripe, PayPal, Konnect, Click-to-Pay, e-Dinar, selon config",
+    "3DS obligatoire pour cartes (sécurité bancaire)",
+    "Erreurs 40X = config passerelle, 500 = serveur",
+    "COD = mode par défaut Tunisie, dépend du transporteur configuré",
+    "Virement bancaire = 24-48h délai traitement",
+    "/settings → Transporteurs : config COD et frais livraison"
+  ],
+  "best_practices": [
+    "Testez paiement après chaque modif config",
+    "Gardez mode sandbox actif pour tests",
+    "Documentez clés API en lieu sûr",
+    "Proposez plusieurs moyens de paiement (carte + COD + Konnect)",
+    "Formez équipe à créer commandes manuelles COD en cas urgence",
+    "Vérifiez webhook/callback pour Konnect après chaque changement de domaine",
+    "Informez clients sur plafonds e-Dinar avant achat"
+  ],
+  "canonical_scope": "checkout",
+  "required_fields": [
+    {
+      "key": "checkout_url",
+      "question": "Quelle est l’URL de checkout ?"
+    },
+    {
+      "key": "payment_method",
+      "question": "Quelle méthode de paiement ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message/code exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
 }

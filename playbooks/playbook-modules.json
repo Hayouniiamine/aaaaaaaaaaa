@@ -1,0 +1,243 @@
+{
+  "id": "playbook-modules",
+  "scope": "apps",
+  "title": "Modules — activation / désactivation / accès / permissions / Facebook Pixel / intégrations",
+  "triggers": [
+    "accès",
+    "activer module",
+    "conversion",
+    "désactiver module",
+    "facebook",
+    "facebook pixel",
+    "google analytics",
+    "intégration",
+    "leads",
+    "leads facebook",
+    "menu",
+    "messenger",
+    "module",
+    "module manquant",
+    "modules",
+    "ne voit pas menu",
+    "permission",
+    "personnaliser menu",
+    "pixel",
+    "pixel facebook",
+    "tracking",
+    "tracking automatique"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Activer/désactiver des modules :\n• Icône ⚙️ près du logo → 'Personnaliser le menu'\n• Liste de tous les modules disponibles selon votre pack\n• Basculez le switch pour activer/désactiver\n• Exemples de modules activables :\n  - Expédition (/shipping)\n  - Retours (/returns)\n  - Manifestes (/manifests)\n  - Échange Commande (/orders/exchange)\n  - POS (/pos)\n  - Clients (/customers)\n  - Réclamations (/complaints)\n  - Attributs Produits (/product-attributes)\n  - Gestion Stock (/stock-management)\n  - Leads Facebook (/messenger/leads)\n  - Comptabilité (/accounting)\n  - Tracking automatique (/automatic-tracking)\n• Sauvegardez et rafraîchissez\n\nQuel module voulez-vous activer (nom exact) ?",
+      "actions": [
+        "toggle_module",
+        "customize_menu"
+      ],
+      "success_indicator": "Module apparaît dans le menu de navigation après rafraîchissement",
+      "note": "Disponibilité selon pack souscrit",
+      "step_id": "SOLVE_01_ACTIVER_D_SACTIVER_299689"
+    },
+    {
+      "kind": "solve",
+      "response": "Utilisateur ne voit pas un menu/module :\n✓ Vérifiez que le module est ACTIVÉ (⚙️ → Personnaliser le menu)\n✓ Vérifiez le rôle/permissions de l'utilisateur :\n  - /settings → Équipe & Utilisateurs\n  - Certains rôles ont accès limité aux modules\n  - Administrateur : accès complet\n  - Service client, etc. : accès partiel selon configuration\n✓ L'utilisateur doit se déconnecter puis se reconnecter\n✓ Rafraîchissez la page (Ctrl+F5)\n✓ Testez navigation privée\n\nQuel est le rôle exact de l'utilisateur ? Le module est-il activé dans 'Personnaliser le menu' ?",
+      "actions": [
+        "check_permissions",
+        "verify_module_enabled",
+        "check_user_role"
+      ],
+      "success_indicator": "Module visible après activation + reconnexion utilisateur",
+      "common_causes": [
+        "Module désactivé → activer dans ⚙️",
+        "Permissions insuffisantes → ajuster rôle",
+        "Cache navigateur → Ctrl+F5",
+        "Session ancienne → déconnexion/reconnexion"
+      ],
+      "step_id": "SOLVE_02_UTILISATEUR_NE_VOI_282942"
+    },
+    {
+      "kind": "solve",
+      "response": "Module actif mais fonctionnalités absentes :\n✓ Vérifiez que l'activation est bien sauvegardée\n✓ Rafraîchissez (Ctrl+F5) pour forcer rechargement complet\n✓ Videz le cache navigateur\n✓ Testez navigation privée / incognito\n✓ Testez autre navigateur (Chrome, Firefox, Edge)\n✓ Vérifiez console navigateur (F12) pour erreurs JavaScript\n✓ Vérifiez pack souscrit (certaines fonctions nécessitent pack supérieur)\n\nQuel écran/fonctionnalité exactement est manquant ? Quelle page (/route) ?",
+      "actions": [
+        "reload_ui",
+        "clear_browser_cache",
+        "check_browser_console",
+        "verify_pack_features"
+      ],
+      "success_indicator": "Fonctionnalités du module visibles et accessibles",
+      "escalation_criteria": "Module activé + permissions OK + cache vidé + navigation privée testé, mais fonctions toujours absentes",
+      "step_id": "SOLVE_03_MODULE_ACTIF_MAIS__E89561"
+    },
+    {
+      "kind": "solve",
+      "response": "Modules disponibles selon pack :\n• Modules de base (tous packs) :\n  - Commandes, Produits, Catégories, Clients, POS\n• Modules selon pack :\n  - Expédition (scan), Retours, Manifestes\n  - Réclamations, Tickets support\n  - Gestion stock, Attributs produits\n  - Leads Facebook Messenger\n  - Comptabilité, Tracking automatique\n• Vérifiez votre pack actuel dans /settings ou contactez support\n• Upgrade de pack possible pour débloquer plus de modules\n\nQuel module ne voyez-vous pas ? Connaissez-vous votre pack actuel ?",
+      "actions": [
+        "check_current_pack",
+        "verify_module_availability"
+      ],
+      "success_indicator": "Clarté sur modules inclus dans votre pack",
+      "step_id": "SOLVE_04_MODULES_DISPONIBLE_C18059"
+    },
+    {
+      "kind": "solve",
+      "response": "Facebook Pixel — Installation et configuration :\n• Le Pixel Facebook permet de suivre les conversions, remarketing et audiences\n• Installation dans TikTak PRO :\n  1. Créez un Pixel dans Facebook Business Manager (Events Manager)\n  2. Copiez l'ID du Pixel (numéro à 15-16 chiffres)\n  3. Dans TikTak PRO : /settings ou section intégrations → collez l'ID Pixel\n  4. Le Pixel sera automatiquement injecté dans toutes les pages du site\n\n✓ Événements trackés automatiquement :\n  - PageView (toutes les pages)\n  - ViewContent (fiches produits)\n  - AddToCart (ajout panier)\n  - InitiateCheckout (début checkout)\n  - Purchase (commande confirmée)\n\n✓ Vérification :\n  - Installez l'extension 'Facebook Pixel Helper' dans Chrome\n  - Visitez votre site → l'extension doit afficher les événements détectés\n  - Vérifiez dans Facebook Events Manager que les événements remontent\n\nAvez-vous l'ID Pixel Facebook ? Où en êtes-vous dans la configuration ?",
+      "actions": [
+        "configure_facebook_pixel",
+        "verify_pixel_installation",
+        "check_pixel_events"
+      ],
+      "success_indicator": "Pixel Helper détecte les événements, Events Manager reçoit des données",
+      "common_errors": [
+        {
+          "symptom": "Pixel non détecté par Pixel Helper",
+          "fix": "Vérifier que l'ID Pixel est bien saisi dans les paramètres TikTak"
+        },
+        {
+          "symptom": "Aucun événement dans Events Manager",
+          "fix": "Attendre 24h, vérifier que le site est en ligne avec le bon domaine"
+        },
+        {
+          "symptom": "Événements en double",
+          "fix": "Vérifier qu'il n'y a qu'un seul Pixel configuré (pas de code manuel en plus)"
+        },
+        {
+          "symptom": "Pixel actif mais conversions non trackées",
+          "fix": "Vérifier que l'événement Purchase est bien configuré et le domaine vérifié dans Business Manager"
+        }
+      ],
+      "step_id": "SOLVE_05_FACEBOOK_PIXEL_INS_0D091A"
+    },
+    {
+      "kind": "solve",
+      "response": "Facebook Leads (Messenger) :\n• Module Leads Facebook (/messenger/leads) — disponible selon pack\n• Permet de recevoir et gérer les leads depuis Messenger\n• Activation : ⚙️ → Personnaliser le menu → activer 'Leads Facebook'\n• Configuration : connecter votre page Facebook via les paramètres d'intégration\n\n✓ Problèmes fréquents :\n  - Leads non reçus → vérifier connexion page Facebook, permissions app\n  - Module non visible → vérifier pack (fonctionnalité selon pack)\n  - Leads dupliqués → vérifier qu'une seule intégration est active\n  - Déconnexion fréquente → reconnecter la page, vérifier permissions\n\nLe module Leads Facebook est-il activé dans votre menu ?",
+      "actions": [
+        "enable_facebook_leads",
+        "connect_facebook_page",
+        "verify_leads_integration"
+      ],
+      "success_indicator": "Leads Messenger reçus et affichés dans /messenger/leads",
+      "step_id": "SOLVE_06_FACEBOOK_LEADS_MES_0DB922"
+    },
+    {
+      "kind": "solve",
+      "response": "Tracking automatique :\n• Module Tracking automatique (/automatic-tracking) — selon pack\n• Suivi automatisé des expéditions via intégration transporteurs\n• Activation : ⚙️ → Personnaliser le menu → activer 'Tracking automatique'\n• Nécessite : transporteur configuré avec API active dans /settings → Transporteurs\n\n✓ Problèmes fréquents :\n  - Tracking non mis à jour → vérifier intégration API transporteur (clés valides)\n  - Statuts bloqués → vérifier que le transporteur supporte le tracking auto\n  - Notifications non envoyées → vérifier config notifications email\n\nQuel transporteur utilisez-vous ? Le tracking automatique est-il activé ?",
+      "actions": [
+        "enable_auto_tracking",
+        "verify_carrier_api",
+        "check_tracking_updates"
+      ],
+      "success_indicator": "Statuts d'expédition mis à jour automatiquement",
+      "step_id": "SOLVE_07_TRACKING_AUTOMATIQ_907088"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Module devrait être disponible selon pack mais reste inaccessible après activation + permissions vérifiées + cache vidé, ou problème technique empêchant activation/désactivation",
+      "required_info": [
+        "Nom exact du module manquant",
+        "Pack souscrit (si connu)",
+        "Rôle de l'utilisateur concerné",
+        "Capture écran de 'Personnaliser le menu' montrant le module",
+        "Capture écran du menu navigation actuel",
+        "URL de la page concernée",
+        "Navigateur + version",
+        "Console navigateur (F12) si erreurs"
+      ],
+      "step_id": "ESCALATE_08_ESCALATE_F16090",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Module devrait être disponible selon pack mais reste inaccessible après activation + permissions vérifiées + cache vidé, ou problème technique empêchant activation/désactivation",
+        "repro_steps": [],
+        "evidence": [
+          "Nom exact du module manquant",
+          "Pack souscrit (si connu)",
+          "Rôle de l'utilisateur concerné",
+          "Capture écran de 'Personnaliser le menu' montrant le module",
+          "Capture écran du menu navigation actuel",
+          "URL de la page concernée",
+          "Navigateur + version",
+          "Console navigateur (F12) si erreurs"
+        ],
+        "suspected_component": "apps",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_09_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : module + pack + rôle + capture 'Personnaliser menu' + capture menu actuel + URL + navigateur + console F12.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_10_POUR_ESCALADER_MOD_698372",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Modules — activation / désactivation / accès / permissions / Facebook Pixel / intégrations",
+        "repro_steps": [],
+        "evidence": [
+          "module_name",
+          "symptom",
+          "error_message",
+          "screenshot"
+        ],
+        "suspected_component": "apps",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "Activation modules : icône ⚙️ → 'Personnaliser le menu'",
+    "Modules disponibles selon pack",
+    "Permissions par rôle utilisateur",
+    "Facebook Pixel : suivi conversions via ID Pixel dans paramètres",
+    "Facebook Leads : /messenger/leads pour réception leads Messenger",
+    "Tracking automatique : /automatic-tracking avec API transporteurs"
+  ],
+  "module_list_reference": [
+    "Expédition - /shipping",
+    "Retours - /returns",
+    "Manifestes - /manifests",
+    "Échange Commande - /orders/exchange",
+    "POS - /pos",
+    "Clients - /customers",
+    "Réclamations - /complaints",
+    "Attributs Produits - /product-attributes",
+    "Gestion Stock - /stock-management",
+    "Leads Facebook - /messenger/leads",
+    "Comptabilité - /accounting",
+    "Tracking automatique - /automatic-tracking"
+  ],
+  "best_practices": [
+    "Activez uniquement les modules que vous utilisez (interface plus claire)",
+    "Vérifiez permissions avant de contacter support (souvent c'est juste ça)",
+    "Après activation, déconnectez/reconnectez l'utilisateur",
+    "Documentez quels modules sont actifs pour votre équipe"
+  ],
+  "canonical_scope": "apps",
+  "required_fields": [
+    {
+      "key": "module_name",
+      "question": "Quel module/app ?"
+    },
+    {
+      "key": "symptom",
+      "question": "Quel est le problème exact (activation, accès, erreur) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

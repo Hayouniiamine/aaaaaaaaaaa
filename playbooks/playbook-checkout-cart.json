@@ -1,0 +1,241 @@
+{
+  "id": "playbook-checkout-cart",
+  "scope": "orders",
+  "title": "Checkout & Panier — Ajouter au Panier / Finaliser Commande / Paiement",
+  "triggers": [
+    "checkout",
+    "panier",
+    "cart",
+    "ajouter au panier",
+    "add to cart",
+    "bouton panier",
+    "finaliser commande",
+    "finaliser",
+    "complete order",
+    "valider commande",
+    "page paiement"
+  ],
+  "description": "Résolution des problèmes liés au panier et au processus de checkout: bouton 'Ajouter au panier' ne fonctionne pas, panier vide, checkout bloqué, impossible de finaliser la commande.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Checkout/Panier : (1) Quelle étape pose problème (bouton panier ne répond pas / panier vide ou ne s'actualise pas / page checkout ne charge pas / impossible de finaliser/payer) ? (2) Message d'erreur affiché ? (3) Navigateur utilisé ?",
+      "step_id": "ASK_01_CHECKOUT_PANIER_1__206EEA",
+      "field": "checkout_step"
+    },
+    {
+      "kind": "solve",
+      "title": "Diagnostic rapide checkout",
+      "response": "Vérifications rapides avant diagnostic approfondi :\n\n✓ 1. TESTER NAVIGATION PRIVÉE\n  • Ctrl+Shift+N (Chrome) ou Ctrl+Shift+P (Firefox)\n  • Le problème persiste en mode privé ?\n  • → Non: problème cache/cookies\n  • → Oui: problème plus profond\n\n✓ 2. TESTER AUTRE NAVIGATEUR\n  • Chrome, Firefox, Safari\n  • Fonctionne ailleurs ?\n  • → Oui: problème navigateur spécifique\n  • → Non: problème configuration site\n\n✓ 3. TESTER PETIT MONTANT\n  • Commander un seul article peu cher\n  • Isole si problème: quantité, montant, produit spécifique\n\n✓ 4. VÉRIFIER CONSOLE NAVIGATEUR\n  • F12 → Console\n  • Erreurs rouges JavaScript ?\n  • Screenshot pour escalade si besoin\n\nLe problème apparaît-il sur tous navigateurs ?",
+      "actions": [
+        "test_incognito_mode",
+        "test_other_browser",
+        "test_small_order",
+        "check_console_errors"
+      ],
+      "success_indicator": "Isolation du problème: cache vs configuration vs bug",
+      "time_estimate": "2-3 minutes",
+      "step_id": "SOLVE_02_DIAGNOSTIC_RAPIDE__E47D04"
+    },
+    {
+      "kind": "solve",
+      "title": "Bouton 'Ajouter au Panier' Ne Répond Pas",
+      "response": "Si clic sur bouton 'Ajouter au panier' ne fait rien :\n\n✓ 1. VÉRIFIER JAVASCRIPT & CONSOLE\n  • F12 → Console\n  • Erreurs rouges au clic ?\n  • JavaScript activé dans navigateur ?\n  • Si erreur JS → Screenshot + escalade\n\n✓ 2. VIDER CACHE NAVIGATEUR\n  • Ctrl+Shift+Delete\n  • Effacer cache + cookies\n  • Rafraîchir: Ctrl+F5\n  • Retester\n\n✓ 3. DÉSACTIVER EXTENSIONS\n  • AdBlock peut bloquer boutons\n  • VPN peut interférer\n  • Mode navigation privée (désactive tout)\n  • Retester\n\n✓ 4. VÉRIFIER STOCK PRODUIT (ADMIN)\n  • Produits → [Produit concerné]\n  • Inventaire → Stock > 0 ?\n  • 'Gérer le stock' activé ?\n  • Si stock = 0 → Réapprovisionner\n\n✓ 5. VÉRIFIER VARIANTES (si applicable)\n  • Produit a des variantes (taille/couleur) ?\n  • Client DOIT sélectionner variante AVANT ajout\n  • Message 'Veuillez sélectionner...' affiché ?\n  • Variantes disponibles et en stock ?\n\n✓ 6. TESTER AUTRE PRODUIT\n  • Problème sur un seul produit ?\n  • Ou tous produits ?\n  • → Un seul: problème config produit\n  • → Tous: problème site/navigateur\n\nY a-t-il des erreurs en console (F12) ?",
+      "actions": [
+        "check_console_javascript_errors",
+        "clear_cache_cookies",
+        "disable_adblocker_vpn",
+        "verify_product_stock",
+        "check_variant_selected",
+        "test_different_product"
+      ],
+      "success_indicator": "Bouton fonctionne après une correction, ou cause identifiée",
+      "common_errors": [
+        "JavaScript error → Escalade (bug code)",
+        "Stock = 0 → Réapprovisionner produit",
+        "Variante non sélectionnée → Client doit choisir taille/couleur",
+        "AdBlock bloque → Désactiver pour le site"
+      ],
+      "troubleshooting": {
+        "Clic sans effet": "Vérifier console F12 pour erreur JS",
+        "Un produit ne marche pas": "Vérifier stock + variantes de ce produit",
+        "Tous produits ne marchent pas": "Cache, extensions, ou bug site",
+        "Fonctionne en navigation privée": "Vider cache + cookies"
+      },
+      "step_id": "SOLVE_03_BOUTON_AJOUTER_AU__29FE0B"
+    },
+    {
+      "kind": "solve",
+      "title": "Panier Vide / Ne S'Actualise Pas",
+      "response": "Si panier reste vide ou quantités ne changent pas :\n\n✓ 1. COOKIES NAVIGATEUR\n  • Le panier utilise les COOKIES\n  • Navigateur → Paramètres → Cookies\n  • Autoriser cookies pour tiktak.space\n  • Sans cookies: panier ne fonctionne pas\n\n✓ 2. NAVIGATION PRIVÉE\n  • Mode privé efface panier à fermeture\n  • Utiliser mode NORMAL pour conserver panier\n  • Ou finaliser commande dans même session\n\n✓ 3. SESSION EXPIRÉE\n  • Panier expire après 24-48h d'inactivité\n  • Normal pour sécurité\n  • Rajouter produits si expiré\n\n✓ 4. VIDER CACHE\n  • Cache corrompu peut causer désync\n  • Ctrl+Shift+Delete → Cache\n  • Ctrl+F5 recharger\n  • Rajouter produits\n\n✓ 5. VÉRIFIER SYNC (CONSOLE)\n  • F12 → Console\n  • Chercher erreurs 'Failed to fetch' ou 'API error'\n  • Si erreur réseau → Problème connexion/serveur\n  • Screenshot + escalade\n\n✓ 6. QUANTITÉ NE CHANGE PAS\n  • Cliquer +/- sur quantité\n  • Vider cache (Ctrl+F5)\n  • Retirer produit et rajouter\n  • Vérifier limite stock (ne peut pas dépasser stock)\n\nLes cookies sont-ils activés ? Mode privé utilisé ?",
+      "actions": [
+        "enable_cookies",
+        "exit_private_mode",
+        "clear_cache_ctrl_f5",
+        "check_session_expiry",
+        "check_network_errors_console",
+        "verify_stock_limit"
+      ],
+      "success_indicator": "Panier persiste, quantités se mettent à jour correctement",
+      "time_estimate": "5 minutes",
+      "common_fixes": [
+        "Activer cookies dans navigateur",
+        "Sortir du mode navigation privée",
+        "Vider cache et rafraîchir (Ctrl+F5)",
+        "Rajouter produits si session expirée"
+      ],
+      "troubleshooting": {
+        "Panier se vide au rechargement": "Cookies bloqués ou mode privé",
+        "Quantité ne change pas": "Cache, faire Ctrl+F5",
+        "Produit ajouté mais total = 0": "Bug prix, vérifier prix produit > 0 TND",
+        "Panier vide après 1 jour": "Normal, session expirée après 24-48h"
+      },
+      "step_id": "SOLVE_04_PANIER_VIDE_NE_S_A_B82C54"
+    },
+    {
+      "kind": "solve",
+      "title": "Page Checkout Ne Charge Pas / Erreur",
+      "response": "Si clic 'Finaliser' ou 'Commander' → rien ou erreur :\n\n✓ 1. INFORMATIONS REQUISES COMPLÈTES\n  Vérifier que client a bien saisi:\n  • ✓ Nom complet (prénom + nom)\n  • ✓ Adresse complète (rue, ville, code postal)\n  • ✓ Téléphone (format: +216 XX XXX XXX ou XX XXX XXX)\n  • ✓ Email (format: xxx@xxx.xx)\n  • ✓ Ville/Région/Gouvernorat sélectionné\n  \n  → Champ manquant = checkout bloqué\n\n✓ 2. FORMAT TÉLÉPHONE\n  Formats acceptés:\n  • +216 XX XXX XXX\n  • 00216 XX XXX XXX  \n  • XX XXX XXX (sans préfixe)\n  \n  ⚠️ Erreurs courantes:\n  • Espaces bizarres: +216XX XXX XXX (manque espace)\n  • Lettres dans numéro\n  • Numéro trop court/long\n  • Format international mal formé\n\n✓ 3. LIVRAISON NON SÉLECTIONNÉE\n  • Client DOIT choisir mode de livraison\n  • Si aucune option disponible:\n    → Problème zones de livraison (admin)\n  • Vérifier frais livraison s'affichent\n  • Si 0 option → Escalade\n\n✓ 4. SCRIPTS BLOQUÉS\n  • Désactiver AdBlock pour tiktak.space\n  • Désactiver VPN temporairement\n  • Tester autre navigateur\n  • Mode navigation privée\n\n✓ 5. GATEWAY PAIEMENT DOWN\n  • Si page charge mais bloque à étape paiement\n  • Tester mode paiement différent:\n    - Carte bancaire\n    - Paiement à la livraison (COD)\n  • Attendre 5-10 min et réessayer\n  • Si persiste → Escalade (gateway down)\n\nTous les champs sont-ils correctement remplis ?",
+      "actions": [
+        "verify_required_fields",
+        "check_phone_format",
+        "select_shipping_method",
+        "disable_adblocker_vpn",
+        "test_different_payment_method",
+        "wait_retry_gateway"
+      ],
+      "success_indicator": "Checkout s'ouvre et permet de continuer vers paiement",
+      "escalation_criteria": "Tous champs remplis correctement, livraison sélectionnée, mais checkout reste bloqué",
+      "common_errors": [
+        "Champ téléphone invalide → Vérifier format",
+        "Aucune option livraison → Vérifier zones (admin)",
+        "Gateway timeout → Réessayer après 5-10 min",
+        "AdBlock bloque → Désactiver pour site"
+      ],
+      "step_id": "SOLVE_05_PAGE_CHECKOUT_NE_C_765265"
+    },
+    {
+      "kind": "solve",
+      "title": "Problèmes Bouton / Style Checkout",
+      "response": "Si bouton 'Payer' trop grand/petit/mal placé/invisible :\n\n⚠️ C'est un problème de CSS/Template (cosmétique)\n\n✓ SOLUTIONS TEMPORAIRES (CLIENT):\n  • Utiliser zoom navigateur:\n    - Ctrl + (zoomer)\n    - Ctrl - (dézoomer)\n    - Ctrl 0 (réinitialiser)\n  • Changer résolution écran\n  • Tester mode mobile vs desktop:\n    - F12 → Toggle device toolbar\n    - Sélectionner iPhone/Android\n  • Tester autre navigateur\n\n✓ SOLUTIONS PERMANENTES (ADMIN):\n  1. Templates → Checkout\n  2. Éditer CSS personnalisé\n  3. Ou restaurer template par défaut\n\n✓ EXEMPLE CORRECTION CSS:\n  ```css\n  .checkout-button {\n    max-width: 300px !important;\n    font-size: 16px !important;\n    padding: 12px 24px !important;\n    margin: 20px auto !important;\n  }\n  ```\n\n⚠️ Si pas de compétences CSS:\n  → Restaurer template par défaut\n  → Ou escalader pour assistance design\n\nLe bouton est-il juste mal affiché ou complètement absent ?",
+      "actions": [
+        "adjust_browser_zoom",
+        "toggle_device_toolbar",
+        "edit_custom_css",
+        "reset_checkout_template"
+      ],
+      "success_indicator": "Bouton visible et cliquable",
+      "note": "Problème esthétique, n'affecte pas fonctionnalité si bouton cliquable",
+      "step_id": "SOLVE_06_PROBL_MES_BOUTON_S_8519DA"
+    },
+    {
+      "kind": "solve",
+      "title": "Vérifications Admin (Zones & Paiement)",
+      "response": "Vérifications côté administration TikTak PRO :\n\n✓ 1. ZONES DE LIVRAISON\n  • Paramètres → Transporteurs (/settings)\n  • Vérifier au moins 1 transporteur:\n    - Statut: Actif ✓\n    - Visibilité Web: Actif ✓\n    - Zones configurées (gouvernorats)\n  • Si aucun transporteur actif:\n    → Clients ne peuvent pas commander\n\n✓ 2. MODES DE PAIEMENT\n  • Paramètres → Paiement\n  • Vérifier au moins 1 mode actif:\n    - Paiement à la livraison (COD)\n    - Carte bancaire (gateway configuré)\n    - Autre mode actif\n  • Si aucun mode actif:\n    → Checkout bloqué\n\n✓ 3. PRODUITS DISPONIBLES\n  • Produits → Vérifier produits panier\n  • Chaque produit:\n    - Visible sur site: ✓\n    - Stock > 0 (si gestion stock)\n    - Prix > 0 TND\n  • Si produit masqué/épuisé:\n    → Retirer du panier ou réactiver\n\n✓ 4. PARAMÈTRES CHECKOUT\n  • Paramètres → Checkout / Commandes\n  • Champs requis configurés\n  • Email confirmation activé\n  • Conditions générales (CGV) publiées\n\nTous les paramètres sont-ils correctement configurés ?",
+      "actions": [
+        "verify_active_carriers",
+        "verify_shipping_zones",
+        "verify_payment_methods_active",
+        "verify_products_visible_stock",
+        "check_checkout_settings"
+      ],
+      "success_indicator": "Au moins 1 transporteur et 1 mode paiement actifs, produits disponibles",
+      "step_id": "SOLVE_07_V_RIFICATIONS_ADMI_A35207"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, le checkout fonctionne-t-il ? Si non, fournissez : étape exacte qui bloque, message erreur, capture écran, console F12 si erreur technique.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_LE_0BE552"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Checkout bloqué après vérification de tous les champs requis, transporteur et paiement actifs, cache vidé, navigateurs testés, OU erreur JavaScript critique en console",
+      "required_info": [
+        "Étape exacte qui bloque (panier / checkout / paiement)",
+        "Message d'erreur exact (capture écran)",
+        "URL page checkout",
+        "Navigateur + version",
+        "Résultat mode navigation privée",
+        "Console erreurs F12 (capture)",
+        "Tous champs remplis ? (oui/non)",
+        "Mode livraison disponible ? (oui/non)",
+        "Mode paiement sélectionné (carte/COD/autre)",
+        "Montant total commande (TND)",
+        "Problème affecte tous clients ou un seul"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_AA4EC5",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Checkout bloqué après vérification de tous les champs requis, transporteur et paiement actifs, cache vidé, navigateurs testés, OU erreur JavaScript critique en console",
+        "repro_steps": [],
+        "evidence": [
+          "Étape exacte qui bloque (panier / checkout / paiement)",
+          "Message d'erreur exact (capture écran)",
+          "URL page checkout",
+          "Navigateur + version",
+          "Résultat mode navigation privée",
+          "Console erreurs F12 (capture)",
+          "Tous champs remplis ? (oui/non)",
+          "Mode livraison disponible ? (oui/non)",
+          "Mode paiement sélectionné (carte/COD/autre)",
+          "Montant total commande (TND)",
+          "Problème affecte tous clients ou un seul"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/settings - Configuration transporteurs, paiement, checkout",
+    "/products - Vérification stock et visibilité produits"
+  ],
+  "best_practices": [
+    "Toujours tester checkout en tant que client régulièrement",
+    "Activer notifications emails pour commandes test",
+    "Vérifier tous modes paiement fonctionnels",
+    "Tester sur mobile ET desktop",
+    "Avoir toujours mode paiement alternatif (COD) actif",
+    "Configurer au moins 2 transporteurs pour redondance"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Bouton panier ne répond pas",
+      "cause": "JavaScript erreur ou AdBlock bloque",
+      "solution": "Vérifier console F12, désactiver AdBlock, tester navigation privée"
+    },
+    {
+      "symptom": "Panier se vide à chaque rechargement",
+      "cause": "Cookies désactivés ou navigation privée",
+      "solution": "Activer cookies, utiliser mode normal (pas privé)"
+    },
+    {
+      "symptom": "Checkout bloque à étape livraison",
+      "cause": "Aucun transporteur actif ou zones non configurées",
+      "solution": "Admin: activer au moins 1 transporteur avec zones"
+    },
+    {
+      "symptom": "Impossible de finaliser paiement",
+      "cause": "Gateway paiement down ou champs invalides",
+      "solution": "Vérifier format téléphone/email, tester COD, attendre 5 min gateway"
+    }
+  ],
+  "canonical_scope": "checkout",
+  "required_fields": [
+    {
+      "key": "checkout_step",
+      "question": "À quelle étape le problème survient (panier / informations / livraison / paiement) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d'erreur exact s'affiche ?"
+    },
+    {
+      "key": "fields_completed",
+      "question": "Tous les champs requis sont-ils remplis correctement ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

@@ -4,3 +4,16 @@ venv/
 .venv/
 .env
 .DS_Store
+
+# Generated test output
+e2e_results.*
+e2e_full_results.*
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# IDE / OS
+.vscode/
+*.swp
+Thumbs.db

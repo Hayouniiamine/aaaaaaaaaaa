@@ -8,4 +8,12 @@ export default defineNuxtConfig({
       supportWidgetSecret: process.env.NUXT_PUBLIC_SUPPORT_WIDGET_SECRET || '',
     },
   },
+  nitro: {
+    devProxy: {
+      '/support/ai': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
+  },
 })

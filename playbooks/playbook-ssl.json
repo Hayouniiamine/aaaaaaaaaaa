@@ -1,52 +1,231 @@
 {
-  "id": "playbook-orders",
-  "scope": "orders",
-  "title": "Commande non créée / n'apparaît pas",
+  "id": "playbook-ssl",
+  "scope": "settings",
+  "title": "SSL — HTTPS / certificat / erreurs sécurité",
   "triggers": [
-    "commande non créée",
-    "commande n'apparaît pas",
-    "commande n'existe pas",
-    "ma commande a disparu",
-    "commande introuvable",
-    "order not created",
-    "order missing",
-    "cannot create order",
-    "erreur création commande",
-    "commande ne s'affiche pas"
+    "525",
+    "526",
+    "cadenas",
+    "certificat",
+    "certificate",
+    "err_ssl",
+    "https",
+    "https ne marche pas",
+    "invalid certificate",
+    "mixed content",
+    "net::err_cert",
+    "not secure",
+    "site sécurisé",
+    "ssl"
   ],
-  "description": "Diagnostic création commande : filtres, doublons, erreurs stock/produits.",
   "steps": [
     {
-      "kind": "solve",
-      "title": "Commande créée mais cachée par filtres",
-      "condition": "confirmation_seen",
-      "response": "✅ **Votre commande a bien été créée !**\n\nSi vous avez vu le message de confirmation, la commande existe dans le système.\n\n🔍 **Pour la retrouver :**\n\n**1. Vérifiez les filtres actifs**\n\nAllez dans **Commandes** (`/orders`) et :\n\n• Cliquez sur les **filtres** en haut\n• **Réinitialisez tous les filtres** (bouton \"Réinitialiser\" ou \"Tout effacer\")\n• Vérifiez que vous n'avez pas de filtre sur :\n  - Date (aujourd'hui / cette semaine / ce mois)\n  - Statut (En attente / Confirmée / Livrée)\n  - Transporteur\n  - Source de commande\n\n**2. Recherchez par téléphone client**\n\nLe moyen le plus rapide :\n• Utilisez la **barre de recherche**\n• Tapez le **numéro de téléphone du client**\n• La commande apparaîtra immédiatement\n\n**3. Triez par date décroissante**\n\n• Cliquez sur la colonne **\"Date\"**\n• Triez par **plus récent d'abord**\n• Votre commande sera en haut de la liste\n\n💡 **Astuce :** Par défaut, TikTak Pro peut afficher seulement les commandes des 7 derniers jours. Changez le filtre de date si votre commande est plus ancienne.\n\n📱 **Si après avoir réinitialisé les filtres vous ne la trouvez toujours pas**, donnez-moi le numéro de téléphone du client et je vérifierai.",
-      "actions": ["reset_filters", "search_by_phone"]
+      "kind": "ask",
+      "question": "Quel est le domaine exact et l'erreur précise (ex: NET::ERR_CERT..., ERR_SSL_PROTOCOL_ERROR, 525/526, 'Non sécurisé') ? Cloudflare activé (oui/non) ?",
+      "step_id": "ASK_01_QUEL_EST_LE_DOMAIN_2E6D27",
+      "field": "domain_or_url"
     },
     {
       "kind": "solve",
-      "title": "Erreur anti-doublon (2+ commandes même jour)",
-      "condition": "duplicate_error",
-      "response": "🔒 **Protection anti-fraude activée**\n\nTikTak Pro bloque automatiquement si le **même numéro de téléphone** a déjà **2 commandes ou plus le même jour**.\n\n✅ **C'est une protection volontaire contre la fraude.**\n\n🔍 **Vérifications à faire :**\n\n**1. Est-ce vraiment un doublon accidentel ?**\n\n• Allez dans **Commandes**\n• Cherchez par le numéro de téléphone du client\n• Regardez si ce client a déjà commandé aujourd'hui\n• Si oui → C'est peut-être une erreur de manipulation\n\n**2. Si c'est un client légitime qui commande beaucoup**\n\nVous avez plusieurs options :\n\n**Option A - La plus propre :**\n• **Contactez le client** pour confirmer qu'il veut vraiment 3+ commandes aujourd'hui\n• Si oui, créez la commande avec un **numéro légèrement différent** (ex: ajoutez +1 à la fin)\n• Notez dans le commentaire le vrai numéro\n\n**Option B - Attendre demain :**\n• La limite se réinitialise à minuit\n• Le client pourra recommander normalement demain\n\n**Option C - Vérifier l'historique :**\n• Si ce client commande souvent plusieurs fois par jour, ce n'est peut-être pas de la fraude\n• Vous pouvez créer avec un faux numéro temporaire puis le corriger après\n\n💡 **Pourquoi cette limite ?** Les fraudeurs testent souvent plusieurs adresses/produits avec le même numéro. Cette protection empêche ça.\n\n📱 **Si vous êtes sûr que c'est légitime**, confirmez-moi et je vous guiderai pour la créer quand même.",
-      "actions": ["check_duplicate_orders", "contact_customer"]
+      "response": "SSL avec TikTak PRO - Fonctionnement :\n• Domaines achetés chez TikTak : SSL automatique inclus (pas de config)\n• Domaines liés externes : SSL émis automatiquement APRÈS propagation DNS complète\n• Délai normal : 24-48h après DNS correctement configurés\n• Géré par TikTak (pas d'accès serveur pour clients)\n\n✅ Prérequis SSL :\n1. DNS correctement configurés (@ et www → 102.211.211.10)\n2. Pas d'enregistrement AAAA actif\n3. Propagation complète (visible sur WhatsMyDNS)\n4. Liaison activée dans TikTak si domaine externe\n\nDepuis combien de temps le domaine est-il configuré/acheté ? (<24h ou >24h)",
+      "actions": [
+        "verify_ssl_prerequisites"
+      ],
+      "success_indicator": "Cadenas affiché dans la barre navigateur, https:// fonctionne",
+      "time_estimate": "Émission SSL : automatique dans les 24-48h après DNS OK",
+      "step_id": "SOLVE_02_SSL_AVEC_TIKTAK_PR_5AC379"
     },
     {
       "kind": "solve",
-      "title": "Stock insuffisant",
-      "condition": "stock_error",
-      "response": "📦 **Stock insuffisant pour créer la commande**\n\nUn ou plusieurs produits n'ont plus assez de stock disponible.\n\n✅ **Vérifications :**\n\n**1. Identifiez le produit en rupture**\n\n• L'erreur doit indiquer quel produit est concerné\n• Notez le nom ou la référence (SKU)\n\n**2. Vérifiez le stock par variante**\n\n⚠️ **Important :** Le stock est géré **par variante**, pas par produit !\n\nAllez dans **Produits** :\n• Cherchez le produit\n• Cliquez dessus\n• Regardez le stock pour la **variante spécifique** (taille/couleur) demandée\n\nExemple :\n```\nT-shirt Rouge:\n- Taille S : Stock 10 ✅\n- Taille M : Stock 0 ❌ ← Problème ici\n- Taille L : Stock 5 ✅\n```\n\n**3. Solutions possibles**\n\n**Option A - Réapprovisionner :**\n• Mettez à jour le stock de la variante concernée\n• Puis recréez la commande\n\n**Option B - Changer de variante :**\n• Proposez au client une autre taille/couleur en stock\n• Créez la commande avec la variante disponible\n\n**Option C - Réduire la quantité :**\n• Si le client veut 5 mais stock = 3\n• Créez pour 3 unités disponibles\n• Notez en commentaire le reste est en attente\n\n💡 **Astuce :** Activez les **alertes stock bas** dans Paramètres pour être prévenu avant la rupture !",
-      "actions": ["check_variant_stock", "restock_product"]
+      "response": "Erreur 525/526 avec Cloudflare :\n⚠️ Ces erreurs indiquent un problème SSL entre Cloudflare et le serveur TikTak\n\n🔧 SOLUTION IMMÉDIATE :\n\n1️⃣ Désactivez TEMPORAIREMENT le proxy Cloudflare :\n   • Dans Cloudflare DNS → cliquez nuage orange pour le rendre GRIS (DNS only)\n   • Faites-le pour @ ET www\n\n2️⃣ Vérifiez DNS Cloudflare :\n   @ : A → 102.211.211.10\n   www : A → 102.211.211.10 (ou CNAME → @)\n   AAAA : AUCUN\n\n3️⃣ Testez le site en DNS only (gris) :\n   • Si ça fonctionne → attendez 24-48h que le SSL TikTak soit émis\n   • Puis réactivez le proxy orange\n\n4️⃣ Configuration SSL Cloudflare (une fois proxy réactivé) :\n   • SSL/TLS → Overview → SSL mode\n   • Choisissez 'Flexible' ou 'Full' (PAS 'Full Strict')\n   • 'Full Strict' nécessite un certificat validé côté serveur\n\n5️⃣ Si erreur persiste en gris (DNS only) :\n   • Vérifiez que DNS sont exacts\n   • Escaladez le cas\n\nLe proxy est-il actuellement orange ou gris ? Le site fonctionne-t-il en gris ?",
+      "actions": [
+        "cloudflare_ssl_check",
+        "disable_cloudflare_proxy",
+        "configure_ssl_mode"
+      ],
+      "success_indicator": "Site fonctionne en DNS only, puis avec proxy orange après config SSL correcte",
+      "condition": "cloudflare_525_526_error",
+      "step_id": "SOLVE_03_ERREUR_525_526_AVE_C7DB7C"
+    },
+    {
+      "kind": "solve",
+      "response": "Certificat invalide / NET::ERR_CERT_... :\n\n🔍 DIAGNOSTIC :\n\n1️⃣ Vérifiez l'URL exacte :\n   • HTTPS:// présent ?\n   • Domaine exact (sans faute de frappe) ?\n   • Test sur @ (domaine.com) ET www (www.domaine.com)\n\n2️⃣ Vérifiez DNS (prérequis SSL) :\n   • @ : A → 102.211.211.10\n   • www : A → 102.211.211.10 (ou CNAME → @)\n   • AAAA : AUCUN\n   • Test propagation : https://www.whatsmydns.net\n\n3️⃣ Videz les caches SSL :\n   CHROME :\n   • chrome://net-internals/#sockets → Flush socket pools\n   • chrome://net-internals/#hsts → Delete domain security policies (entrez domaine)\n   • Paramètres → Confidentialité → Effacer données navigation → Cochez tout\n   \n   FIREFOX :\n   • Options → Vie privée → Effacer historique → Tout\n   \n   SYSTÈME :\n   • Windows : ipconfig /flushdns dans CMD\n   • Mac : sudo dscacheutil -flushcache dans Terminal\n\n4️⃣ Test navigation privée + autre appareil/réseau\n\n5️⃣ Vérifiez que la page TikTak s'affiche :\n   • Page TikTak visible = DNS OK, SSL en cours d'émission\n   • Rien = DNS incorrect\n\nQuel navigateur ? Le domaine affiche-t-il la page TikTak (logo) ? Quel code ERR exact ?",
+      "actions": [
+        "verify_dns_for_ssl",
+        "clear_ssl_cache",
+        "test_ssl_different_device"
+      ],
+      "success_indicator": "Certificat reconnu valide, cadenas vert affiché",
+      "common_errors": [
+        "NET::ERR_CERT_AUTHORITY_INVALID → certificat en cours d'émission ou DNS incorrect",
+        "NET::ERR_CERT_COMMON_NAME_INVALID → domaine ne correspond pas au certificat (typo URL ?)",
+        "NET::ERR_CERT_DATE_INVALID → date système incorrecte ou certificat expiré/pas encore valide"
+      ],
+      "step_id": "SOLVE_04_CERTIFICAT_INVALID_F1EE06"
+    },
+    {
+      "kind": "solve",
+      "response": "Mixed Content (contenu mixte HTTP/HTTPS) :\n⚠️ Erreur : page HTTPS charge des ressources HTTP (images, scripts, CSS)\n\n🔧 SOLUTIONS :\n\n1️⃣ Dans l'éditeur de contenu TikTak :\n   • Vérifiez toutes les URLs d'images/ressources\n   • Remplacez http:// par https://\n   • Ou utilisez URLs relatives (//exemple.com/image.jpg)\n\n2️⃣ Console navigateur (F12) :\n   • Onglet Console → cherchez warnings 'Mixed Content'\n   • Notez les URLs HTTP à corriger\n\n3️⃣ Templates/Widgets :\n   • Si le template charge des ressources externes\n   • Vérifiez qu'elles sont en HTTPS\n   • Contactez support si template par défaut\n\n4️⃣ Force HTTPS :\n   • Dans paramètres (si option disponible)\n   • Ou via Cloudflare : SSL/TLS → Edge Certificates → Always Use HTTPS\n\nVoyez-vous un cadenas barré ou message 'Non sécurisé' ? Pouvez-vous copier les erreurs de la console (F12) ?",
+      "actions": [
+        "fix_mixed_content",
+        "check_browser_console",
+        "force_https"
+      ],
+      "success_indicator": "Cadenas plein (pas barré), aucun warning mixed content",
+      "step_id": "SOLVE_05_MIXED_CONTENT_CONT_4E2A36"
+    },
+    {
+      "kind": "solve",
+      "response": "SSL fonctionne sur @ mais pas sur www (ou inverse) :\n\n🔍 CAUSE : Enregistrement DNS manquant ou certificat incomplet\n\n✅ SOLUTIONS :\n\n1️⃣ Vérifiez DNS pour les DEUX :\n   @ : A → 102.211.211.10\n   www : A → 102.211.211.10 (ou CNAME → @)\n\n2️⃣ Test séparé :\n   • https://domaine.com\n   • https://www.domaine.com\n   • Notez lequel fonctionne\n\n3️⃣ Ajoutez l'enregistrement manquant puis attendez propagation (2-24h)\n\n4️⃣ Le SSL TikTak couvrira automatiquement @ ET www une fois DNS complets\n\nLequel fonctionne (@ ou www) ? L'autre affiche quelle erreur exactement ?",
+      "actions": [
+        "verify_both_apex_www",
+        "add_missing_dns_record"
+      ],
+      "success_indicator": "SSL actif sur @ ET www",
+      "time_estimate": "24-48h après ajout DNS manquant",
+      "step_id": "SOLVE_06_SSL_FONCTIONNE_SUR_3CB34D"
     },
     {
       "kind": "escalate",
-      "title": "Erreur inconnue lors création",
-      "condition": "unknown_error",
-      "reason": "Erreur technique non standard lors de la création de commande - nécessite vérification logs/base de données"
+      "reason": "SSL non émis après 48h avec DNS corrects et propagés, OU erreur SSL persistante après toutes vérifications, OU Cloudflare 525/526 persistant en DNS only",
+      "required_info": [
+        "Domaine exact",
+        "Capture écran erreur SSL complète (avec code ERR)",
+        "Captures DNS (@, www, AAAA, NS) depuis registraire",
+        "Résultat WhatsMyDNS (capture ou lien)",
+        "Cloudflare oui/non, si oui : proxy orange/gris, mode SSL",
+        "Navigateur + version",
+        "Date de configuration DNS / achat domaine",
+        "Ce qui s'affiche exactement sur chaque version (http://, https://, @, www)"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_C1F230",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "SSL non émis après 48h avec DNS corrects et propagés, OU erreur SSL persistante après toutes vérifications, OU Cloudflare 525/526 persistant en DNS only",
+        "repro_steps": [],
+        "evidence": [
+          "Domaine exact",
+          "Capture écran erreur SSL complète (avec code ERR)",
+          "Captures DNS (@, www, AAAA, NS) depuis registraire",
+          "Résultat WhatsMyDNS (capture ou lien)",
+          "Cloudflare oui/non, si oui : proxy orange/gris, mode SSL",
+          "Navigateur + version",
+          "Date de configuration DNS / achat domaine",
+          "Ce qui s'affiche exactement sur chaque version (http://, https://, @, www)"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
     },
     {
-      "kind": "ask",
-      "title": "Demander si confirmation vue",
-      "question": "**Pour comprendre ce qui s'est passé :**\n\nAprès avoir cliqué sur **\"Créer la commande\"**, qu'avez-vous vu exactement ?\n\n• ✅ Message de confirmation (\"Commande créée avec succès\" + numéro)\n• ❌ Message d'erreur (si oui, lequel ?)\n• ⏳ Chargement infini (la page tourne sans fin)\n• ❓ Rien du tout (retour à la liste sans message)\n\nℹ️ Ça m'aide à savoir si la commande existe (mais cachée) ou s'il y a eu un vrai problème."
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : domaine + capture erreur SSL + captures DNS + résultat WhatsMyDNS + Cloudflare (oui/non, orange/gris, mode SSL) + navigateur + date config + ce qui s'affiche.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_09_POUR_ESCALADER_DOM_70B8D4",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour SSL — HTTPS / certificat / erreurs sécurité",
+        "repro_steps": [],
+        "evidence": [
+          "domain_or_url",
+          "error_message",
+          "dns_change_time",
+          "screenshot"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
     }
-  ]
+  ],
+  "related_docs": [
+    "Certificat SSL géré par TikTak pour domaines liés/achetés",
+    "Émission automatique après DNS propagés",
+    "Pas d'accès serveur côté client (SaaS hébergé)"
+  ],
+  "ssl_checklist": {
+    "prerequisites": [
+      "DNS @ → 102.211.211.10",
+      "DNS www → 102.211.211.10",
+      "Aucun AAAA actif",
+      "Propagation complète (vérifier WhatsMyDNS)",
+      "Liaison activée dans TikTak (domaines externes)"
+    ],
+    "verification_steps": [
+      "Test https://domaine.com → fonctionne ?",
+      "Test https://www.domaine.com → fonctionne ?",
+      "Cadenas affiché dans navigateur ?",
+      "Console (F12) → aucune erreur mixed content ?",
+      "Navigation privée → même résultat ?"
+    ],
+    "troubleshooting_tools": [
+      "https://www.ssllabs.com/ssltest/ - test certificat",
+      "https://www.whatsmydns.net - propagation DNS",
+      "Console navigateur (F12) - erreurs SSL et mixed content"
+    ]
+  },
+  "common_errors_details": [
+    {
+      "error": "525 (SSL Handshake Failed)",
+      "meaning": "Cloudflare ne peut pas établir connexion SSL avec serveur origine",
+      "solution": "Proxy gris (DNS only) temporairement, attendre SSL TikTak actif, puis orange avec mode Flexible/Full"
+    },
+    {
+      "error": "526 (Invalid SSL Certificate)",
+      "meaning": "Certificat serveur origine invalide selon Cloudflare",
+      "solution": "Proxy gris, mode SSL 'Flexible' ou 'Full' (pas Full Strict)"
+    },
+    {
+      "error": "NET::ERR_CERT_AUTHORITY_INVALID",
+      "meaning": "Certificat non reconnu par navigateur",
+      "solution": "Attendre émission complète (24-48h), vérifier DNS, vider cache SSL"
+    },
+    {
+      "error": "NET::ERR_CERT_COMMON_NAME_INVALID",
+      "meaning": "Domaine URL ne correspond pas au certificat",
+      "solution": "Vérifier URL exacte (typo ?), attendre couverture @ et www"
+    }
+  ],
+  "time_expectations": {
+    "ssl_issuance": "24-48h après DNS propagés",
+    "cache_ssl_clearing": "Immédiat après flush",
+    "cloudflare_propagation": "Quelques minutes après changement proxy/mode SSL"
+  },
+  "cloudflare_ssl_modes": {
+    "off": "Pas de SSL (non recommandé)",
+    "flexible": "Cloudflare ↔ Client : HTTPS, Cloudflare ↔ Serveur : HTTP (OK pour TikTak en attente SSL)",
+    "full": "HTTPS partout mais certificat serveur non validé (OK pour TikTak)",
+    "full_strict": "HTTPS partout + certificat serveur validé (NE PAS UTILISER avant SSL TikTak actif)",
+    "recommended": "Flexible ou Full pendant émission SSL, puis Full après"
+  },
+  "canonical_scope": "domains",
+  "required_fields": [
+    {
+      "key": "domain_or_url",
+      "question": "Quel est le domaine ou l’URL exact ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel est le message d’erreur exact (ou code) ?"
+    },
+    {
+      "key": "dns_change_time",
+      "question": "Quand avez-vous changé les DNS / nameservers (date/heure) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
 }

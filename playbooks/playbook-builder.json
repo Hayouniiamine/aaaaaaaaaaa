@@ -1,0 +1,299 @@
+{
+  "id": "playbook-builder",
+  "scope": "builder",
+  "title": "Builder — éditeur de site / WebSocket / drag & drop / widgets / configuration",
+  "triggers": [
+    "builder",
+    "builder verrouillé",
+    "builder bloqué",
+    "code personnalisé",
+    "couleur",
+    "couleurs",
+    "custom code",
+    "drag drop",
+    "editeur html",
+    "éditeur du site",
+    "éditeur visuel",
+    "favicon",
+    "formulaire",
+    "glisser déposer",
+    "iframe",
+    "liens sociaux",
+    "maintenance",
+    "menu editor",
+    "modifier le thème",
+    "panneau de configuration",
+    "personnaliser",
+    "prévisualisation",
+    "quelqu'un utilise le builder",
+    "réseaux sociaux",
+    "responsive",
+    "sauvegarde",
+    "section",
+    "sections perdues",
+    "style",
+    "thème",
+    "toolbar",
+    "typographie",
+    "verrouillage",
+    "vue mobile",
+    "vue tablette",
+    "websocket",
+    "widget",
+    "widget produit"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Le Builder est verrouillé / en cours d'utilisation par quelqu'un d'autre :\n\nLe Builder utilise un système WebSocket de détection de présence + verrouillage. Si un autre utilisateur (ou un ancien onglet) est connecté, le builder passe en lecture seule.\n\n✓ Solutions :\n  1. Demander à l'autre personne de quitter le builder (fermer l'onglet)\n  2. Fermer TOUS vos onglets du dashboard TikTak → rouvrir\n  3. Attendre 2-3 minutes (timeout WebSocket automatique)\n  4. Vider cache navigateur (Ctrl+Shift+Del) et se reconnecter\n  5. Essayer en navigation privée\n\n⚠️ Le verrouillage est normal — il protège contre les modifications simultanées et conflits de données.\n\nAvez-vous d'autres onglets du dashboard ouverts ? Quelqu'un d'autre a-t-il accès au back-office ?",
+      "actions": [
+        "close_other_tabs",
+        "wait_websocket_timeout",
+        "clear_cache_reconnect"
+      ],
+      "success_indicator": "Builder déverrouillé, édition possible",
+      "step_id": "SOLVE_01_LE_BUILDER_EST_VER_B75372"
+    },
+    {
+      "kind": "solve",
+      "response": "Modifications non sauvegardées / données perdues :\n\nLe Builder sauvegarde automatiquement via un système d'événements groupés (batching + debounce). Les modifications sont mises en file d'attente puis envoyées au serveur en lot.\n\n✓ Pourquoi des données peuvent être perdues :\n  - Connexion internet coupée pendant l'édition\n  - Fermeture de l'onglet avant la fin du flush\n  - Perte de connexion WebSocket\n\n✓ Solutions préventives :\n  1. Cliquer 'Sauvegarder' explicitement (Ctrl+S) avant de quitter\n  2. Attendre le spinner de sauvegarde termine avant de fermer\n  3. Vérifier la stabilité de la connexion internet\n  4. Sauvegarder régulièrement (toutes les 2-3 modifications)\n\n✓ Récupération :\n  - Les données sauvegardées sont la dernière version confirmée par le serveur\n  - Pas de système d'historique/annulation à ce stade → toujours sauvegarder\n\nÀ quel moment avez-vous perdu les modifications ? Avez-vous vu un message d'erreur ?",
+      "actions": [
+        "check_save_status",
+        "verify_internet_connection",
+        "reload_builder"
+      ],
+      "success_indicator": "Modifications correctement sauvegardées et visibles après rechargement",
+      "step_id": "SOLVE_02_MODIFICATIONS_NON__3B7DF2"
+    },
+    {
+      "kind": "solve",
+      "response": "Drag & drop (glisser-déposer) ne fonctionne pas :\n\nLe Builder utilise DnD Kit (bibliothèque React) pour le glisser-déposer des sections.\n\n✓ Causes fréquentes et solutions :\n  1. Extension navigateur bloquante (ad-blocker, privacy tools)\n     → Désactiver temporairement les extensions ou tester en navigation privée\n  2. Navigateur obsolète\n     → Mettre à jour Chrome/Edge/Firefox (version récente requise)\n  3. Appareil tactile (tablette/mobile)\n     → Utiliser les boutons flèches haut/bas au lieu du drag & drop\n  4. JavaScript désactivé ou bloqué\n     → Vérifier les paramètres du navigateur\n  5. Cache navigateur corrompu\n     → Ctrl+Shift+Del → vider cache et cookies → recharger\n\n✓ Alternative :\n  - Les boutons d'action sur chaque SectionCard permettent de réorganiser avec 'Monter' / 'Descendre'\n\nQuel navigateur utilisez-vous ? Le problème concerne la réorganisation des sections ou l'ajout ?",
+      "actions": [
+        "test_incognito",
+        "update_browser",
+        "use_buttons_instead"
+      ],
+      "success_indicator": "Sections déplaçables par drag & drop ou boutons flèches",
+      "step_id": "SOLVE_03_DRAG_DROP_GLISSER__DD4ADB"
+    },
+    {
+      "kind": "solve",
+      "response": "Onglets de la sidebar du Builder :\n\nLa sidebar contient 10 onglets de configuration :\n\n📋 main-content — Contenu principal (sections de la page)\n🔝 navigation-header — En-tête : logo, menu, barre de recherche\n⬇️ footer — Pied de page : liens, colonnes, informations légales\n🎨 style-theme — Style/Thème : couleurs, typographies, espacements\n📱 social-links — Réseaux sociaux : Facebook, Instagram, TikTok…\n🛒 checkout — Personnalisation page de paiement\n🔧 maintenance — Mode maintenance (site en construction)\n🔍 seo — SEO global : titres, meta, Open Graph\n💻 custom-code — Code personnalisé HTML/CSS/JS\n🐛 debug — Diagnostic (mode avancé)\n\n⚠️ Certains onglets (Custom Code, Debug) nécessitent des permissions avancées.\n\nQuel onglet cherchez-vous ou quel paramètre voulez-vous modifier ?",
+      "actions": [
+        "navigate_sidebar_tab",
+        "check_permissions"
+      ],
+      "success_indicator": "Onglet trouvé et paramètre modifié",
+      "step_id": "SOLVE_04_ONGLETS_DE_LA_SIDE_DBE13F"
+    },
+    {
+      "kind": "solve",
+      "response": "Configurer les réseaux sociaux :\n\n✓ Étapes :\n  1. Ouvrir le Builder (éditer une page)\n  2. Sidebar → onglet 'Réseaux sociaux' (social-links)\n  3. Remplir les URLs complètes :\n     • Facebook : https://facebook.com/votrepage\n     • Instagram : https://instagram.com/votrepage\n     • TikTok : https://tiktok.com/@votrepage\n     • Twitter/X : https://twitter.com/votrepage\n     • YouTube : https://youtube.com/votrechaine\n  4. Sauvegarder\n\n✓ Où s'affichent-ils ?\n  - Dans le header et/ou footer du site (selon le template actif)\n  - Si non visibles : le template peut ne pas supporter l'affichage des icônes sociales\n\nVos liens ne s'affichent pas sur le site ? Quel template utilisez-vous ?",
+      "actions": [
+        "configure_social_links",
+        "verify_template_support"
+      ],
+      "success_indicator": "Icônes réseaux sociaux visibles sur le site",
+      "step_id": "SOLVE_05_CONFIGURER_LES_R_S_117E44"
+    },
+    {
+      "kind": "solve",
+      "response": "Modifier le thème / les couleurs du site :\n\n✓ Via ThemeConfig (Sidebar → Style/Thème) :\n  - Couleur principale (boutons, liens, accents)\n  - Couleur secondaire (arrière-plans, bordures)\n  - Typographies (police titre, police corps)\n  - Tailles de texte\n  - Espacements globaux\n  - Coins arrondis des boutons/cartes\n\n✓ Processus :\n  1. Builder → Sidebar → 'Style/Thème'\n  2. Modifier les paramètres souhaités\n  3. La prévisualisation se met à jour en temps réel\n  4. Sauvegarder\n\n⚠️ Si les couleurs ne changent pas :\n  - Le template peut avoir des styles CSS prioritaires (en dur)\n  - Solution : onglet 'Custom Code' → ajouter CSS avec !important\n  - Exemple : body { --primary-color: #FF5733 !important; }\n\nQuelles couleurs/styles voulez-vous modifier ?",
+      "actions": [
+        "open_theme_config",
+        "modify_colors",
+        "add_custom_css"
+      ],
+      "success_indicator": "Thème modifié et visible dans la prévisualisation + sur le site",
+      "step_id": "SOLVE_06_MODIFIER_LE_TH_ME__4A106B"
+    },
+    {
+      "kind": "solve",
+      "response": "Types de widgets/sections disponibles dans le Builder :\n\nLe tiroir 'Ajouter une section' (AddSectionDrawer) propose ces types de champs :\n\n📝 Texte (TextFieldComponent) — Titre, label, URL\n📄 Zone de texte (TextareaFieldComponent) — Paragraphe, description\n📋 Sélection (SelectFieldComponent) — Menu déroulant d'options\n☑️ Cases à cocher (CheckboxFieldComponent) — Choix multiples\n🔘 Interrupteur (BooleanFieldComponent) — On/Off, toggle\n🖊️ Éditeur HTML (HtmlEditorFieldComponent) — Contenu riche WYSIWYG\n🖼️ Image (ImageFieldComponent) — Bannière, photo, logo\n🛍️ Widget Produits (ProductsWidgetFieldComponent) — Grille/carrousel de produits\n🔗 Widget Liens (LinkWidgetFieldComponent) — Bouton CTA, liens\n📊 Widget Tableau (TableWidgetFieldComponent) — Tableaux de données\n↔️ Alignement (AlignFieldComponents) — Position gauche/centre/droite\n\nQuel type de section/widget cherchez-vous ou quel widget pose problème ?",
+      "actions": [
+        "add_section",
+        "configure_widget",
+        "troubleshoot_widget"
+      ],
+      "success_indicator": "Widget ajouté et correctement configuré",
+      "step_id": "SOLVE_07_TYPES_DE_WIDGETS_S_F0D599"
+    },
+    {
+      "kind": "solve",
+      "response": "Mode maintenance (site en construction) :\n\n✓ Activer :\n  1. Builder → Sidebar → onglet 'Maintenance'\n  2. Activer le mode maintenance (toggle On)\n  3. Personnaliser le message affiché aux visiteurs\n  4. Sauvegarder\n\n✓ Résultat :\n  - Les visiteurs voient une page 'Site en construction'\n  - Les administrateurs connectés voient le site normalement\n  - Utile pendant les gros changements de template/contenu\n\n✓ Désactiver :\n  - Retourner dans l'onglet Maintenance et désactiver le toggle\n\nVoulez-vous activer ou désactiver le mode maintenance ?",
+      "actions": [
+        "toggle_maintenance_mode"
+      ],
+      "success_indicator": "Mode maintenance activé/désactivé selon besoin",
+      "step_id": "SOLVE_08_MODE_MAINTENANCE_S_64FE2B"
+    },
+    {
+      "kind": "solve",
+      "response": "Code personnalisé (Custom Code) :\n\n✓ Accès : Builder → Sidebar → onglet 'Code personnalisé'\n\n✓ Zones d'injection :\n  - Header : Code ajouté dans le <head> (CSS, tracking, meta tags)\n  - Footer : Code ajouté avant </body> (JS, analytics, chat widgets)\n\n✓ Cas d'usage fréquents :\n  - Google Analytics / GTM : coller le script dans Header\n  - Facebook Pixel : coller dans Header\n  - CSS personnalisé : ajouter dans Header entre <style>...</style>\n  - Chat Tawk.to / Crisp : coller dans Footer\n\n⚠️ Attention :\n  - Un mauvais code peut casser l'affichage du site\n  - Testez en prévisualisation avant de publier\n  - Cet onglet nécessite des permissions avancées\n\nQuel type de code voulez-vous ajouter ?",
+      "actions": [
+        "add_header_code",
+        "add_footer_code"
+      ],
+      "success_indicator": "Code injecté et fonctionnel sur le site",
+      "step_id": "SOLVE_09_CODE_PERSONNALIS_C_3CCDC7"
+    },
+    {
+      "kind": "solve",
+      "response": "Prévisualisation responsive (Desktop / Tablette / Mobile) :\n\n✓ Utiliser le View Mode Toggle dans la toolbar du Builder :\n  - 🖥️ Desktop : largeur pleine\n  - 📱 Tablette : largeur ~768px\n  - 📱 Mobile : largeur ~375px\n\n✓ L'iframe de prévisualisation s'adapte en temps réel.\n\n✓ Si la prévisualisation est blanche / ne charge pas :\n  1. Ctrl+F5 pour recharger\n  2. Vérifier console navigateur (F12) pour erreurs JS\n  3. Retirer la dernière section ajoutée\n  4. Tester en navigation privée\n  5. Si persiste : changer de template temporairement\n\n✓ Pour une prévisualisation complète :\n  - Cliquer 'Prévisualiser' → ouvre le site dans un nouvel onglet\n\nLa prévisualisation ne fonctionne pas ou vous voulez juste tester le responsive ?",
+      "actions": [
+        "toggle_view_mode",
+        "open_full_preview"
+      ],
+      "success_indicator": "Prévisualisation affichée dans le mode souhaité",
+      "step_id": "SOLVE_10_PR_VISUALISATION_R_B50DEE"
+    },
+    {
+      "kind": "solve",
+      "response": "Configurer le menu de navigation (MenuEditor) :\n\n✓ Accès : Builder → Sidebar → onglet 'Navigation/Header'\n\n✓ Fonctionnalités du MenuEditor :\n  - Ajouter un élément au menu (page, catégorie, lien externe)\n  - Réorganiser les éléments par glisser-déposer\n  - Créer des sous-menus (éléments enfants)\n  - Supprimer des éléments\n  - Modifier le texte affiché et l'URL/page liée\n\n✓ Types d'éléments :\n  - Pages du site (Accueil, À propos, FAQ…)\n  - Catégories de produits\n  - Liens externes (URL personnalisée)\n\n✓ Après modification :\n  1. Sauvegarder dans le MenuEditor\n  2. Sauvegarder/publier le Builder\n  3. Vider cache navigateur pour voir le résultat\n\nQuel élément voulez-vous ajouter/modifier dans le menu ?",
+      "actions": [
+        "open_menu_editor",
+        "add_menu_item",
+        "reorder_menu"
+      ],
+      "success_indicator": "Menu de navigation mis à jour sur le site",
+      "step_id": "SOLVE_11_CONFIGURER_LE_MENU_3DA46C"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, le problème est-il résolu ? Si non, décrivez ce qui se passe et envoyez une capture d'écran.",
+      "step_id": "VERIFY_12_APR_S_CES_TAPES_LE_E93D46"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Builder reste verrouillé après 10+ minutes et toutes les solutions tentées, OU données perdues de façon répétée, OU bug technique empêchant l'édition",
+      "required_info": [
+        "URL du dashboard / page en cours d'édition",
+        "Capture d'écran du builder (message d'erreur visible)",
+        "Capture de la console navigateur (F12 → Console)",
+        "Navigateur + version",
+        "Actions effectuées avant le problème",
+        "Template utilisé",
+        "Combien d'utilisateurs ont accès au back-office"
+      ],
+      "step_id": "ESCALATE_13_ESCALATE_2F6581",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Builder reste verrouillé après 10+ minutes et toutes les solutions tentées, OU données perdues de façon répétée, OU bug technique empêchant l'édition",
+        "repro_steps": [],
+        "evidence": [
+          "URL du dashboard / page en cours d'édition",
+          "Capture d'écran du builder (message d'erreur visible)",
+          "Capture de la console navigateur (F12 → Console)",
+          "Navigateur + version",
+          "Actions effectuées avant le problème",
+          "Template utilisé",
+          "Combien d'utilisateurs ont accès au back-office"
+        ],
+        "suspected_component": "builder",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/content-management - Builder / Éditeur de site",
+    "Architecture Builder : SectionsContext, useBuilderWebSocket, PageContentBuilder, FormViewer",
+    "Sidebar : 10 onglets (contenu, navigation, footer, thème, social, checkout, maintenance, SEO, custom-code, debug)",
+    "DnD Kit pour le glisser-déposer des sections"
+  ],
+  "common_workflows": [
+    "Accès Builder → Ajout sections → Configuration FormViewer → Drag & drop réorg → Prévisualisation → Sauvegarder",
+    "Sidebar → Navigation/Header → MenuEditor → Ajouter/réorganiser éléments → Sauvegarder",
+    "Sidebar → Style/Thème → ThemeConfig → Couleurs/typo → Sauvegarder",
+    "Sidebar → Réseaux sociaux → SocialMediaConfig → URLs → Sauvegarder",
+    "Sidebar → Custom Code → Ajouter tracking/CSS → Prévisualiser → Sauvegarder"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Builder verrouillé / en cours d'utilisation",
+      "cause": "Autre utilisateur ou onglet avec session WebSocket active",
+      "solution": "Fermer tous les onglets, attendre 2-3 min timeout, vider cache et reconnecter"
+    },
+    {
+      "symptom": "Modifications perdues / non sauvegardées",
+      "cause": "Perte connexion WebSocket, fermeture avant flush batching",
+      "solution": "Sauvegarder explicitement (Ctrl+S), vérifier connexion internet, attendre fin du spinner"
+    },
+    {
+      "symptom": "Drag & drop ne fonctionne pas",
+      "cause": "Extension bloquante, navigateur obsolète, appareil tactile",
+      "solution": "Navigation privée, mettre à jour navigateur, utiliser boutons flèches à la place"
+    },
+    {
+      "symptom": "Iframe prévisualisation blanche",
+      "cause": "Erreur JS dans sections, template corrompu",
+      "solution": "Ctrl+F5, retirer dernière section, vérifier console F12, tester autre template"
+    },
+    {
+      "symptom": "Widget produits vide",
+      "cause": "Aucun produit sélectionné dans ProductsWidgetFieldComponent",
+      "solution": "Cliquer sur la section → ProductDrawer → sélectionner des produits"
+    },
+    {
+      "symptom": "Éditeur HTML ne fonctionne pas",
+      "cause": "Conflit JavaScript ou navigateur incompatible",
+      "solution": "Essayer Chrome/Edge récent, navigation privée, vider cache"
+    },
+    {
+      "symptom": "Liens sociaux non visibles sur le site",
+      "cause": "URLs non renseignées ou template sans support social",
+      "solution": "SocialMediaConfig → remplir URLs complètes, vérifier compatibilité template"
+    },
+    {
+      "symptom": "Couleurs/thème ne s'appliquent pas",
+      "cause": "Template avec CSS prioritaire",
+      "solution": "ThemeConfig, ou Custom Code avec CSS !important"
+    },
+    {
+      "symptom": "Menu navigation ne se met pas à jour",
+      "cause": "MenuEditor non sauvegardé ou cache",
+      "solution": "Sauvegarder MenuEditor + builder, Ctrl+F5, navigation privée"
+    },
+    {
+      "symptom": "Onglet Custom Code / Debug manquant",
+      "cause": "Permissions insuffisantes",
+      "solution": "Contacter admin pour activer les permissions avancées"
+    },
+    {
+      "symptom": "Erreur à l'ajout de section",
+      "cause": "Limite sections atteinte ou incompatibilité template",
+      "solution": "Vérifier nombre max sections, essayer autre type, recharger builder"
+    },
+    {
+      "symptom": "Mode maintenance ne se désactive pas",
+      "cause": "Toggle non sauvegardé ou cache CDN",
+      "solution": "Désactiver toggle + sauvegarder + attendre 2 min propagation CDN"
+    }
+  ],
+  "best_practices": [
+    "Sauvegarder explicitement (Ctrl+S) après chaque modification importante",
+    "Ne pas ouvrir le builder dans plusieurs onglets simultanément",
+    "Prévisualiser en Desktop + Mobile avant de publier",
+    "Ajouter les sections une par une et tester après chaque ajout",
+    "Tester le code personnalisé en prévisualisation avant de publier",
+    "Toujours vérifier la console navigateur (F12) en cas de problème",
+    "Activer le mode maintenance pendant les gros changements"
+  ],
+  "canonical_scope": "builder",
+  "required_fields": [
+    {
+      "key": "action",
+      "question": "Que voulez-vous faire dans le builder (ajouter section, modifier thème, configurer menu, autre) ?"
+    },
+    {
+      "key": "problem",
+      "question": "Quel problème rencontrez-vous (verrouillage, drag&drop, sauvegarde, affichage) ?"
+    },
+    {
+      "key": "browser",
+      "question": "Quel navigateur utilisez-vous ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

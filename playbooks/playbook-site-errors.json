@@ -1,0 +1,262 @@
+{
+  "id": "playbook-site-errors",
+  "scope": "general",
+  "title": "Erreurs Site — 404 / 500 / Page Blanche / Ne Charge Pas",
+  "triggers": [
+    "erreur",
+    "error",
+    "404",
+    "500",
+    "502",
+    "503",
+    "504",
+    "page blanche",
+    "blank",
+    "white screen",
+    "écran blanc",
+    "ne charge pas",
+    "not loading",
+    "écran vide",
+    "page vide",
+    "timeout",
+    "loading"
+  ],
+  "description": "Diagnostic et résolution des erreurs d'affichage et erreurs serveur: pages blanches, erreurs HTTP (404, 500), sites qui ne chargent pas, timeouts.",
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Erreur site : (1) Quel type d'erreur (page blanche sans message / 404 Page non trouvée / 500-503 Erreur serveur / charge à l'infini) ? (2) URL exacte concernée ? (3) Tous utilisateurs ou un seul ? (4) Navigateur utilisé ?",
+      "step_id": "ASK_01_ERREUR_SITE_1_QUEL_2FB557",
+      "field": "error_type"
+    },
+    {
+      "kind": "solve",
+      "title": "Diagnostic rapide initial",
+      "response": "Avant toute chose, diagnostic rapide :\n\n✓ 1. TESTER AUTRES UTILISATEURS\n  • Vous (admin) pouvez accéder ?\n  • Autres clients ont le problème ?\n  • → Si un seul client: problème côté client\n  • → Si tous: problème côté TikTak\n\n✓ 2. TESTER NAVIGATION PRIVÉE\n  • Ctrl+Shift+N (Chrome) ou Ctrl+Shift+P (Firefox)\n  • Site fonctionne en privé ?\n  • → Oui: problème cache/cookies\n  • → Non: problème plus profond\n\n✓ 3. TESTER AUTRE NAVIGATEUR\n  • Chrome, Firefox, Safari, Edge\n  • Fonctionne ailleurs ?\n  • → Oui: problème navigateur spécifique\n  • → Non: problème général\n\n✓ 4. TESTER AUTRE APPAREIL\n  • Mobile vs Desktop\n  • WiFi vs 4G\n  • Chez vous vs chez client\n\nLe problème est-il global ou localisé ?",
+      "actions": [
+        "test_other_users",
+        "test_incognito_mode",
+        "test_other_browser",
+        "test_other_device"
+      ],
+      "success_indicator": "Isolation du problème: global vs local, navigateur vs réseau",
+      "time_estimate": "2-3 minutes",
+      "step_id": "SOLVE_02_DIAGNOSTIC_RAPIDE__0C6B91"
+    },
+    {
+      "kind": "solve",
+      "title": "Page Blanche / Écran Vide (pas de message)",
+      "response": "Si page complètement blanche sans aucun message :\n\n✓ 1. VIDER CACHE NAVIGATEUR\n  Chrome/Edge:\n  • Ctrl+Shift+Delete\n  • Cocher 'Images et fichiers en cache'\n  • Période: 'Tout'\n  • Effacer\n  \n  Firefox:\n  • Ctrl+Shift+Delete\n  • Cocher 'Cache'\n  • Période: 'Tout'\n  • Effacer maintenant\n  \n  Safari:\n  • Cmd+Option+E (vider cache)\n  • Ou Développement → Vider les caches\n\n✓ 2. RAFRAÎCHIR FORCE\n  • Ctrl+F5 (Windows)\n  • Cmd+Shift+R (Mac)\n  • Recharge sans utiliser cache\n\n✓ 3. DÉSACTIVER EXTENSIONS\n  • AdBlock, VPN, bloqueurs pub\n  • Mode navigation privée (désactive tout)\n  • Retester\n\n✓ 4. VÉRIFIER JAVASCRIPT\n  • Chrome: Paramètres → Confidentialité → Paramètres des sites → JavaScript\n  • Doit être 'Autorisé'\n  • TikTak PRO nécessite JavaScript\n\n✓ 5. CONSOLE DÉVELOPPEUR\n  • F12 → Console\n  • Erreurs rouges ?\n  • Screenshot et escalader si erreur technique\n\nLa page s'affiche après avoir vidé le cache ?",
+      "actions": [
+        "clear_browser_cache",
+        "force_refresh",
+        "disable_extensions",
+        "check_javascript_enabled",
+        "check_console_errors"
+      ],
+      "success_indicator": "Site s'affiche normalement après une des actions",
+      "time_estimate": "5 minutes",
+      "common_fixes": [
+        "Vider cache (80% des cas)",
+        "Ctrl+F5 rafraîchir force",
+        "Désactiver AdBlock/VPN",
+        "Mode navigation privée",
+        "Autre navigateur"
+      ],
+      "troubleshooting": {
+        "Blanc même après cache": "Vérifier JavaScript activé + console F12",
+        "Fonctionne en privé": "Extensions ou cache → Désactiver extensions",
+        "Blanc sur tous navigateurs": "Problème réseau ou DNS → Tester 4G"
+      },
+      "step_id": "SOLVE_03_PAGE_BLANCHE_CRAN__6DEC74"
+    },
+    {
+      "kind": "solve",
+      "title": "Erreur 404 - Page Non Trouvée",
+      "response": "Erreur 404 = La page n'existe pas ou URL incorrecte\n\n✓ CAUSES COURANTES :\n  • URL mal saisie ou incomplète\n  • Page supprimée\n  • Produit supprimé (si page produit)\n  • Lien cassé dans le site\n  • Slug URL modifié\n\n✓ SOLUTIONS CLIENT :\n  1. Vérifier l'URL (copie exacte ?)\n  2. Retourner à l'accueil: votresite.tiktak.space\n  3. Chercher le produit via recherche\n  4. Utiliser menu navigation\n\n✓ SOLUTIONS ADMIN :\n  1. Vérifier page existe:\n     • Produits → Vérifier le produit existe\n     • Pages → Vérifier la page existe\n  2. Vérifier visibilité:\n     • Produit: 'Visible sur site' coché ?\n     • Page: 'Publiée' (pas 'Brouillon') ?\n  3. Vérifier slug/URL:\n     • Pages → Éditer → URL/Slug\n     • Doit correspondre à l'URL demandée\n  4. Catégories:\n     • Catégories → Vérifier 'Active'\n     • Produit assigné à catégorie active ?\n\n⚠️ Si page existait avant:\n• A-t-elle été supprimée par erreur ?\n• URL modifiée récemment ?\n• Restaurer depuis corbeille si disponible\n\nL'URL est-elle correcte ? La page/produit existe-t-il ?",
+      "actions": [
+        "verify_url_correct",
+        "check_page_exists",
+        "check_product_visibility",
+        "verify_slug_url",
+        "check_category_active"
+      ],
+      "success_indicator": "Page accessible ou raison 404 identifiée (supprimée, masquée)",
+      "common_errors": [
+        "Produit masqué → Activer 'Visible sur site'",
+        "Page en brouillon → Publier la page",
+        "Catégorie inactive → Activer catégorie",
+        "URL modifiée → Utiliser nouveau slug"
+      ],
+      "step_id": "SOLVE_04_ERREUR_404_PAGE_NO_4C7FA0"
+    },
+    {
+      "kind": "solve",
+      "title": "Erreur 500 / 502 / 503 - Erreur Serveur",
+      "response": "Erreurs 5xx = Problème côté serveur TikTak PRO\n\n⚠️ IMPORTANT: Ces erreurs nécessitent souvent escalade\n\n❌ CE N'EST PAS UN PROBLÈME CLIENT\n• 500 Internal Server Error: bug application\n• 502 Bad Gateway: problème proxy/serveur\n• 503 Service Unavailable: maintenance ou surcharge\n• 504 Gateway Timeout: serveur trop lent\n\n✓ QUE FAIRE (CLIENT) :\n  1. Noter l'heure exacte de l'erreur\n  2. Noter l'URL complète\n  3. Prendre capture d'écran\n  4. Attendre 5-10 minutes\n  5. Réessayer\n  6. Si persiste > 5 min → Contacter support\n\n✓ QUE FAIRE (VOUS) :\n  1. Vérifier si erreur générale:\n     • Vous aussi avez l'erreur ?\n     • Page d'accueil fonctionne ?\n     • Autres sections accessibles ?\n  2. Tester depuis autre connexion\n  3. Si général et persiste > 5 min:\n     → ESCALADE IMMÉDIATE\n  4. Si localisé à une page:\n     → Noter quelle page\n     → Tester autres pages similaires\n     → Escalader avec détails\n\n📋 INFORMATIONS À COLLECTER :\n• URL exacte\n• Code erreur exact (500/502/503/504)\n• Heure précise (HH:MM)\n• Capture écran\n• Action qui a provoqué l'erreur\n• Fréquence (une fois / systématique)\n\nL'erreur est-elle générale ou sur une page spécifique ?",
+      "actions": [
+        "note_exact_time",
+        "screenshot_error",
+        "wait_retry",
+        "test_other_pages",
+        "escalate_if_persists"
+      ],
+      "success_indicator": "Erreur résolue après attente, ou informations collectées pour escalade",
+      "escalation_criteria": "Erreur 500/502/503/504 persiste > 5 minutes, ou affecte tous utilisateurs",
+      "time_estimate": "5-10 minutes d'attente recommandée avant escalade",
+      "step_id": "SOLVE_05_ERREUR_500_502_503_0B6076"
+    },
+    {
+      "kind": "solve",
+      "title": "Page Charge à l'Infini (Loading...)",
+      "response": "Si page affiche 'Chargement...' indéfiniment :\n\n✓ 1. VÉRIFIER CONNEXION INTERNET\n  • Testez autre site (google.com)\n  • WiFi/4G active et stable ?\n  • Débit suffisant ?\n\n✓ 2. VIDER CACHE\n  • Ctrl+Shift+Delete → Cache\n  • Ctrl+F5 rafraîchir\n\n✓ 3. DÉSACTIVER VPN/PROXY\n  • VPN peut ralentir ou bloquer\n  • Proxy d'entreprise peut filtrer\n  • Désactiver temporairement\n  • Retester\n\n✓ 4. DÉSACTIVER ADBLOCK\n  • AdBlock peut bloquer scripts\n  • Désactiver pour tiktak.space\n  • Retester\n\n✓ 5. CLOUDFLARE CHALLENGE\n  • Message 'Checking your browser...' ?\n  • C'est normal (protection DDoS)\n  • Attendre 5-10 secondes\n  • Devrait passer automatiquement\n  • Si bloqué: vérifier cookies activés\n\n✓ 6. TIMEOUT RÉSEAU\n  • Si connexion lente (<2 Mbps)\n  • Page peut timeout\n  • Attendre ou réessayer plus tard\n  • Tester depuis 4G\n\nLa connexion internet est-elle stable ? VPN activé ?",
+      "actions": [
+        "verify_internet_connection",
+        "clear_cache_retry",
+        "disable_vpn_proxy",
+        "disable_adblock",
+        "wait_cloudflare_challenge",
+        "test_4g_connection"
+      ],
+      "success_indicator": "Page charge complètement, ou cause identifiée (VPN, connexion lente)",
+      "time_estimate": "5-10 secondes si Cloudflare, sinon problème réseau",
+      "common_fixes": [
+        "Attendre Cloudflare challenge (5-10s)",
+        "Désactiver VPN",
+        "Vider cache + Ctrl+F5",
+        "Tester 4G au lieu de WiFi"
+      ],
+      "step_id": "SOLVE_06_PAGE_CHARGE_L_INFI_732EB5"
+    },
+    {
+      "kind": "solve",
+      "title": "Console Développeur (diagnostic avancé)",
+      "response": "Pour utilisateurs avancés ou escalade :\n\n✓ OUVRIR CONSOLE DÉVELOPPEUR :\n  • F12 (tous navigateurs)\n  • Ou clic droit → Inspecter → Console\n\n✓ QUE CHERCHER :\n  🔴 Erreurs rouges:\n  • 'Failed to load resource' → Fichier manquant\n  • 'Uncaught TypeError' → Bug JavaScript\n  • 'CORS error' → Problème sécurité\n  • 'net::ERR_CONNECTION_REFUSED' → Serveur inaccessible\n  \n  🟡 Warnings jaunes:\n  • Moins critiques\n  • Peuvent indiquer problèmes\n  \n  ℹ️ Info bleues:\n  • Normales, ignorer\n\n✓ ACTIONS :\n  1. Screenshot console complète\n  2. Copier texte des erreurs rouges\n  3. Noter ressources en échec\n  4. Fournir lors escalade\n\n⚠️ Ne PAS modifier code dans console sauf si expert\n\nY a-t-il des erreurs rouges dans la console ?",
+      "actions": [
+        "open_developer_console",
+        "screenshot_console_errors",
+        "copy_error_messages",
+        "provide_for_escalation"
+      ],
+      "success_indicator": "Erreurs identifiées et documentées pour escalade",
+      "note": "Requis pour escalade de problèmes techniques complexes",
+      "step_id": "SOLVE_07_CONSOLE_D_VELOPPEU_4594F6"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, le site fonctionne-t-il normalement ? Si non, fournissez : type erreur exact, URL complète, navigateur/version, résultat mode privé, capture console F12.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_LE_50C91A"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Site inaccessible après toutes vérifications client (cache vidé, autres navigateurs testés, navigation privée), ou erreur serveur 5xx persistante, ou erreurs JavaScript critiques en console",
+      "required_info": [
+        "Type erreur exact (page blanche / 404 / 500 / loading infini)",
+        "URL complète qui pose problème",
+        "Message d'erreur exact (copié-collé ou capture)",
+        "Navigateur + version (Chrome 120, Firefox 115, etc)",
+        "Résultat test navigation privée (fonctionne oui/non)",
+        "Résultat test autre navigateur (fonctionne oui/non)",
+        "Heure exacte du problème (HH:MM)",
+        "Fréquence (une fois / systématique / intermittent)",
+        "Affecte tous utilisateurs ou un seul",
+        "Capture d'écran erreur",
+        "Capture console développeur F12 (si applicable)",
+        "Action qui provoque l'erreur (navigation, clic bouton, soumission form)"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_F1C100",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Site inaccessible après toutes vérifications client (cache vidé, autres navigateurs testés, navigation privée), ou erreur serveur 5xx persistante, ou erreurs JavaScript critiques en console",
+        "repro_steps": [],
+        "evidence": [
+          "Type erreur exact (page blanche / 404 / 500 / loading infini)",
+          "URL complète qui pose problème",
+          "Message d'erreur exact (copié-collé ou capture)",
+          "Navigateur + version (Chrome 120, Firefox 115, etc)",
+          "Résultat test navigation privée (fonctionne oui/non)",
+          "Résultat test autre navigateur (fonctionne oui/non)",
+          "Heure exacte du problème (HH:MM)",
+          "Fréquence (une fois / systématique / intermittent)",
+          "Affecte tous utilisateurs ou un seul",
+          "Capture d'écran erreur",
+          "Capture console développeur F12 (si applicable)",
+          "Action qui provoque l'erreur (navigation, clic bouton, soumission form)"
+        ],
+        "suspected_component": "general",
+        "priority": "P2"
+      }
+    }
+  ],
+  "diagnostic_checklist": {
+    "verifications_client": [
+      "Vider cache navigateur (Ctrl+Shift+Delete)",
+      "Rafraîchir force (Ctrl+F5)",
+      "Tester navigation privée",
+      "Désactiver extensions (AdBlock, VPN)",
+      "Tester autre navigateur",
+      "Tester autre appareil/connexion",
+      "Vérifier JavaScript activé"
+    ],
+    "signes_probleme_tiktak": [
+      "Erreur 500/502/503 (serveur)",
+      "Tous navigateurs affectés",
+      "Mode privé aussi affecté",
+      "Plusieurs utilisateurs rapportent",
+      "Erreur JavaScript en console",
+      "Fonctionne chez vous mais pas chez client (DNS?)"
+    ]
+  },
+  "common_errors": [
+    {
+      "symptom": "Page blanche tous navigateurs",
+      "cause": "JavaScript désactivé ou erreur critique JS",
+      "solution": "Activer JavaScript, vérifier console F12, escalader si erreur technique"
+    },
+    {
+      "symptom": "404 sur page qui existait avant",
+      "cause": "Page supprimée, URL modifiée, ou masquée",
+      "solution": "Vérifier back-office si page existe et est publiée/visible"
+    },
+    {
+      "symptom": "500 Internal Server Error",
+      "cause": "Bug application ou problème serveur",
+      "solution": "Attendre 5 min, réessayer, escalader si persiste"
+    },
+    {
+      "symptom": "Loading infini avec VPN",
+      "cause": "VPN bloque connexion ou Cloudflare challenge",
+      "solution": "Désactiver VPN, attendre Cloudflare, réessayer"
+    }
+  ],
+  "best_practices": [
+    "Toujours vider cache AVANT d'escalader",
+    "Tester en navigation privée pour isoler problème",
+    "Noter heure exacte pour erreurs serveur",
+    "Capturer console F12 pour problèmes techniques",
+    "Tester autre navigateur/appareil pour confirmer",
+    "Pour 5xx: attendre 5-10 min avant escalade"
+  ],
+  "canonical_scope": "technical",
+  "required_fields": [
+    {
+      "key": "error_type",
+      "question": "Quel type d'erreur (blanc / 404 / 500 / loading) ?"
+    },
+    {
+      "key": "url",
+      "question": "Quelle URL exacte pose problème ?"
+    },
+    {
+      "key": "cache_cleared",
+      "question": "Le cache a-t-il été vidé (Ctrl+Shift+Delete) ?"
+    },
+    {
+      "key": "incognito_tested",
+      "question": "Mode navigation privée testé ? Résultat ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

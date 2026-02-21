@@ -1,0 +1,138 @@
+{
+  "id": "playbook-products-import",
+  "scope": "products",
+  "title": "Produits — import Excel/CSV / export / mise à jour masse",
+  "triggers": [
+    "colonnes",
+    "csv",
+    "erreur import",
+    "export produits",
+    "import produit",
+    "importation",
+    "mise à jour masse",
+    "sku",
+    "stock",
+    "variant",
+    "xlsx"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Import produits (/products → Import) :\n✓ Format accepté : .xlsx ou .csv\n✓ Colonnes obligatoires (exemple) :\n  - Nom*, Prix*, SKU*, Stock\n  - Catégorie, Description, Code-barres\n  - Images (URLs ou noms fichiers)\n✓ Pour variantes :\n  - Ligne parent produit\n  - Lignes variantes avec attributs\n  - SKU unique par variante\n✓ Séparateur CSV : , (virgule) ou ; (point-virgule)\n✓ Encodage : UTF-8 (évite caractères bizarres)\n✓ Limite : testez d'abord avec 10 produits\n\nQuelle erreur d'import voyez-vous ? Format xlsx ou csv ?",
+      "actions": [
+        "import_products",
+        "download_template",
+        "verify_file_format"
+      ],
+      "success_indicator": "Produits importés, visibles dans liste",
+      "common_errors": [
+        "SKU doublons → chaque SKU unique",
+        "Colonnes manquantes → vérifier modèle",
+        "Encodage → UTF-8",
+        "Format Excel corrompu → réenregistrer",
+        "Limite lignes → scinder fichier"
+      ],
+      "step_id": "SOLVE_01_IMPORT_PRODUITS_PR_099D17"
+    },
+    {
+      "kind": "solve",
+      "response": "Télécharger modèle import :\n• /products → bouton 'Télécharger modèle' ou 'Template'\n• Fichier Excel exemple avec colonnes requises\n• Remplissez en suivant exemple\n• Respectez format colonnes (texte, nombres, dates)\n• Sauvegardez en .xlsx\n\nAvez-vous le modèle officiel ou utilisez-vous votre propre fichier ?",
+      "actions": [
+        "download_import_template",
+        "fill_template"
+      ],
+      "success_indicator": "Modèle téléchargé avec colonnes correctes",
+      "step_id": "SOLVE_02_T_L_CHARGER_MOD_LE_658019"
+    },
+    {
+      "kind": "solve",
+      "response": "Erreur variantes ('variant' / 'product') :\n✓ Structure :\n  - Ligne 1 : produit parent (Type = parent ou vide)\n  - Lignes 2-n : variantes (Type = variant, Parent SKU = SKU ligne 1)\n✓ Chaque variante : SKU unique + attributs (Couleur, Taille...)\n✓ Variantes héritent catégorie/description du parent\n✓ Stock/prix peuvent être spécifiques par variante\n\nL'import contient des variantes ? Structure parent/enfant respectée ?",
+      "actions": [
+        "structure_variants_import",
+        "verify_parent_sku"
+      ],
+      "success_indicator": "Variantes importées et liées au parent",
+      "step_id": "SOLVE_03_ERREUR_VARIANTES_V_FA13B3"
+    },
+    {
+      "kind": "solve",
+      "response": "Export produits :\n• /products → sélectionnez produits ou 'Tout sélectionner'\n• Menu 'Actions' → 'Exporter vers Excel'\n• Téléchargez fichier .xlsx\n• Contient : tous les produits sélectionnés avec toutes colonnes\n• Utilisez pour modifier en masse puis réimporter\n\nVoulez-vous exporter tous les produits ou juste une sélection ?",
+      "actions": [
+        "export_products",
+        "export_all_products"
+      ],
+      "success_indicator": "Fichier Excel téléchargé avec produits",
+      "step_id": "SOLVE_04_EXPORT_PRODUITS_PR_6C8FAE"
+    },
+    {
+      "kind": "solve",
+      "response": "Mise à jour masse via import :\n• Exportez produits existants\n• Modifiez dans Excel (prix, stock, descriptions...)\n• Réimportez → système détecte SKU existants et MAJ\n• Vérifiez avant : sauv1gardez backup export\n• Testez sur 5-10 produits d'abord\n\nQuel champ voulez-vous mettre à jour en masse (prix, stock, catégorie) ?",
+      "actions": [
+        "mass_update_via_import",
+        "update_prices",
+        "update_stock"
+      ],
+      "success_indicator": "Produits mis à jour sans créer doublons",
+      "step_id": "SOLVE_05_MISE_JOUR_MASSE_VI_B5007D"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_06_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Import échoue avec fichier conforme au modèle, ou erreurs parsing non standard",
+      "required_info": [
+        "Fichier import (ou colonnes + 5 lignes exemple)",
+        "Message erreur exact",
+        "Format (xlsx/csv)",
+        "Nombre lignes",
+        "Contient variantes (oui/non)"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_A63F44",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Import échoue avec fichier conforme au modèle, ou erreurs parsing non standard",
+        "repro_steps": [],
+        "evidence": [
+          "Fichier import (ou colonnes + 5 lignes exemple)",
+          "Message erreur exact",
+          "Format (xlsx/csv)",
+          "Nombre lignes",
+          "Contient variantes (oui/non)"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/products - Import/export Excel avec variantes, SKU, stock"
+  ],
+  "best_practices": [
+    "Testez toujours import sur 10 produits d'abord",
+    "SKU unique absolu",
+    "UTF-8 toujours",
+    "Sauvegardez backup avant mise à jour masse",
+    "Modèle officiel pour éviter erreurs colonnes"
+  ],
+  "canonical_scope": "products",
+  "required_fields": [
+    {
+      "key": "product_identifier",
+      "question": "Quel produit (nom/SKU) ?"
+    },
+    {
+      "key": "action",
+      "question": "Qu’est-ce que vous essayez de faire (import, ajout, modification, affichage) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

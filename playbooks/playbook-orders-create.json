@@ -1,0 +1,161 @@
+{
+  "id": "playbook-orders-create",
+  "scope": "orders",
+  "title": "Commandes — création manuelle / back-office",
+  "triggers": [
+    "ajouter commande",
+    "commande back-office",
+    "commande manuelle",
+    "create order",
+    "créer commande",
+    "nouvelle commande",
+    "panier backoffice"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer une commande manuelle (/orders/new) :\n• Commandes → 'Nouvelle commande'\n• ÉTAPE 1 - Détection client par téléphone :\n  - Saisissez téléphone (format uniforme +216XXXXXXXX)\n  - Système détecte client existant ou propose création\n  - Contrôle anti-doublon jour (si configuré)\n• ÉTAPE 2 - Produits :\n  - Recherchez produit ou scannez code-barres\n  - Sélectionnez variantes (taille, couleur...)\n  - Ajustez quantités\n  - Vérifiez stock disponible\n• ÉTAPE 3 - Client & livraison :\n  - Complétez/vérifiez nom, adresse, gouvernorat, ville\n  - Sélectionnez transporteur\n  - Frais livraison calculés automatiquement (ou personnalisés)\n• ÉTAPE 4 - Paiement :\n  - Mode paiement (COD, carte, virement, etc.)\n  - Remise éventuelle (montant ou %)\n• Enregistrez\n\nÀ quelle étape ça bloque (client, produit, livraison, paiement, sauvegarde) ?",
+      "actions": [
+        "create_order_manual",
+        "detect_customer",
+        "add_products",
+        "set_shipping",
+        "set_payment"
+      ],
+      "success_indicator": "Commande créée avec ID, visible dans liste commandes",
+      "common_errors": [
+        "Téléphone déjà utilisé aujourd'hui (anti-doublon) → vérifier ou forcer",
+        "Stock insuffisant → ajuster quantité ou produit",
+        "Adresse incomplète → remplir gouvernorat/ville",
+        "Transporteur non compatible zone → changer transporteur"
+      ],
+      "step_id": "SOLVE_01_CR_ER_UNE_COMMANDE_80248A"
+    },
+    {
+      "kind": "solve",
+      "response": "Produit ne s'ajoute pas au panier :\n✓ Vérifiez stock disponible (peut bloquer selon config)\n✓ Pour variantes : sélectionnez TOUTES les options (taille, couleur...)\n✓ Vérifiez que le produit est actif\n✓ Recherchez par nom exact ou code-barres/SKU\n✓ Testez ajout d'un autre produit pour isoler le problème\n\nQuel produit/variante exactement ? Y a-t-il du stock ? Toutes les options variantes sélectionnées ?",
+      "actions": [
+        "add_product_to_order",
+        "select_variant",
+        "check_stock_availability"
+      ],
+      "success_indicator": "Produit ajouté au panier avec quantité et prix",
+      "escalation_criteria": "Produit actif + stock OK + variantes sélectionnées mais refuse de s'ajouter",
+      "step_id": "SOLVE_02_PRODUIT_NE_S_AJOUT_985511"
+    },
+    {
+      "kind": "solve",
+      "response": "Commande ne se sauvegarde pas :\n✓ Champs requis obligatoires :\n  - Client (téléphone minimum)\n  - Au moins un produit\n  - Adresse livraison (adresse, gouvernorat, ville)\n  - Transporteur\n  - Mode paiement\n✓ Vérifiez zones transporteur (gouvernorat couvert ?)\n✓ Vérifiez format téléphone\n✓ Vérifiez montant total cohérent\n✓ Rafraîchissez et réessayez\n\nQuel message d'erreur exactement ? Quels champs sont en rouge ?",
+      "actions": [
+        "save_order",
+        "verify_required_fields",
+        "check_carrier_zones"
+      ],
+      "success_indicator": "Commande enregistrée sans erreur",
+      "common_fixes": [
+        "Téléphone au bon format",
+        "Gouvernorat dans zones transporteur",
+        "Tous champs * remplis",
+        "Stock disponible pour quantités"
+      ],
+      "step_id": "SOLVE_03_COMMANDE_NE_SE_SAU_6E54DE"
+    },
+    {
+      "kind": "solve",
+      "response": "Remises et frais personnalisés :\n• Remise commande :\n  - Montant fixe ou pourcentage\n  - S'applique au total panier\n• Frais livraison :\n  - Calculés automatiquement selon transporteur/zone\n  - Peuvent être personnalisés si besoin\n  - Option 'Livraison gratuite' si disponible\n• Échange produit :\n  - Possibilité d'ajouter crédit/avoir\n  - Géré via module Échange si activé\n\nVoulez-vous appliquer une remise ou modifier les frais de livraison ?",
+      "actions": [
+        "apply_discount",
+        "customize_shipping_fee",
+        "apply_store_credit"
+      ],
+      "success_indicator": "Remise ou frais modifiés, total recalculé",
+      "step_id": "SOLVE_04_REMISES_ET_FRAIS_P_EEE23E"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Impossible de créer commande malgré tous champs remplis, ou produit refuse de s'ajouter avec stock OK, ou erreur technique lors sauvegarde",
+      "required_info": [
+        "Capture écran formulaire avec erreur",
+        "Étape bloquée",
+        "ID client si détecté",
+        "Produits tentés",
+        "Message erreur exact",
+        "Navigateur"
+      ],
+      "step_id": "ESCALATE_05_ESCALATE_B6DDEC",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Impossible de créer commande malgré tous champs remplis, ou produit refuse de s'ajouter avec stock OK, ou erreur technique lors sauvegarde",
+        "repro_steps": [],
+        "evidence": [
+          "Capture écran formulaire avec erreur",
+          "Étape bloquée",
+          "ID client si détecté",
+          "Produits tentés",
+          "Message erreur exact",
+          "Navigateur"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_06_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : capture formulaire + étape + ID client + produits + message erreur + navigateur.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_07_POUR_ESCALADER_CAP_F36677",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Commandes — création manuelle / back-office",
+        "repro_steps": [],
+        "evidence": [
+          "order_id",
+          "status_or_step",
+          "error_message"
+        ],
+        "suspected_component": "orders",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/orders/new - Création commande manuelle avec détection client, anti-doublon, contrôle stock"
+  ],
+  "best_practices": [
+    "Format téléphone uniforme (+216)",
+    "Vérifiez stock avant commande importante",
+    "Activez anti-doublon pour éviter erreurs saisie",
+    "Complétez adresse précise pour sync transporteur"
+  ],
+  "canonical_scope": "orders",
+  "required_fields": [
+    {
+      "key": "order_id",
+      "question": "Quel est l’ID de la commande (ou email/téléphone du client) ?"
+    },
+    {
+      "key": "status_or_step",
+      "question": "À quelle étape ça bloque (création, paiement, validation, livraison) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

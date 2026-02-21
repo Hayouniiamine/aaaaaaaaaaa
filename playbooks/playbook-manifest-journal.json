@@ -1,0 +1,169 @@
+{
+  "id": "playbook-manifest-journal",
+  "scope": "shipping",
+  "title": "Manifeste / Journal — filtres / historique / export",
+  "triggers": [
+    "export",
+    "historique manifeste",
+    "impression manifeste",
+    "journal",
+    "liste expédition",
+    "manifest",
+    "manifeste",
+    "pdf manifeste"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Accéder au journal des manifestes (/manifests) :\n• Manifestes → liste des manifestes par jour et transporteur\n• Chaque manifeste affiche :\n  - Date de création\n  - Transporteur\n  - Nombre de colis\n  - Montant total\n  - Actions (télécharger, voir détails)\n\nQuelle période ou quel transporteur recherchez-vous ?",
+      "actions": [
+        "access_manifest_history"
+      ],
+      "success_indicator": "Liste des manifestes historiques affichée",
+      "step_id": "SOLVE_01_ACC_DER_AU_JOURNAL_BC69B6"
+    },
+    {
+      "kind": "solve",
+      "response": "Filtrer le journal :\n• Sélectionnez période (date début / date fin)\n• Filtrez par transporteur (liste déroulante)\n• Filtrez par statut si disponible\n• Vérifiez qu'il existe bien des manifestes sur la période choisie\n• Appliquez les filtres\n\nQuelle période exacte voulez-vous consulter (ex: dernière semaine, janvier 2026) ?",
+      "actions": [
+        "manifest_filter",
+        "filter_by_date_range",
+        "filter_by_carrier"
+      ],
+      "success_indicator": "Liste filtrée affiche uniquement les manifestes correspondants",
+      "common_errors": [
+        "Période trop restreinte → aucun résultat",
+        "Filtres multiples cumulés → élargissez",
+        "Mauvais fuseau horaire → ajustez dates"
+      ],
+      "step_id": "SOLVE_02_FILTRER_LE_JOURNAL_EA4F65"
+    },
+    {
+      "kind": "solve",
+      "response": "Télécharger / réimprimer un manifeste :\n• Cliquez sur l'icône téléchargement ou 'PDF' dans la ligne du manifeste\n• Le fichier PDF/Excel s'ouvre dans un nouvel onglet ou se télécharge\n• Si bloqué :\n  ✓ Autorisez pop-ups pour dash.tiktak.space\n  ✓ Essayez Ctrl+F5 puis recliquez\n  ✓ Testez navigation privée\n  ✓ Vérifiez téléchargements autorisés dans paramètres navigateur\n\nLe navigateur bloque-t-il le popup ou le téléchargement ?",
+      "actions": [
+        "download_manifest",
+        "popup_check",
+        "allow_downloads"
+      ],
+      "success_indicator": "Manifeste PDF/Excel téléchargé ou affiché",
+      "troubleshooting": [
+        "Pop-up bloqué → icône dans barre adresse → autoriser",
+        "Téléchargement bloqué → paramètres → téléchargements → autoriser site",
+        "Erreur 404 → manifeste peut avoir été supprimé, vérifier avec équipe"
+      ],
+      "step_id": "SOLVE_03_T_L_CHARGER_R_IMPR_351BAD"
+    },
+    {
+      "kind": "solve",
+      "response": "Voir détails d'un manifeste :\n• Cliquez sur le manifeste pour ouvrir le détail\n• Consultez :\n  - Liste complète des commandes incluses\n  - Références, clients, montants\n  - Transporteur et date\n  - Statuts des commandes\n• Vérifiez cohérence avec vos expéditions réelles\n\nCherchez-vous un numéro de commande spécifique dans un manifeste ?",
+      "actions": [
+        "view_manifest_details",
+        "search_order_in_manifest"
+      ],
+      "success_indicator": "Détails complets du manifeste affichés avec toutes les commandes",
+      "step_id": "SOLVE_04_VOIR_D_TAILS_D_UN__C1FA4C"
+    },
+    {
+      "kind": "solve",
+      "response": "Données manquantes / incohérentes :\n✓ Vérifiez filtres actifs (période, transporteur) → élargissez si nécessaire\n✓ Vérifiez permissions utilisateur :\n  - Administrateur : voit tous les manifestes\n  - Autres rôles : peuvent avoir accès limité\n✓ Vérifiez que les expéditions ont bien été finalisées (module scan)\n✓ Rafraîchissez la page (Ctrl+F5)\n\nQuel est votre rôle utilisateur ? Les filtres sont-ils très restrictifs ?",
+      "actions": [
+        "check_permissions",
+        "verify_filters",
+        "check_finalized_shipments"
+      ],
+      "success_indicator": "Données cohérentes avec les expéditions réelles effectuées",
+      "escalation_criteria": "Manifestes manquants alors que expéditions finalisées + permissions OK + filtres corrects",
+      "step_id": "SOLVE_05_DONN_ES_MANQUANTES_D71DC2"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Manifestes manquants malgré expéditions finalisées, ou impossibilité de télécharger après tous tests, ou incohérences de données",
+      "required_info": [
+        "Capture écran de la liste manifestes + filtres actifs",
+        "Période concernée",
+        "Transporteur concerné",
+        "Navigateur + version",
+        "Rôle utilisateur",
+        "Message d'erreur si téléchargement bloqué",
+        "Date des expéditions censées générer les manifestes"
+      ],
+      "step_id": "ESCALATE_06_ESCALATE_CCBADA",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Manifestes manquants malgré expéditions finalisées, ou impossibilité de télécharger après tous tests, ou incohérences de données",
+        "repro_steps": [],
+        "evidence": [
+          "Capture écran de la liste manifestes + filtres actifs",
+          "Période concernée",
+          "Transporteur concerné",
+          "Navigateur + version",
+          "Rôle utilisateur",
+          "Message d'erreur si téléchargement bloqué",
+          "Date des expéditions censées générer les manifestes"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_07_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : capture liste + filtres + période + transporteur + navigateur + rôle + date expéditions.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_08_POUR_ESCALADER_CAP_638AF8",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Manifeste / Journal — filtres / historique / export",
+        "repro_steps": [],
+        "evidence": [
+          "carrier_or_zone",
+          "what_fails"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/manifests - Historique des manifestes",
+    "Liste par jour et transporteur, téléchargement PDF/Excel"
+  ],
+  "common_workflows": [
+    "Consultation historique → filtrage période/transporteur → téléchargement PDF",
+    "Recherche commande → détails manifeste → vérification inclusion",
+    "Export comptable → filtrage mois → téléchargement tous manifestes période"
+  ],
+  "best_practices": [
+    "Gardez les manifestes archivés pour traçabilité",
+    "Vérifiez cohérence manifeste vs nombre de colis réellement expédiés",
+    "Utilisez les manifestes pour réconciliation avec transporteurs",
+    "Filtrez par transporteur pour faciliter la recherche"
+  ],
+  "canonical_scope": "shipping",
+  "required_fields": [
+    {
+      "key": "carrier_or_zone",
+      "question": "Quel transporteur / zone / règle de livraison ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu’est-ce qui ne marche pas exactement (calcul frais, expédition, douchette, manifeste) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

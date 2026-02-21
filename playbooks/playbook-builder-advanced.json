@@ -1,0 +1,192 @@
+{
+  "id": "playbook-builder-advanced",
+  "scope": "builder",
+  "title": "Builder avancé — landing page / verrouillage / code personnalisé / responsive / réseaux sociaux / debug",
+  "description": "Guide avancé pour le Builder TikTak PRO : création de landing pages, résolution du verrouillage builder, code personnalisé, problèmes responsive/mobile, liens réseaux sociaux et debug.",
+  "triggers": [
+    "ajouter section",
+    "builder bloqué",
+    "builder verrouillé",
+    "builder locked",
+    "code personnalisé",
+    "custom code",
+    "debug",
+    "glisser-déposer",
+    "drag and drop",
+    "iframe blanc",
+    "iframe blank",
+    "image cliquable",
+    "landing page",
+    "landing",
+    "lien hypertexte",
+    "lien instagram",
+    "locked",
+    "modifier le contenu",
+    "page blanche builder",
+    "problème mobile",
+    "responsive",
+    "réseaux sociaux",
+    "social media",
+    "sous-menu",
+    "style",
+    "typographie",
+    "upsell",
+    "cross-sell",
+    "verrouillage",
+    "verrouillé",
+    "video banniere",
+    "vidéo bannière",
+    "websocket",
+    "widget",
+    "modèle",
+    "bande"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel est votre besoin avec le Builder ?\n(1) Créer une landing page\n(2) Builder verrouillé / bloqué par un autre utilisateur\n(3) Ajouter du code personnalisé (Pixel, GA, scripts)\n(4) Problème d'affichage mobile / responsive\n(5) Configurer les liens réseaux sociaux\n(6) Problème de glisser-déposer / drag & drop\n(7) Page / iframe blanche dans le builder",
+      "step_id": "ASK_01_QUEL_EST_VOTRE_BES_8E6482",
+      "field": "issue_description"
+    },
+    {
+      "kind": "solve",
+      "title": "Créer une landing page",
+      "response": "Créer une landing page dans TikTak PRO :\n\n1. Allez dans Gestion de contenu (dash.tiktak.space/content-management)\n2. Cliquez 'Nouvelle page'\n3. Configurez la page :\n   • Nom : nom descriptif (ex. 'Promo Été 2025')\n   • Type : 'Contenu' (pas 'Accueil')\n\n4. Ajoutez des sections dans l'éditeur :\n   • Utilisez le bouton '+' ou 'Ajouter une section'\n   • Types de sections disponibles : bannière, texte, image, produits, galerie, vidéo\n   • Glissez-déposez pour réorganiser\n\n5. Configurez chaque section :\n   • Cliquez sur une section pour ouvrir le panneau de configuration\n   • Images : téléversez en haute qualité\n   • Widget produits : sélectionnez les produits à mettre en avant\n   • Texte : formatez avec l'éditeur HTML\n\n6. Configurez le SEO (onglet SEO) :\n   • Titre SEO (30-60 caractères)\n   • Meta description (70-160 caractères)\n   • Slug URL (court et descriptif, ex. 'promo-ete-2025')\n\n7. Activez la page (switch Statut → Actif)\n8. Partagez l'URL : votre-domaine.com/le-slug\n\nQuel type de landing page souhaitez-vous créer ?",
+      "success_indicator": "Landing page créée, active et accessible via son URL",
+      "ui": {
+        "label": "Ouvrir Gestion de contenu",
+        "route": "/content-management"
+      },
+      "step_id": "SOLVE_02_CR_ER_UNE_LANDING__D9D4A9"
+    },
+    {
+      "kind": "solve",
+      "title": "Builder verrouillé par un autre utilisateur",
+      "response": "Builder verrouillé ('Un autre utilisateur modifie cette page') :\n\nCe verrouillage est un système de sécurité WebSocket qui empêche deux personnes de modifier la même page simultanément.\n\n1. Solutions rapides :\n   • Demandez à l'autre utilisateur de fermer l'éditeur\n   • Attendez quelques minutes — le verrou se libère automatiquement si l'utilisateur est inactif\n\n2. Si le verrou persiste (l'autre utilisateur a fermé mais le verrou reste) :\n   • Rafraîchissez la page (F5 ou Ctrl+F5)\n   • Fermez tous les onglets du Builder dans tous les navigateurs\n   • Videz le cache du navigateur\n   • Essayez en navigation privée\n   • Si toujours bloqué : attendez 5-10 minutes (timeout WebSocket)\n\n3. Si vous êtes le seul utilisateur et le builder est verrouillé :\n   • C'est probablement une session orpheline (onglet fermé sans se déconnecter)\n   • Déconnectez-vous complètement du dashboard → reconnectez-vous\n   • Ou attendez le timeout automatique\n\nLe builder est-il toujours verrouillé après ces étapes ?",
+      "success_indicator": "Builder déverrouillé, édition possible",
+      "common_errors": [
+        "Session orpheline — déconnexion + reconnexion",
+        "Onglet builder ouvert dans un autre navigateur — fermer",
+        "WebSocket non connecté — vérifier connexion internet"
+      ],
+      "step_id": "SOLVE_03_BUILDER_VERROUILL__F83C42"
+    },
+    {
+      "kind": "solve",
+      "title": "Code personnalisé (Pixel, GA, scripts)",
+      "response": "Ajouter du code personnalisé dans le Builder :\n\n1. Ouvrez l'éditeur (dash.tiktak.space/content-management → Modifier la page)\n2. Dans la sidebar gauche, allez à l'onglet 'Code personnalisé'\n3. Deux zones d'injection :\n   • Head : pour les scripts qui doivent charger en premier\n     → Facebook Pixel, Google Analytics, Google Tag Manager, meta tags\n   • Autre zone selon template : pour scripts en bas de page\n\n4. Collez votre code complet (avec les balises <script>)</n5. Sauvegardez (Ctrl+S ou bouton Sauvegarder)\n6. Prévisualisez pour vérifier que le site fonctionne correctement\n\nImportant :\n• Ne modifiez pas le code existant du template\n• Un seul code par service (pas de doublon Pixel)\n• Testez en navigation privée après ajout\n• Si le site casse après ajout de code → retirez le code ajouté\n\nRaccourcis utiles :\n• Ctrl+S : sauvegarder\n• Ctrl+F5 : recharger sans cache\n• F12 : console développeur (pour debug)\n\nQuel code souhaitez-vous ajouter ?",
+      "success_indicator": "Code ajouté, site fonctionne, service de tracking actif",
+      "step_id": "SOLVE_04_CODE_PERSONNALIS_P_ABD22A"
+    },
+    {
+      "kind": "solve",
+      "title": "Problème d'affichage mobile / responsive",
+      "response": "Problème d'affichage mobile / responsive :\n\n1. Vérifiez dans le Builder :\n   • Utilisez les boutons de changement de vue : Desktop / Tablet / Mobile\n   • Vérifiez chaque section en vue mobile\n\n2. Problèmes courants et solutions :\n   • Image trop large → utilisez des images responsives\n   • Texte qui déborde → réduisez la taille de police ou le contenu\n   • Section invisible sur mobile → vérifiez les paramètres de la section (visibilité par appareil)\n   • Menu cassé → vérifiez la configuration du header/navigation\n\n3. Solutions techniques :\n   • Videz le cache du navigateur mobile\n   • Testez sur plusieurs appareils ou simulateurs\n   • Vérifiez que le template est responsive (la plupart le sont)\n   • Si le problème est spécifique à un template, essayez de changer de template\n\n4. Pour le menu mobile :\n   • Le menu s'adapte automatiquement en hamburger menu sur mobile\n   • Vérifiez que les liens sont corrects\n   • Trop de catégories → simplifiez la navigation\n\nSur quel appareil et quel écran avez-vous le problème d'affichage ?",
+      "success_indicator": "Affichage correct sur mobile et desktop",
+      "step_id": "SOLVE_05_PROBL_ME_D_AFFICHA_3A669F"
+    },
+    {
+      "kind": "solve",
+      "title": "Configurer les liens réseaux sociaux",
+      "response": "Configurer les liens réseaux sociaux dans le Builder :\n\n1. Ouvrez l'éditeur (dash.tiktak.space/content-management → Modifier)\n2. Dans la sidebar, allez à l'onglet 'Réseaux sociaux'\n3. Configurez les liens :\n   • Facebook : URL complète (https://www.facebook.com/votre-page)\n   • Instagram : URL complète (https://www.instagram.com/votre-compte)\n   • TikTok, Twitter, YouTube, LinkedIn... selon disponibilité\n\n4. Sauvegardez\n5. Les icônes réseaux sociaux s'affichent :\n   • Généralement dans le footer du site\n   • Parfois dans le header selon le template\n\nSi les icônes ne s'affichent pas :\n• Vérifiez que les URLs sont complètes (avec https://)\n• Vérifiez que le template affiche les réseaux sociaux\n• Certains templates n'affichent que Facebook + Instagram\n• Videz le cache (Ctrl+F5)\n\nQuels réseaux sociaux voulez-vous ajouter ?",
+      "success_indicator": "Icônes réseaux sociaux visibles sur le site avec liens corrects",
+      "step_id": "SOLVE_06_CONFIGURER_LES_LIE_213E11"
+    },
+    {
+      "kind": "solve",
+      "title": "Drag & drop et iframe blanche",
+      "response": "Problèmes de glisser-déposer (drag & drop) et page blanche :\n\nDrag & drop ne fonctionne pas :\n1. Désactivez les extensions de navigateur (surtout les bloqueurs)\n2. Testez dans un autre navigateur (Chrome recommandé)\n3. Testez en navigation privée\n4. Rafraîchissez la page (Ctrl+F5)\n5. Vérifiez que vous cliquez-maintenez sur la zone de drag (icône ≡)\n\nIframe / prévisualisation blanche :\n1. Videz le cache du navigateur complètement\n2. Essayez en navigation privée\n3. Vérifiez la console (F12 → onglet Console) pour des erreurs JavaScript\n4. Si erreur JS visible → le template peut être corrompu\n5. Testez un autre navigateur\n6. Si toujours blanc :\n   • Sauvegardez vos modifications\n   • Essayez de changer de template temporairement et revenir\n\nSection impossible à ajouter :\n• Certains templates ont une limite de sections\n• Vérifiez que le type de section est compatible avec le template\n\nQuel problème exact rencontrez-vous ?",
+      "success_indicator": "Builder fonctionnel, preview visible, drag & drop opérationnel",
+      "step_id": "SOLVE_07_DRAG_DROP_ET_IFRAM_4D1405"
+    },
+    {
+      "kind": "verify",
+      "question": "Le problème Builder est-il résolu ? Si non, envoyez une capture écran + le message d'erreur ou décrivez le comportement exact.",
+      "step_id": "VERIFY_08_LE_PROBL_ME_BUILDE_F55F27"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Builder toujours verrouillé, page blanche persistante, template corrompu, ou fonctionnalité manquante dans le Builder",
+      "required_info": [
+        "URL de la page concernée",
+        "Capture écran du builder (ou de l'erreur)",
+        "Navigateur et version utilisés",
+        "Template actuel",
+        "Console F12 (erreurs JavaScript)",
+        "Actions tentées avant le problème"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_1D8246",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Builder toujours verrouillé, page blanche persistante, template corrompu, ou fonctionnalité manquante dans le Builder",
+        "repro_steps": [],
+        "evidence": [
+          "URL de la page concernée",
+          "Capture écran du builder (ou de l'erreur)",
+          "Navigateur et version utilisés",
+          "Template actuel",
+          "Console F12 (erreurs JavaScript)",
+          "Actions tentées avant le problème"
+        ],
+        "suspected_component": "builder",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Builder verrouillé par un utilisateur fantôme",
+      "cause": "Session WebSocket orpheline",
+      "solution": "Déconnexion complète + reconnexion, ou attendre timeout (5-10 min)"
+    },
+    {
+      "symptom": "Preview iframe blanche",
+      "cause": "Erreur JavaScript ou template corrompu",
+      "solution": "F12 console pour diagnostic, vider cache, tester autre navigateur"
+    },
+    {
+      "symptom": "Icônes réseaux sociaux non visibles",
+      "cause": "URLs vides ou template ne les affiche pas",
+      "solution": "Remplir URLs avec https://, vérifier si template supporte cette fonctionnalité"
+    },
+    {
+      "symptom": "Affichage cassé sur mobile",
+      "cause": "Images trop larges ou sections non responsives",
+      "solution": "Vérifier vue mobile dans Builder, ajuster images/textes"
+    }
+  ],
+  "best_practices": [
+    "Toujours prévisualiser en mode Desktop, Tablet et Mobile avant de publier",
+    "Sauvegarder régulièrement (Ctrl+S) pendant l'édition",
+    "Ne pas ouvrir le Builder dans plusieurs onglets simultanément",
+    "Utiliser Chrome pour la meilleure compatibilité Builder",
+    "Ajouter les codes de tracking dans la zone Head uniquement"
+  ],
+  "related_playbooks": [
+    "playbook-contents",
+    "playbook-templates",
+    "playbook-facebook-pixel",
+    "playbook-modules"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "page_url",
+      "question": "Quelle page (URL) est concernée ?"
+    },
+    {
+      "key": "issue_description",
+      "question": "Que se passe-t-il exactement (bloqué, template, menu, etc.) ?"
+    },
+    {
+      "key": "screenshot",
+      "question": "Pouvez-vous envoyer une capture écran ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact (si affiché) ?"
+    }
+  ]
+}

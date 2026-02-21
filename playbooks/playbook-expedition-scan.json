@@ -1,0 +1,210 @@
+{
+  "id": "playbook-expedition-scan",
+  "scope": "shipping",
+  "title": "Expédition (Douchette) — scan / lot / manifeste",
+  "triggers": [
+    "barcode",
+    "colis",
+    "douchette",
+    "expedition",
+    "expédition",
+    "lot expédition",
+    "manifeste",
+    "scan colis",
+    "shipping scan",
+    "étiquette"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Préparer le module Expédition (/shipping) :\n• Accédez à 'Expédition / Transport'\n• Cliquez dans le champ 'Scannez ou saisissez l'ID transport' pour activer le focus clavier\n• Vérifiez que votre douchette envoie un 'Enter' (CR/LF) à la fin du code\n• Configuration douchette recommandée : mode clavier, suffixe Enter, pas de préfixe\n\nQuel type de lecteur utilisez-vous (douchette USB, Bluetooth, autre) ?",
+      "actions": [
+        "prepare_scan_module",
+        "verify_scanner_config"
+      ],
+      "success_indicator": "Focus dans le champ, douchette prête à scanner en flux continu",
+      "scanner_setup": {
+        "mode": "Clavier (Keyboard Emulation)",
+        "suffix": "Enter (CR/LF)",
+        "prefix": "Aucun",
+        "test": "Scanner dans un bloc-notes doit écrire le code + aller à la ligne"
+      },
+      "step_id": "SOLVE_01_PR_PARER_LE_MODULE_A858F0"
+    },
+    {
+      "kind": "solve",
+      "response": "Scanner un colis :\n• Présentez le code-barres ID transport à la douchette\n• OU saisissez l'ID manuellement + Enter\n• Attendez le retour visuel/sonore (succès ✓ ou erreur ✗)\n• Vérifiez que la commande s'ajoute à l'historique avec :\n  - ID transport\n  - Référence commande\n  - Client\n  - Montant\n  - Transporteur\n• Les statistiques se mettent à jour : nb scannés, montant total\n\n⚠️ Commandes REFUSÉES automatiquement :\n• Statut 'Annulée'\n• Statut 'Déjà expédiée'\n• Doublons (même ID déjà scanné)\n\nQuel est l'ID transport ou le code que vous scannez ?",
+      "actions": [
+        "scan_package",
+        "verify_order_status"
+      ],
+      "success_indicator": "Commande ajoutée à l'historique, statistiques à jour, pas d'erreur",
+      "valid_statuses": [
+        "En attente",
+        "Confirmée",
+        "Prêt à expédier"
+      ],
+      "rejected_statuses": [
+        "Annulée",
+        "Expédiée",
+        "Livrée"
+      ],
+      "step_id": "SOLVE_02_SCANNER_UN_COLIS_P_D4BE2B"
+    },
+    {
+      "kind": "solve",
+      "response": "Scanner ne fonctionne pas / rien ne se passe :\n✓ Vérifiez que le focus est dans le champ de scan (cliquez dedans)\n✓ Testez la douchette dans un bloc-notes :\n  - Doit écrire le code\n  - Doit aller à la ligne automatiquement (Enter)\n✓ Configurez la douchette pour envoyer Enter/CR/LF après chaque scan\n✓ Vérifiez mode clavier (pas série/autre)\n✓ Testez saisie manuelle : tapez un ID + Enter\n\nLa douchette écrit-elle le code quand vous testez dans un bloc-notes ? Va-t-elle à la ligne ?",
+      "actions": [
+        "troubleshoot_scanner",
+        "configure_scanner_suffix",
+        "test_manual_entry"
+      ],
+      "success_indicator": "Scanner écrit code + Enter dans bloc-notes, fonctionne dans module",
+      "common_fixes": [
+        "Cliquer dans le champ avant chaque scan",
+        "Configurer suffixe Enter dans paramètres douchette",
+        "Désactiver préfixes/caractères spéciaux",
+        "Vérifier câble/batterie"
+      ],
+      "step_id": "SOLVE_03_SCANNER_NE_FONCTIO_E18496"
+    },
+    {
+      "kind": "solve",
+      "response": "Erreurs de scan - Messages et solutions :\n\n❌ 'Commande annulée' ou 'Déjà expédiée' :\n   • Vérifiez le statut dans /orders\n   • Mettez à 'Prêt à expédier' si erreur\n   • Rescannez\n\n❌ 'Doublon détecté' :\n   • Même ID déjà scanné dans le lot actuel\n   • Ignorez ou supprimez la ligne en double dans l'historique\n   • Continuez\n\n❌ 'ID inconnu / non trouvé' :\n   • Vérifiez l'étiquette (bon transporteur ?)\n   • Vérifiez que la commande existe\n   • Associez un transporteur dans la fiche commande\n   • Rescannez\n\n❌ 'Transporteur manquant' :\n   • Ouvrez la commande dans /orders\n   • Sélectionnez un transporteur\n   • Sauvegardez puis rescannez\n\nQuel message d'erreur exact voyez-vous ? Quel est l'ID concerné ?",
+      "actions": [
+        "handle_scan_errors",
+        "correct_order_status",
+        "assign_carrier"
+      ],
+      "success_indicator": "Commande scannée sans erreur après correction",
+      "step_id": "SOLVE_04_ERREURS_DE_SCAN_ME_AAC53A"
+    },
+    {
+      "kind": "solve",
+      "response": "Finaliser l'expédition et exporter le manifeste :\n• Contrôlez l'historique des scans (quantité & montant total)\n• Vérifiez que toutes les commandes voulues sont dans le lot\n• Cliquez 'Exporter le manifeste'\n• Choisissez le format (PDF/Excel/CSV selon configuration)\n• Autorisez les pop-ups si demandé\n• Téléchargez le manifeste\n• Validez la finalisation\n• ✅ Toutes les commandes du lot passent en statut 'Expédiées'\n\n⚠️ Après finalisation, les commandes ne peuvent plus être modifiées facilement.\n\nCombien de commandes dans votre lot ? Le manifeste doit-il être en PDF ou Excel ?",
+      "actions": [
+        "verify_batch",
+        "export_manifest",
+        "finalize_shipment"
+      ],
+      "success_indicator": "Manifeste téléchargé, toutes les commandes en statut 'Expédiées'",
+      "time_estimate": "Export immédiat, changement statut quelques secondes",
+      "step_id": "SOLVE_05_FINALISER_L_EXP_DI_97ABD5"
+    },
+    {
+      "kind": "solve",
+      "response": "Export manifeste bloqué / ne télécharge pas :\n✓ Autorisez les pop-ups pour le domaine dash.tiktak.space\n  Chrome/Edge : icône bloqué dans barre adresse → Toujours autoriser\n  Firefox : préférences → Pop-ups → Exceptions → Autoriser\n✓ Essayez Ctrl+F5 puis réexportez\n✓ Testez en navigation privée\n✓ Testez un autre format (PDF vs Excel) si disponible\n✓ Vérifiez que le lot n'est pas vide\n✓ Testez autre navigateur (Chrome si vous êtes sur Firefox, etc.)\n\nLe navigateur affiche-t-il une icône de pop-up bloqué ? Quel format essayez-vous ?",
+      "actions": [
+        "allow_popups",
+        "try_different_format",
+        "test_other_browser"
+      ],
+      "success_indicator": "Manifeste PDF/Excel téléchargé correctement",
+      "step_id": "SOLVE_06_EXPORT_MANIFESTE_B_08C9F9"
+    },
+    {
+      "kind": "solve",
+      "response": "Réinitialiser / commencer un nouveau lot :\n• Vérifiez que le lot précédent est bien finalisé (commandes expédiées)\n• Videz l'historique si option disponible\n• OU rafraîchissez la page pour nouveau lot\n• Cliquez dans le champ de scan pour focus\n• Commencez à scanner le nouveau lot\n\nLe lot précédent est-il finalisé ? Voulez-vous garder l'historique visible ?",
+      "actions": [
+        "clear_batch_history",
+        "start_new_batch"
+      ],
+      "success_indicator": "Historique vide ou nouveau, statistiques à zéro, prêt pour nouveau lot",
+      "step_id": "SOLVE_07_R_INITIALISER_COMM_EA73D8"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Scanner configuré correctement mais ne fonctionne pas dans module, ou erreurs techniques persistantes, ou export manifeste impossible après tous tests",
+      "required_info": [
+        "Capture écran du module avec erreur",
+        "ID transport testé",
+        "Marque/modèle douchette",
+        "Test bloc-notes (code s'écrit ? Entre automatique ?)",
+        "Message d'erreur exact",
+        "Navigateur + version",
+        "Pop-ups autorisés (oui/non)"
+      ],
+      "step_id": "ESCALATE_08_ESCALATE_2CDB69",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Scanner configuré correctement mais ne fonctionne pas dans module, ou erreurs techniques persistantes, ou export manifeste impossible après tous tests",
+        "repro_steps": [],
+        "evidence": [
+          "Capture écran du module avec erreur",
+          "ID transport testé",
+          "Marque/modèle douchette",
+          "Test bloc-notes (code s'écrit ? Entre automatique ?)",
+          "Message d'erreur exact",
+          "Navigateur + version",
+          "Pop-ups autorisés (oui/non)"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_09_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : capture module + ID testé + marque douchette + test bloc-notes + message erreur + navigateur + pop-ups.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_10_POUR_ESCALADER_CAP_D2D393",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Expédition (Douchette) — scan / lot / manifeste",
+        "repro_steps": [],
+        "evidence": [
+          "carrier_or_zone",
+          "what_fails"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/shipping - Module Expédition scan douchette",
+    "Scan ID transport, anti-doublons, refus annulées/expédiées, export manifeste, passage statut 'Expédiées'"
+  ],
+  "workflow": [
+    "1. Préparer module → focus champ scan",
+    "2. Scanner colis un par un → vérifier ajout historique",
+    "3. Gérer erreurs au fur et mesure → corriger statuts/transporteurs",
+    "4. Vérifier lot complet → statistiques cohérentes",
+    "5. Exporter manifeste → PDF/Excel",
+    "6. Finaliser → toutes commandes passent 'Expédiées'"
+  ],
+  "best_practices": [
+    "Cliquez dans le champ avant de commencer à scanner",
+    "Configurez la douchette une fois pour toutes (mode clavier + Enter)",
+    "Vérifiez les statuts des commandes AVANT de scanner le lot",
+    "Contrôlez le montant total du lot avant de finaliser",
+    "Gardez les manifestes pour traçabilité",
+    "Ne finalisez que quand tous les colis sont prêts à partir"
+  ],
+  "canonical_scope": "shipping",
+  "required_fields": [
+    {
+      "key": "carrier_or_zone",
+      "question": "Quel transporteur / zone / règle de livraison ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu’est-ce qui ne marche pas exactement (calcul frais, expédition, douchette, manifeste) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

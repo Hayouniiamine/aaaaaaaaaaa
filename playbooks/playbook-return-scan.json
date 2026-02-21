@@ -1,0 +1,128 @@
+{
+  "id": "playbook-return-scan",
+  "scope": "shipping",
+  "title": "Retour (Douchette) — scan / validation / stock",
+  "triggers": [
+    "colis retour",
+    "douchette retour",
+    "remise en stock",
+    "retour",
+    "retour reçu",
+    "return",
+    "rma",
+    "scan retour"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Scanner un retour (/returns) :\n• Ouvrez module Retour (Douchette)\n• Cliquez dans champ scan pour focus\n• Scannez code colis/commande ou saisissez ID manuellement\n• Système vérifie statut commande\n• Confirmez état reçu → stock remis automatiquement\n• Historique mis à jour\n\nQuel code/ID scannez-vous ? De quel transporteur ?",
+      "actions": [
+        "scan_return",
+        "verify_return_status",
+        "restore_stock"
+      ],
+      "success_indicator": "Retour enregistré, stock remis, statut maj",
+      "step_id": "SOLVE_01_SCANNER_UN_RETOUR__B1CA46"
+    },
+    {
+      "kind": "solve",
+      "response": "Scanner ne fonctionne pas retours :\n✓ Même config que expédition : mode clavier + Enter\n✓ Cliquez dans champ avant scan\n✓ Testez bloc-notes (code + Enter automatique)\n✓ Vérifiez code correspond à une commande expédiée\n\nLa douchette fonctionne-t-elle en mode expédition ? Test bloc-notes OK ?",
+      "actions": [
+        "configure_scanner_returns",
+        "test_scanner"
+      ],
+      "success_indicator": "Scan fonctionne, retours enregistrés",
+      "step_id": "SOLVE_02_SCANNER_NE_FONCTIO_6B110C"
+    },
+    {
+      "kind": "solve",
+      "response": "Retour non trouvé / ID inconnu :\n✓ Vérifiez que la commande existe et est 'Expédiée' ou 'Livrée'\n✓ Vérifiez le code correspond au bon colis\n✓ Essayez saisie manuelle de l'ID commande\n✓ Vérifiez que c'est bien un code commande (pas produit)\n✓ Commandes annulées non éligibles retour\n\nAvez-vous l'ID commande exact ? Quel est son statut actuel ?",
+      "actions": [
+        "search_return_order",
+        "verify_order_status"
+      ],
+      "success_indicator": "Commande trouvée et éligible retour",
+      "step_id": "SOLVE_03_RETOUR_NON_TROUV_I_6B8B0E"
+    },
+    {
+      "kind": "solve",
+      "response": "Validation retour échoue :\n✓ Vérifiez droits utilisateur (permissions retours)\n✓ Vérifiez statut commande compatible (Expédiée → Retour reçu)\n✓ Vérifiez que le produit existe et est actif\n✓ Vérifiez la quantité retournée <= quantité expédiée\n✓ Rafraîchissez et réessayez\n\nQuel message d'erreur exact ? Quel rôle utilisateur ?",
+      "actions": [
+        "validate_return",
+        "check_user_permissions"
+      ],
+      "success_indicator": "Retour validé, transition statut OK",
+      "step_id": "SOLVE_04_VALIDATION_RETOUR__13C830"
+    },
+    {
+      "kind": "solve",
+      "response": "Stock après retour :\n• Stock remis automatiquement après validation scan\n• Quantité ajoutée : celle de la commande retournée\n• Boutique/entrepôt : celui de la commande origine\n• Vérifiez dans /products ou /stock-management\n• Si stock négatif : problème dans le process\n\nLe stock a-t-il bien augmenté ? Sur quelle boutique ?",
+      "actions": [
+        "verify_stock_restored",
+        "check_stock_location"
+      ],
+      "success_indicator": "Stock mis à jour correctement",
+      "step_id": "SOLVE_05_STOCK_APR_S_RETOUR_62244F"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_06_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Scanner configuré mais ne fonctionne pas pour retours, ou validation impossible malgré statut OK + permissions OK",
+      "required_info": [
+        "ID commande retour",
+        "Capture module",
+        "Statut commande actuel/cible",
+        "Transporteur",
+        "Message erreur",
+        "Rôle utilisateur"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_D40ADD",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Scanner configuré mais ne fonctionne pas pour retours, ou validation impossible malgré statut OK + permissions OK",
+        "repro_steps": [],
+        "evidence": [
+          "ID commande retour",
+          "Capture module",
+          "Statut commande actuel/cible",
+          "Transporteur",
+          "Message erreur",
+          "Rôle utilisateur"
+        ],
+        "suspected_component": "shipping",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/returns - Scan retours, remise stock auto, repérage commandes non retournées"
+  ],
+  "best_practices": [
+    "Scannez TOUS les retours pour traçabilité",
+    "Vérifiez stock après retours importants",
+    "Associez retours à réclamations si besoin",
+    "Même douchette qu'expédition = même config"
+  ],
+  "canonical_scope": "inventory",
+  "required_fields": [
+    {
+      "key": "product_identifier",
+      "question": "Quel produit (nom/SKU) ?"
+    },
+    {
+      "key": "stock_context",
+      "question": "Stock négatif, non mis à jour, ou blocage d’import ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact (si existant) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

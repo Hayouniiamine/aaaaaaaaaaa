@@ -1,0 +1,209 @@
+{
+  "id": "playbook-auth",
+  "scope": "auth",
+  "title": "Authentification — connexion / mot de passe / OTP / rôles / accès",
+  "description": "Résout les problèmes de connexion au dashboard TikTak PRO : mot de passe oublié, OTP non reçu, session expirée, accès refusé, rôles et permissions.",
+  "triggers": [
+    "accès refusé",
+    "accéder",
+    "authentification",
+    "2fa",
+    "code otp",
+    "connexion",
+    "connecter",
+    "déconnecté",
+    "déconnexion",
+    "identifiant",
+    "identifiants",
+    "login",
+    "mot de passe",
+    "mot de pass",
+    "n'arrive pas à se connecter",
+    "otp",
+    "oublié mot de passe",
+    "password",
+    "réinitialiser mot de passe",
+    "reset password",
+    "rôle utilisateur",
+    "session expirée",
+    "vérification otp",
+    "permission",
+    "403",
+    "accès interdit",
+    "compte bloqué",
+    "mot de passe incorrect",
+    "impossible de se connecter",
+    "llogin",
+    "lpassword",
+    "lconnexion"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quel est exactement votre problème de connexion ?\n(1) Mot de passe oublié / réinitialisation\n(2) Code OTP non reçu\n(3) Session expirée / déconnexion automatique\n(4) Accès refusé (403 / permissions)\n(5) Compte bloqué\n(6) Créer ou modifier un utilisateur",
+      "step_id": "ASK_01_QUEL_EST_EXACTEMEN_EBA2B6",
+      "field": "account_identifier"
+    },
+    {
+      "kind": "solve",
+      "title": "Mot de passe oublié / réinitialisation",
+      "response": "Réinitialiser votre mot de passe :\n1. Sur la page de connexion, cliquez sur 'Mot de passe oublié'\n2. Saisissez l'email associé à votre compte\n3. Consultez votre boîte mail (vérifiez aussi les spams)\n4. Cliquez sur le lien de réinitialisation dans l'email\n5. Créez un nouveau mot de passe (min. 8 caractères, avec majuscule + chiffre)\n6. Connectez-vous avec le nouveau mot de passe\n\nSi l'email n'arrive pas :\n• Vérifiez que l'adresse email est correcte (celle utilisée à la création du compte)\n• Vérifiez dossier spam/indésirables\n• Attendez 5 minutes et réessayez\n• Essayez un autre navigateur ou navigation privée\n\nL'email de réinitialisation est-il arrivé ?",
+      "success_indicator": "Connexion réussie avec le nouveau mot de passe",
+      "common_errors": [
+        "Email incorrect — utiliser l'email exact du compte",
+        "Email dans les spams — vérifier dossier indésirables",
+        "Lien expiré — redemander une réinitialisation",
+        "Mot de passe trop simple — min 8 car. avec majuscule et chiffre"
+      ],
+      "step_id": "SOLVE_02_MOT_DE_PASSE_OUBLI_AA2F80"
+    },
+    {
+      "kind": "solve",
+      "title": "Code OTP non reçu",
+      "response": "Code OTP non reçu :\n1. Vérifiez que le numéro de téléphone est correct et au bon format (+216...)\n2. Attendez 2-3 minutes — les SMS peuvent avoir du retard\n3. Vérifiez que votre téléphone n'est pas en mode avion\n4. Vérifiez que vous n'avez pas bloqué les SMS provenant de numéros courts\n5. Si toujours rien, demandez un nouveau code (bouton 'Renvoyer le code')\n6. Essayez avec un autre numéro si disponible dans votre profil\n\nSi le problème persiste après 3 tentatives, c'est probablement un problème technique côté envoi SMS.\n\nCombien de tentatives avez-vous faites ?",
+      "success_indicator": "Code OTP reçu et connexion réussie",
+      "common_errors": [
+        "Numéro incorrect — vérifier format international",
+        "SMS bloqués — vérifier paramètres téléphone",
+        "Réseau indisponible — tester avec Wi-Fi activé",
+        "Trop de tentatives — attendre 15 minutes"
+      ],
+      "step_id": "SOLVE_03_CODE_OTP_NON_RE_U_A9362F"
+    },
+    {
+      "kind": "solve",
+      "title": "Session expirée / déconnexion automatique",
+      "response": "Session expirée / déconnexion automatique :\n1. Les sessions expirent après une période d'inactivité — c'est normal pour la sécurité\n2. Reconnectez-vous avec vos identifiants\n3. Si la déconnexion est fréquente (toutes les quelques minutes) :\n   • Videz le cache et les cookies du navigateur\n   • Désactivez les extensions de navigateur (surtout bloqueurs de pubs)\n   • Essayez en navigation privée\n   • Essayez un autre navigateur\n4. Si vous utilisez un VPN, désactivez-le temporairement\n5. Vérifiez que la date/heure de votre appareil est correcte\n\nLa déconnexion arrive-t-elle à chaque action ou après une période d'inactivité ?",
+      "success_indicator": "Session stable sans déconnexions intempestives",
+      "common_errors": [
+        "Cache/cookies corrompus — vider et réessayer",
+        "Extension navigateur interfère — tester en navigation privée",
+        "VPN/proxy — désactiver temporairement",
+        "Horloge système décalée — synchroniser date/heure"
+      ],
+      "step_id": "SOLVE_04_SESSION_EXPIR_E_D__539E4D"
+    },
+    {
+      "kind": "solve",
+      "title": "Accès refusé (403 / permissions)",
+      "response": "Accès refusé (erreur 403 ou écran vide) :\n1. Vérifiez votre rôle utilisateur : Paramètres → Équipe → votre compte\n   • Administrateur : accès complet\n   • Service client : accès limité (commandes, clients, tickets)\n2. Pour accéder à un module manquant :\n   • Demandez à l'administrateur de modifier votre rôle\n   • Ou activez le module : ⚙️ (près du logo) → Personnaliser le menu → activer le module\n3. Module grisé = non inclus dans votre pack actuel\n4. Si 403 sur tout le dashboard : votre compte est peut-être désactivé → contactez l'admin\n\nQuel module ou page vous donne 'accès refusé' ?",
+      "success_indicator": "Accès au module/page souhaité",
+      "common_errors": [
+        "Rôle insuffisant — demander changement à l'admin",
+        "Module non activé — activer dans menu personnalisé",
+        "Pack insuffisant — module non inclus dans le forfait",
+        "Compte désactivé — contacter l'administrateur"
+      ],
+      "step_id": "SOLVE_05_ACC_S_REFUS_403_PE_82BFB1"
+    },
+    {
+      "kind": "solve",
+      "title": "Compte bloqué",
+      "response": "Compte bloqué :\n1. Trop de tentatives de connexion échouées → le compte peut être temporairement verrouillé\n   • Attendez 15-30 minutes puis réessayez\n2. Compte désactivé par un administrateur :\n   • Contactez l'administrateur de votre boutique pour réactiver\n   • L'admin va dans Paramètres → Équipe → trouve votre compte → active le switch\n3. IP bloquée (Paramètres → Sécurité) :\n   • L'admin peut vérifier et retirer le blocage IP\n4. Abonnement expiré :\n   • Si votre forfait TikTak est expiré, l'accès peut être restreint\n   • Renouvelez votre abonnement pour restaurer l'accès\n\nDepuis quand le compte est bloqué et quel message s'affiche ?",
+      "success_indicator": "Compte débloqué et connexion réussie",
+      "step_id": "SOLVE_06_COMPTE_BLOQU_D8B1FD"
+    },
+    {
+      "kind": "solve",
+      "title": "Créer ou modifier un utilisateur",
+      "response": "Gestion des utilisateurs (Paramètres → Équipe) :\n\nCréer un utilisateur :\n1. Allez dans Paramètres → Équipe\n2. Cliquez 'Nouvel utilisateur'\n3. Remplissez : Prénom*, Nom*, Email*, Téléphone*, Rôle*\n4. Définissez un mot de passe (min 8 car., majuscule + chiffre)\n5. Cliquez 'Créer'\n\nModifier un utilisateur :\n1. Paramètres → Équipe → icône crayon sur l'utilisateur\n2. Modifiez rôle, email, téléphone ou réinitialisez le mot de passe\n3. Sauvegardez\n\nDésactiver un utilisateur :\n• Switch à côté du nom → désactivé (ne peut plus se connecter)\n\nQue souhaitez-vous faire (créer, modifier, désactiver) ?",
+      "success_indicator": "Utilisateur créé/modifié avec le bon rôle et accès",
+      "common_errors": [
+        "Mot de passe refusé — respecter complexité min 8 car.",
+        "Email déjà utilisé — chaque utilisateur doit avoir un email unique",
+        "Rôle incorrect — vérifier les permissions associées"
+      ],
+      "ui": {
+        "label": "Ouvrir Équipe",
+        "route": "/settings"
+      },
+      "step_id": "SOLVE_07_CR_ER_OU_MODIFIER__299656"
+    },
+    {
+      "kind": "verify",
+      "question": "Avez-vous réussi à vous connecter / résoudre le problème d'accès ? Si non, décrivez le message d'erreur exact affiché.",
+      "step_id": "VERIFY_08_AVEZ_VOUS_R_USSI_V_72A6AB"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Problème de connexion persistant après réinitialisation mdp + vérification OTP + cache vidé, ou compte bloqué sans raison visible",
+      "required_info": [
+        "Email du compte concerné",
+        "Message d'erreur exact affiché",
+        "Capture écran de la page de connexion",
+        "Navigateur utilisé",
+        "Nombre de tentatives effectuées",
+        "Rôle de l'utilisateur"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_51F39B",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Problème de connexion persistant après réinitialisation mdp + vérification OTP + cache vidé, ou compte bloqué sans raison visible",
+        "repro_steps": [],
+        "evidence": [
+          "Email du compte concerné",
+          "Message d'erreur exact affiché",
+          "Capture écran de la page de connexion",
+          "Navigateur utilisé",
+          "Nombre de tentatives effectuées",
+          "Rôle de l'utilisateur"
+        ],
+        "suspected_component": "auth",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Mot de passe incorrect même après réinitialisation",
+      "cause": "Cache navigateur conserve ancien mot de passe / Auto-remplissage navigateur",
+      "solution": "Vider cache + cookies, désactiver auto-remplissage, saisir manuellement"
+    },
+    {
+      "symptom": "OTP jamais reçu",
+      "cause": "Numéro de téléphone incorrect ou SMS bloqués",
+      "solution": "Vérifier numéro au format +216, tester sur autre appareil"
+    },
+    {
+      "symptom": "403 Accès refusé sur certaines pages",
+      "cause": "Rôle utilisateur sans les permissions nécessaires",
+      "solution": "Admin change le rôle dans Paramètres → Équipe"
+    },
+    {
+      "symptom": "Déconnexion toutes les 5 minutes",
+      "cause": "Cookies bloqués ou extension navigateur interférente",
+      "solution": "Navigation privée ou autre navigateur, vérifier cookies autorisés"
+    }
+  ],
+  "best_practices": [
+    "Utiliser un mot de passe fort (min 8 caractères, majuscule, chiffre, caractère spécial)",
+    "Ne jamais partager ses identifiants par email ou ticket",
+    "Chaque utilisateur doit avoir son propre compte",
+    "Vérifier le rôle avant de signaler un problème d'accès"
+  ],
+  "related_playbooks": [
+    "playbook-settings",
+    "playbook-activation"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "account_identifier",
+      "question": "Quel email / numéro du compte ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    },
+    {
+      "key": "otp_received",
+      "question": "Recevez-vous le code OTP ? (oui/non)"
+    },
+    {
+      "key": "role",
+      "question": "Quel rôle (admin, staff) ?"
+    }
+  ]
+}

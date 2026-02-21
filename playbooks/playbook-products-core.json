@@ -1,0 +1,133 @@
+{
+  "id": "playbook-products-core",
+  "scope": "products",
+  "title": "Produits — création / liste / visibilité / variantes",
+  "triggers": [
+    "actif",
+    "ajouter produit",
+    "créer produit",
+    "image produit",
+    "liste produits",
+    "prix",
+    "product",
+    "produit",
+    "produit non visible",
+    "stock",
+    "variante",
+    "visible web"
+  ],
+  "steps": [
+    {
+      "kind": "solve",
+      "response": "Créer un produit (/products/new) :\n5 ONGLETS :\n1️⃣ Infos générales :\n  - Nom*, Référence (unique), Description riche\n  - Code-barres (pour POS/scan)\n  - Actif = Oui, Visible site = Oui\n  - Catégorie principale*, tags/secondaires\n\n2️⃣ Tarification :\n  - Prix TTC*, Remise (% ou montant)\n  - Taxes % → HT calculé auto\n  - Prix achat, revendeur, livraison personnalisé\n  - Paliers quantité (prix dégressifs)\n\n3️⃣ Images : galerie, réorganisables\n\n4️⃣ Variantes :\n  - Attributs (Couleur, Taille, Âge...)\n  - Génération combinaisons auto\n  - Stock/prix/image par variante\n\n5️⃣ SEO :\n  - Titre 30-60, Meta 70-160, Slug, ≥3 mots-clés\n  - Score et conseils\n\nQuel champ/onglet bloque (prix, stock, image, variante, SEO) ?",
+      "actions": [
+        "create_product",
+        "set_pricing",
+        "add_images",
+        "create_variants",
+        "optimize_seo"
+      ],
+      "success_indicator": "Produit créé, visible dans /products",
+      "common_errors": [
+        "Nom/Prix/Catégorie manquants (requis)",
+        "Référence/Slug déjà utilisés → modifier",
+        "Variantes : sélectionner valeurs avant Ajouter"
+      ],
+      "step_id": "SOLVE_01_CR_ER_UN_PRODUIT_P_1D02F6"
+    },
+    {
+      "kind": "solve",
+      "response": "Produit non visible sur le site :\n✓ Statut actif = Oui\n✓ Visible web = Oui\n✓ Stock > 0 (peut masquer selon config)\n✓ Catégorie associée et catégorie active\n✓ Template affiche bien les produits\n✓ Videz cache (Ctrl+F5) ou navigation privée\n\nLe produit est-il actif ET visible web ? A-t-il du stock ? Catégorie active ?",
+      "actions": [
+        "check_visibility",
+        "check_stock",
+        "verify_category_active"
+      ],
+      "success_indicator": "Produit affiché sur le site",
+      "time_estimate": "Visible immédiatement après activation + cache vidé",
+      "step_id": "SOLVE_02_PRODUIT_NON_VISIBL_73D9C7"
+    },
+    {
+      "kind": "solve",
+      "response": "Images ne s'affichent pas :\n✓ Format supporté : JPG, PNG, WebP (recommandé)\n✓ Poids raisonnable : <2 Mo par image (compressez si besoin)\n✓ Re-upload puis sauvegardez\n✓ Testez navigation privée\n✓ Vérifiez que l'image est bien associée au produit/variante\n✓ Réorganisez pour définir image principale\n\nQuel format (jpg/png) et taille approx ? L'image apparaît-elle dans /products ?",
+      "actions": [
+        "upload_images",
+        "compress_images",
+        "set_main_image"
+      ],
+      "success_indicator": "Images visibles site et back-office",
+      "step_id": "SOLVE_03_IMAGES_NE_S_AFFICH_0FEA5F"
+    },
+    {
+      "kind": "solve",
+      "response": "Variantes - Création et gestion :\n• Choisissez attribut (Couleur, Taille, Pointure, Âge...)\n• Sélectionnez valeurs (Rouge, Bleu / S, M, L...)\n• Cliquez 'Ajouter' → génération combinaisons\n• Répétez pour autres attributs\n• Pour chaque variante :\n  - Stock spécifique\n  - Prix spécifique (optionnel, sinon hérite du produit)\n  - Image liée (ex: couleur)\n• Variantes héritent données produit si non override\n\nCombien d'attributs (1, 2, 3) ? Les combinaisons se génèrent-elles ?",
+      "actions": [
+        "add_product_attributes",
+        "generate_variants",
+        "set_variant_stock",
+        "set_variant_image"
+      ],
+      "success_indicator": "Matrice variantes complète, stocks/images OK",
+      "step_id": "SOLVE_04_VARIANTES_CR_ATION_B0F66D"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_05_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Produit actif + visible + stock mais invisible site, ou problème technique création/sauvegarde produit",
+      "required_info": [
+        "ID produit",
+        "Capture fiche produit (statuts)",
+        "Capture catégorie",
+        "Navigateur",
+        "Étapes création si bloqué"
+      ],
+      "step_id": "ESCALATE_06_ESCALATE_6D5279",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Produit actif + visible + stock mais invisible site, ou problème technique création/sauvegarde produit",
+        "repro_steps": [],
+        "evidence": [
+          "ID produit",
+          "Capture fiche produit (statuts)",
+          "Capture catégorie",
+          "Navigateur",
+          "Étapes création si bloqué"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/products - Catalogue avec import/export Excel, variantes, stock, images, SEO"
+  ],
+  "best_practices": [
+    "Référence unique pour éviter confus",
+    "SEO 70%+ pour référencement",
+    "Images <1 Mo, WebP recommandé",
+    "Code-barres pour POS obligatoire",
+    "Catégorie principale toujours"
+  ],
+  "canonical_scope": "products",
+  "required_fields": [
+    {
+      "key": "product_identifier",
+      "question": "Quel produit (nom/SKU) ?"
+    },
+    {
+      "key": "action",
+      "question": "Qu’est-ce que vous essayez de faire (import, ajout, modification, affichage) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

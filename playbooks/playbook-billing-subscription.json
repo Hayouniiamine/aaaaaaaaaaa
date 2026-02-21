@@ -1,0 +1,177 @@
+{
+  "id": "playbook-billing-subscription",
+  "scope": "billing",
+  "title": "Facturation — abonnement / facture TikTak / renouvellement / pack / changement de forfait",
+  "description": "Gère les questions de facturation TikTak PRO : abonnements, factures, renouvellement, upgrade/downgrade de pack, paiement de modules et templates.",
+  "triggers": [
+    "abonnement",
+    "annuler abonnement",
+    "changer de pack",
+    "changer forfait",
+    "downgrade",
+    "expiration",
+    "expiration abonnement",
+    "facture",
+    "facture tiktak",
+    "facturation",
+    "forfait",
+    "frais",
+    "frais liaison",
+    "invoice",
+    "pack",
+    "paiement template",
+    "plan",
+    "prix",
+    "prix abonnement",
+    "renouvellement",
+    "renouveler",
+    "subscription",
+    "tarif",
+    "upgrade",
+    "virement",
+    "capacité pack",
+    "lfacture",
+    "labonnement"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Quelle est votre question sur la facturation ?\n(1) Voir ma facture / demander une facture\n(2) Renouveler mon abonnement\n(3) Changer de pack / forfait (upgrade ou downgrade)\n(4) Paiement d'un template ou module\n(5) Frais de liaison domaine (29 TND)\n(6) Annuler / résilier mon abonnement",
+      "step_id": "ASK_01_QUELLE_EST_VOTRE_Q_637467",
+      "field": "action"
+    },
+    {
+      "kind": "solve",
+      "title": "Voir ou demander une facture",
+      "response": "Pour vos factures TikTak PRO :\n1. Les factures sont généralement envoyées par email à l'adresse de votre compte\n2. Vérifiez votre boîte mail (y compris les spams) pour les factures reçues\n3. Si vous n'avez pas reçu votre facture :\n   • Vérifiez que l'email de votre compte est correct (Paramètres → Équipe)\n   • Demandez un renvoi de facture via un ticket support\n\nInformations sur votre facture :\n• La facture inclut : forfait, modules additionnels, templates achetés\n• Les frais de liaison domaine (29 TND) sont facturés séparément\n• La devise est le Dinar Tunisien (TND)\n\nAvez-vous besoin d'une facture spécifique ou d'un duplicata ?",
+      "success_indicator": "Facture reçue ou renvoyée par email",
+      "step_id": "SOLVE_02_VOIR_OU_DEMANDER_U_604109"
+    },
+    {
+      "kind": "solve",
+      "title": "Renouveler un abonnement",
+      "response": "Pour renouveler votre abonnement TikTak PRO :\n1. Votre abonnement a une date d'expiration fixe\n2. Avant l'expiration, vous recevrez un rappel par email\n3. Pour renouveler :\n   • Le renouvellement se fait par paiement (carte bancaire ou virement)\n   • Le paiement prolonge votre accès pour la période correspondante\n\n4. Si votre abonnement est expiré :\n   • L'accès au dashboard peut être restreint\n   • Vos données sont conservées\n   • Le renouvellement restaure l'accès complet\n\n5. Méthodes de paiement :\n   • Carte bancaire en ligne\n   • Virement bancaire (fournir justificatif)\n\nVotre abonnement est-il déjà expiré ou arrive-t-il bientôt à expiration ?",
+      "success_indicator": "Abonnement renouvelé, accès complet restauré",
+      "step_id": "SOLVE_03_RENOUVELER_UN_ABON_7BA519"
+    },
+    {
+      "kind": "solve",
+      "title": "Changer de pack / forfait",
+      "response": "Changer de pack TikTak PRO :\n\nUpgrade (passer à un pack supérieur) :\n• Vous débloquez plus de modules et fonctionnalités\n• Les modules grisés dans ⚙️ → Personnaliser le menu deviennent accessibles\n• L'upgrade est généralement immédiat après paiement\n\nDowngrade (passer à un pack inférieur) :\n• Certains modules seront désactivés\n• Vos données restent conservées\n• Le changement prend effet au prochain renouvellement\n\nPour changer de pack :\n• Cette opération est gérée par l'équipe TikTak\n• Contactez-nous avec le pack souhaité\n• Le coût est ajusté proportionnellement\n\nQuel pack souhaitez-vous et quels modules avez-vous besoin ?",
+      "success_indicator": "Pack modifié, modules disponibles mis à jour",
+      "step_id": "SOLVE_04_CHANGER_DE_PACK_FO_41D425"
+    },
+    {
+      "kind": "solve",
+      "title": "Paiement d'un template ou module",
+      "response": "Achat de templates et modules :\n\nTemplates (dash.tiktak.space/templates) :\n1. Parcourez la galerie de templates\n2. Cliquez 'Aperçu' pour visualiser le template\n3. Pour un template gratuit : cliquez 'Installer'\n4. Pour un template payant :\n   • Cliquez 'Acheter'\n   • Vérifiez le récapitulatif (article, quantité, prix TTC)\n   • Choisissez le mode de paiement : carte bancaire ou virement\n   • Confirmez et payez\n5. Après paiement : 'Installer le template'\n\nSi le paiement est refusé :\n• Vérifiez les informations de carte (numéro, date, CVV)\n• Vérifiez le solde suffisant\n• Essayez un autre navigateur\n• Pour le virement : le template est activé après confirmation de réception\n\nQuel template ou module souhaitez-vous acheter ?",
+      "success_indicator": "Paiement accepté, template/module installé et actif",
+      "ui": {
+        "label": "Ouvrir Templates",
+        "route": "/templates"
+      },
+      "step_id": "SOLVE_05_PAIEMENT_D_UN_TEMP_3EB21A"
+    },
+    {
+      "kind": "solve",
+      "title": "Frais de liaison domaine",
+      "response": "Frais de liaison de domaine externe :\n• Lier un domaine externe à TikTak coûte 29 TND\n• Ce frais est unique (pas récurrent)\n• Il couvre : la configuration SSL, le routage et la maintenance\n\nProcessus :\n1. Configurez les DNS chez votre registrar (A record → 102.211.211.10)\n2. Dans TikTak → Domaines : entrez votre domaine\n3. Vérifiez que les DNS sont propagés\n4. Cliquez 'Activer la liaison'\n5. Payez les 29 TND\n6. La liaison est active après confirmation\n\nSi vous achetez le domaine via TikTak, il n'y a pas de frais de liaison.\n\nAvez-vous déjà configuré les DNS ?",
+      "success_indicator": "Liaison domaine payée et active",
+      "step_id": "SOLVE_06_FRAIS_DE_LIAISON_D_712DFF"
+    },
+    {
+      "kind": "solve",
+      "title": "Annuler / résilier un abonnement",
+      "response": "Résiliation d'abonnement TikTak PRO :\n• La résiliation prend effet à la fin de votre période d'abonnement en cours\n• Vos données sont conservées pendant une période de grâce\n• Vous pouvez réactiver à tout moment\n\nPour résilier :\n• Cette opération est gérée par l'équipe TikTak\n• Contactez le support avec votre demande de résiliation\n• Précisez la raison (nous aide à améliorer le service)\n\nAvant de résilier :\n• Exportez vos données (produits, clients, commandes) en Excel\n• Sauvegardez vos images et contenus\n\nÊtes-vous sûr de vouloir résilier ou y a-t-il un problème qu'on peut résoudre ?",
+      "success_indicator": "Demande de résiliation transmise ou problème résolu",
+      "step_id": "SOLVE_07_ANNULER_R_SILIER_U_096274"
+    },
+    {
+      "kind": "verify",
+      "question": "Votre question de facturation est-elle résolue ? Si non, quel est le point en suspens ?",
+      "step_id": "VERIFY_08_VOTRE_QUESTION_DE__F20992"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Questions de facturation nécessitant intervention : changement de pack, problème de paiement, demande de facture spécifique, résiliation, remboursement",
+      "required_info": [
+        "Nom de la boutique / entreprise",
+        "Pack actuel",
+        "Action demandée (renouvellement, upgrade, résiliation...)",
+        "Mode de paiement préféré",
+        "Email du compte",
+        "Capture écran si erreur de paiement"
+      ],
+      "step_id": "ESCALATE_09_ESCALATE_55D474",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Questions de facturation nécessitant intervention : changement de pack, problème de paiement, demande de facture spécifique, résiliation, remboursement",
+        "repro_steps": [],
+        "evidence": [
+          "Nom de la boutique / entreprise",
+          "Pack actuel",
+          "Action demandée (renouvellement, upgrade, résiliation...)",
+          "Mode de paiement préféré",
+          "Email du compte",
+          "Capture écran si erreur de paiement"
+        ],
+        "suspected_component": "billing",
+        "priority": "P2"
+      }
+    }
+  ],
+  "common_errors": [
+    {
+      "symptom": "Abonnement expiré, dashboard inaccessible",
+      "cause": "Non-renouvellement du forfait",
+      "solution": "Renouveler par carte ou virement, accès restauré immédiatement"
+    },
+    {
+      "symptom": "Module grisé / non accessible",
+      "cause": "Module non inclus dans le pack actuel",
+      "solution": "Upgrade vers un pack supérieur incluant le module"
+    },
+    {
+      "symptom": "Paiement template refusé",
+      "cause": "Carte refusée (solde, expiration, 3DS)",
+      "solution": "Vérifier carte, essayer autre navigateur, ou payer par virement"
+    },
+    {
+      "symptom": "Facture non reçue",
+      "cause": "Email incorrect ou dans les spams",
+      "solution": "Vérifier email du compte, chercher dans spams, demander renvoi"
+    }
+  ],
+  "best_practices": [
+    "Renouveler avant l'expiration pour éviter toute interruption",
+    "Garder une copie de toutes les factures",
+    "Vérifier les modules nécessaires avant de choisir un pack",
+    "Exporter les données avant toute résiliation"
+  ],
+  "related_playbooks": [
+    "playbook-auth",
+    "playbook-activation",
+    "playbook-templates"
+  ],
+  "schema_version": "v2_deterministic_steps",
+  "required_fields": [
+    {
+      "key": "pack",
+      "question": "Quel pack / abonnement souhaitez-vous (ou avez-vous) ?"
+    },
+    {
+      "key": "action",
+      "question": "Vous voulez renouveler, upgrader, ou résoudre un paiement/facture ?"
+    },
+    {
+      "key": "payment_method",
+      "question": "Quel moyen de paiement utilisez-vous ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact (si affiché) ?"
+    }
+  ]
+}

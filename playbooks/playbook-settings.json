@@ -1,0 +1,243 @@
+{
+  "id": "playbook-settings",
+  "scope": "settings",
+  "title": "Paramètres — marques / taxes / transporteurs / équipe / étapes / global / identité / logo",
+  "triggers": [
+    "boutique",
+    "branding",
+    "code tva",
+    "config fiscale",
+    "coordonnées entreprise",
+    "devise",
+    "identité entreprise",
+    "ip bloquée",
+    "livreur",
+    "logo",
+    "marque",
+    "matricule fiscal",
+    "mot de passe",
+    "multi-brand",
+    "nom entreprise",
+    "paramètres",
+    "paramétrage global",
+    "rôle",
+    "settings",
+    "signature",
+    "taxe",
+    "transporteur",
+    "tva",
+    "utilisateur",
+    "workflow",
+    "équipe",
+    "étape commande"
+  ],
+  "steps": [
+    {
+      "kind": "ask",
+      "question": "Paramètres : (1) Paramétrage global (identité/logo/devise), (2) Marques/boutiques, (3) Taxes/TVA, (4) Transporteurs, (5) Équipe/utilisateurs, (6) Sécurité IP, (7) Étapes commandes ?",
+      "step_id": "ASK_01_PARAM_TRES_1_PARAM_BDAE01",
+      "field": "setting_area"
+    },
+    {
+      "kind": "solve",
+      "response": "Paramétrage global (/settings → Paramétrage global) :\n• Identité entreprise : nom + devise (ex. Dinar Tunisien)\n• Coordonnées : adresse, ville, pays, gouvernorat, code postal, téléphones, email\n• Config fiscale : Code TVA (matricule fiscal) + Taux TVA (%)\n• Branding : téléverser logo + signature pour documents (bons, factures, emails)\n\n✓ Ces réglages s'appliquent :\n  - Aux documents (bons de livraison, factures)\n  - Aux exports et affichages par défaut\n  - Aux emails et communications\n\n✓ Problèmes fréquents :\n  - Logo non affiché → compresser (<2 Mo), format PNG/JPG/WebP, Ctrl+F5\n  - TVA inattendue → vérifier taux global vs exceptions produit\n  - Email/téléphone rejeté → nettoyer espaces, format valide\n  - Devise incorrecte → modifier dans paramètres (pas de conversion auto)\n  - Adresse incohérente → aligner ville/gouvernorat/pays\n\nQue voulez-vous configurer (identité, coordonnées, fiscal, logo) ?",
+      "actions": [
+        "update_company_identity",
+        "update_contact_info",
+        "configure_fiscal",
+        "upload_branding"
+      ],
+      "success_indicator": "Informations correctement affichées sur documents et exports",
+      "common_errors": [
+        {
+          "symptom": "Logo/signature non affiché sur documents",
+          "fix": "Compresser image (<2 Mo), PNG/JPG/WebP, enregistrer et Ctrl+F5"
+        },
+        {
+          "symptom": "TVA calculée de façon inattendue",
+          "fix": "Vérifier taux global vs taux spécifiques au produit"
+        },
+        {
+          "symptom": "Email ou téléphone rejeté",
+          "fix": "Format valide sans espaces: nom@domaine.tld, numéro avec indicatif"
+        },
+        {
+          "symptom": "Devise affichée incorrecte",
+          "fix": "Modifier dans paramètres, recharger. NB: pas de conversion auto"
+        }
+      ],
+      "step_id": "SOLVE_02_PARAM_TRAGE_GLOBAL_4AB325"
+    },
+    {
+      "kind": "solve",
+      "response": "Marques multi-brand (/settings → Marques) :\n• Créer marque : nom, coordonnées, TVA/Matricule, téléphone\n• Activer/désactiver via switch\n• Éditer/supprimer (si non utilisée)\n• Plusieurs marques = plusieurs identités boutique\n• Utilisable produits/commandes selon config\n\nVoulez-vous créer une nouvelle marque ou gérer existante ?",
+      "actions": [
+        "create_brand",
+        "toggle_brand",
+        "edit_brand"
+      ],
+      "success_indicator": "Marque créée/modifiée, active",
+      "step_id": "SOLVE_03_MARQUES_MULTI_BRAN_6E1FE5"
+    },
+    {
+      "kind": "solve",
+      "response": "Taxes et TVA (/settings → Taxes) :\n• Types : Fixe (montant) ou Pourcentage\n• Taxes additionnelles : Timbre fiscal, FODEC...\n• Taux TVA : 19%, 13%, 7%, 0% (activez utiles)\n• Activer/désactiver par switch\n• Éditer valeur/libellé\n\nTVA/taxes calculées deux fois ? Résultat HT/TTC incohérent ?",
+      "actions": [
+        "add_tax",
+        "manage_vat_rates",
+        "activate_tax"
+      ],
+      "success_indicator": "Taxes actives, calculs corrects",
+      "common_fixes": [
+        "Désactiver taxes en double",
+        "Vérifier type Fixe vs %",
+        "Un seul taux TVA par produit"
+      ],
+      "step_id": "SOLVE_04_TAXES_ET_TVA_SETTI_879007"
+    },
+    {
+      "kind": "solve",
+      "response": "Transporteurs (/settings → Transporteurs) :\n• Ajouter : nom, frais base, zones (gouvernorats)\n• Config API/intégration si sync requise (clé API)\n• Défaut : transporteur prioritaire\n• Web : visible comme mode livraison sur site\n• Éditer tarifs/zones, supprimer si non utilisé\n\nTransporteur non proposé lors création commande ?",
+      "actions": [
+        "add_carrier",
+        "configure_carrier_api",
+        "set_carrier_zones",
+        "set_default_carrier"
+      ],
+      "success_indicator": "Transporteur actif, zones définies, intégration OK",
+      "common_issues": [
+        "Statut inactif → activer",
+        "Zones vides → définir gouvernorats",
+        "Clés API invalides → vérifier"
+      ],
+      "step_id": "SOLVE_05_TRANSPORTEURS_SETT_E46E7A"
+    },
+    {
+      "kind": "solve",
+      "response": "Équipe et utilisateurs (/settings → Équipe) :\n• Créer : Prénom*, Nom*, Email*, Téléphone*, Rôle*, Mot de passe*\n• Rôles : Administrateur, Service client, etc. (permissions différentes)\n• Activer/désactiver compte via switch\n• Éditer : modifier rôle, réinitialiser mdp\n• Utilisateur ne voit pas menus → vérifier rôle\n\nQuel rôle attribuer ? Utilisateur ne peut pas se connecter ?",
+      "actions": [
+        "create_user",
+        "toggle_user_active",
+        "change_user_role",
+        "reset_password"
+      ],
+      "success_indicator": "Utilisateur créé, actif, rôle correct",
+      "troubleshooting": "Connexion impossible → mdp, compte actif, email exact",
+      "step_id": "SOLVE_06_QUIPE_ET_UTILISATE_7CDE3C"
+    },
+    {
+      "kind": "solve",
+      "response": "Sécurité IP (/settings → Sécurité) :\n• Bloquer IP : saisissez IP, durée/raison\n• Éditer/supprimer blocage\n• Statut actif/expiré\n• Rafraîchir pour voir états\n• IP réelle (attention proxy/CDN)\n\nVoulez-vous bloquer ou débloquer une IP ?",
+      "actions": [
+        "block_ip",
+        "unblock_ip",
+        "manage_ip_blocks"
+      ],
+      "success_indicator": "IP bloquée/débloquée",
+      "warning": "Vérifiez IP exacte, plage trop large = faux positifs",
+      "step_id": "SOLVE_07_S_CURIT_IP_SETTING_9E08F5"
+    },
+    {
+      "kind": "solve",
+      "response": "Étapes commandes (/settings → Étapes) :\n• Liste ordonnable (drag & drop)\n• Par défaut : étape nouvelles commandes\n• Actif : étape disponible\n• Comptable : prise en compte exports compta\n• Transitions : ordre logique selon process\n• Prudence : ne cassez pas workflow\n\nActions impossibles depuis étape ? Nouvelles commandes pas bonne étape ?",
+      "actions": [
+        "add_order_step",
+        "set_default_step",
+        "reorder_steps",
+        "mark_accounting_step"
+      ],
+      "success_indicator": "Workflow cohérent, étapes actives",
+      "best_practice": "Étapes standard : En attente → Confirmée → Prêt à expédier → Expédiée → Livrée",
+      "step_id": "SOLVE_08_TAPES_COMMANDES_SE_D2F20D"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_09_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "reason": "Config paramètre impossible malgré permissions OK, ou incohérences persistantes taxes/transporteurs/étapes",
+      "required_info": [
+        "Section paramètres",
+        "Capture",
+        "Rôle utilisateur",
+        "Action tentée",
+        "Message erreur"
+      ],
+      "step_id": "ESCALATE_10_ESCALATE_7831B2",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Config paramètre impossible malgré permissions OK, ou incohérences persistantes taxes/transporteurs/étapes",
+        "repro_steps": [],
+        "evidence": [
+          "Section paramètres",
+          "Capture",
+          "Rôle utilisateur",
+          "Action tentée",
+          "Message erreur"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
+    }
+  ],
+  "related_docs": [
+    "/settings - Marques, taxes, transporteurs, équipe, étapes, IP",
+    "/settings → Paramétrage global - Identité entreprise, coordonnées, config fiscale, branding",
+    "Logo/signature appliqués aux bons de livraison, factures et emails",
+    "Code TVA = matricule fiscal, taux TVA (%) par défaut"
+  ],
+  "common_errors": [
+    {
+      "symptom": "Logo/signature non imprimé",
+      "cause": "Image trop lourde ou format non supporté",
+      "solution": "Compresser <2 Mo, PNG/JPG/WebP"
+    },
+    {
+      "symptom": "TVA calculée deux fois",
+      "cause": "Taxe additionnelle + taux TVA actifs en même temps",
+      "solution": "Désactiver la taxe en double"
+    },
+    {
+      "symptom": "Création utilisateur refusée",
+      "cause": "Mot de passe non conforme ou confirmation différente",
+      "solution": "Mots de passe identiques, respecter complexité"
+    },
+    {
+      "symptom": "Transporteur non proposé",
+      "cause": "Statut inactif ou zones non définies",
+      "solution": "Activer et définir les gouvernorats couverts"
+    },
+    {
+      "symptom": "Nouvelles commandes dans mauvaise étape",
+      "cause": "Mauvaise étape Par défaut",
+      "solution": "Cocher Par défaut sur l'étape souhaitée"
+    },
+    {
+      "symptom": "Rapports comptables incomplets",
+      "cause": "Étapes non marquées Comptable",
+      "solution": "Activer Comptable sur les étapes pertinentes"
+    }
+  ],
+  "best_practices": [
+    "Admin seul modifie étapes/transporteurs critiques",
+    "Testez nouveaux utilisateurs avec rôle limité d'abord",
+    "Documentez workflow étapes",
+    "IPs : bloquez précis, pas plages larges"
+  ],
+  "canonical_scope": "settings",
+  "required_fields": [
+    {
+      "key": "setting_area",
+      "question": "Quel paramètre (taxes, marque, transporteur, etc.) ?"
+    },
+    {
+      "key": "what_fails",
+      "question": "Qu’est-ce qui ne marche pas ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
+}

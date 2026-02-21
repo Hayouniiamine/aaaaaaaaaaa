@@ -1,35 +1,74 @@
 {
   "id": "playbook-products",
   "scope": "products",
-  "title": "Import produits échoué / fichier refusé",
+  "title": "Produits — import échoué / problèmes généraux",
   "triggers": [
-    "import produits échoué",
-    "import ne marche pas",
-    "produits non importés",
-    "erreur import excel",
-    "import failed",
     "cannot import products",
-    "fichier excel refusé",
     "csv refusé",
+    "erreur import excel",
+    "fichier excel refusé",
+    "import failed",
+    "import ne marche pas",
+    "import produits échoué",
+    "produits non importés",
     "xlsx refusé"
   ],
-  "description": "Triage import produits: format, colonnes, taille, SKU doublons, puis escalade.",
+  "description": "Triage import produits: format, colonnes, taille, SKU doublons → voir playbook-products-import pour détails complets",
   "steps": [
     {
       "kind": "ask",
-      "question": "Quel format de fichier utilisez-vous ? (Excel .xlsx / CSV)"
-    },
-    {
-      "kind": "ask",
-      "question": "Quel message d'erreur exact voyez-vous lors de l'import ?"
+      "question": "Produits : (1) Création/modification produit, (2) Import fichier Excel/CSV, (3) Visibilité site, (4) Variantes/stock ? → Voir playbook-products-core ou playbook-products-import selon besoin",
+      "step_id": "ASK_01_PRODUITS_1_CR_ATIO_73C927",
+      "field": "action"
     },
     {
       "kind": "solve",
-      "response": "Points à vérifier (les causes les plus fréquentes) :\n\n✓ Format accepté : .xlsx ou .csv\n✓ Colonnes obligatoires (exemple) : Nom, Prix, SKU, Stock\n✓ Limite : évitez les fichiers trop volumineux (testez d’abord avec 10 produits)\n✓ SKU : chaque SKU doit être unique\n\nSi vous me copiez-collez le message d’erreur + le format du fichier, je vous dis exactement quoi corriger."
+      "response": "Points à vérifier import (causes fréquentes) :\n✓ Format accepté : .xlsx ou .csv\n✓ Colonnes obligatoires : Nom, Prix, SKU, Stock minimum\n✓ Limite : évitez fichiers >1000 lignes (testez 10 d'abord)\n✓ SKU : chaque SKU doit être UNIQUE (pas de doublons)\n✓ Encodage : UTF-8 pour caractères spéciaux\n✓ Séparateur CSV : , ou ; selon config\n\nSi vous copiez-collez le message d'erreur + format fichier, je vous dis exactement quoi corriger.",
+      "actions": [
+        "verify_import_basics"
+      ],
+      "success_indicator": "Compréhension du problème, redirection vers playbook détaillé",
+      "step_id": "SOLVE_02_POINTS_V_RIFIER_IM_79E0D0"
+    },
+    {
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_03_APR_S_CES_TAPES_ES_02B92D"
     },
     {
       "kind": "escalate",
-      "reason": "Erreur d'import non standard (parsing/format) → escalade (analyse fichier + logs requis)."
+      "reason": "Erreur import non standard → voir playbook-products-import pour escalade détaillée",
+      "step_id": "ESCALATE_04_ESCALATE_0838BB",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Erreur import non standard → voir playbook-products-import pour escalade détaillée",
+        "repro_steps": [],
+        "evidence": [
+          "product_identifier",
+          "action",
+          "error_message"
+        ],
+        "suspected_component": "products",
+        "priority": "P2"
+      }
     }
-  ]
+  ],
+  "canonical_scope": "products",
+  "required_fields": [
+    {
+      "key": "product_identifier",
+      "question": "Quel produit (nom/SKU) ?"
+    },
+    {
+      "key": "action",
+      "question": "Qu’est-ce que vous essayez de faire (import, ajout, modification, affichage) ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel message d’erreur exact ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
 }

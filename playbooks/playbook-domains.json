@@ -1,46 +1,219 @@
 {
   "id": "playbook-domains",
-  "scope": "domains",
-  "title": "Domaine non visible / DNS",
+  "scope": "settings",
+  "title": "Domaine — DNS / liaison / achat / propagation",
   "triggers": [
-    "mon domaine n'apparait pas",
-    "mon domaine n'apparaît pas",
-    "mon domaine ne marche pas",
-    "mon domaine ne fonctionne pas",
-    "domaine invisible",
-    "site inaccessible",
-    "dns ne marche pas",
-    "propagation dns",
-    "nameservers",
-    "j'ai modifié les dns",
-    "j'ai changé les dns",
-    "après 48h",
-    "apres 48h",
-    "48h",
-    "4 jours",
-    "3 jours"
+    "@",
+    "a record",
+    "achat domaine",
+    "cloudflare",
+    "dns",
+    "domain",
+    "domaine",
+    "enregistrement a",
+    "lier domaine",
+    "nameserver",
+    "ns",
+    "propagation",
+    "site ne charge plus",
+    "www"
   ],
   "steps": [
     {
-      "kind": "solve",
-      "condition": "dns_age < 24h",
-      "response": "DNS_RECENT_LT_24H",
-      "actions": ["dns_recent_reassure", "check_dns_propagation"]
+      "kind": "ask",
+      "question": "Concernant le domaine : (1) Achat chez TikTak, (2) Liaison domaine externe, (3) Problème domaine existant ? Quel est le domaine exact (ex: boutique.tn) ?",
+      "step_id": "ASK_01_CONCERNANT_LE_DOMA_C1303B",
+      "field": "domain_or_url"
     },
     {
       "kind": "solve",
-      "condition": "dns_age >= 24h",
-      "response": "DNS_VERIFY_RECORDS_24H_PLUS",
-      "actions": ["verify_dns_records", "verify_nameservers"]
+      "response": "Acheter un domaine chez TikTak (/domains) :\n• Recherchez le nom souhaité + choisissez extension (.com, .tn, .shop...)\n• Validez le panier et payez\n• ⏱️ Propagation DNS + SSL : jusqu'à 24h (normal)\n• Avantages : SSL inclus, sécurité gérée, pas de configuration DNS\n• Après achat : TikTak gère automatiquement le pointage et le certificat SSL\n\n⚠️ IMPORTANT : Il est NORMAL que le site ne réponde pas immédiatement après l'achat. Attendez jusqu'à 24h.\n\nDepuis combien de temps avez-vous acheté le domaine ? (<24h ou >24h)",
+      "actions": [
+        "purchase_domain_tiktak"
+      ],
+      "success_indicator": "Après 24h max : domaine affiche la page TikTak (logo) puis votre contenu, avec cadenas SSL",
+      "time_estimate": "Propagation DNS : 2-24h, SSL : automatique après propagation complète",
+      "condition": "domain_purchase",
+      "step_id": "SOLVE_02_ACHETER_UN_DOMAINE_46EE83"
+    },
+    {
+      "kind": "solve",
+      "response": "Lier un domaine externe - Configuration DNS A/WWW :\n📋 Chez votre registraire (OXAHOST, GoDaddy, Namecheap...) :\n\n1️⃣ Enregistrement @ (apex/racine) :\n   Type : A\n   Nom : @ (ou laisser vide selon interface)\n   Valeur : 102.211.211.10\n   TTL : 3600 (ou défaut)\n\n2️⃣ Enregistrement www :\n   OPTION A (recommandée) :\n     Type : A\n     Nom : www\n     Valeur : 102.211.211.10\n     TTL : 3600\n   \n   OPTION B :\n     Type : CNAME\n     Nom : www\n     Valeur : @ (ou votre-domaine.com)\n     TTL : 3600\n\n3️⃣ ⚠️ SUPPRIMEZ tout enregistrement AAAA (IPv6) si présent\n\n4️⃣ Sauvegardez et attendez propagation (2-24h)\n\n5️⃣ Dans TikTak : /domains → 'Activer la liaison' → saisissez domaine → payez frais liaison (29 TND)\n\nVous confirmez que @ et www pointent bien vers 102.211.211.10 ? Avez-vous des AAAA à supprimer ?",
+      "actions": [
+        "configure_dns_a_records",
+        "remove_aaaa_records",
+        "activate_domain_link"
+      ],
+      "success_indicator": "Après propagation : page TikTak (logo) visible sur @ ET www, SSL actif",
+      "time_estimate": "Propagation : 2-24h après modification DNS",
+      "condition": "external_domain_link",
+      "step_id": "SOLVE_03_LIER_UN_DOMAINE_EX_80CFAB"
+    },
+    {
+      "kind": "solve",
+      "response": "Modification DNS récente (<24h) - Vérifications immédiates :\n✅ CHECKLIST DNS OBLIGATOIRE :\n\n1️⃣ Enregistrement @ :\n   Type A → 102.211.211.10 ✓\n   \n2️⃣ Enregistrement www :\n   Type A → 102.211.211.10 ✓\n   OU CNAME → @ ✓\n   (Attention : pas les DEUX en même temps !)\n\n3️⃣ Enregistrements AAAA (IPv6) :\n   AUCUN ✓ (supprimez tous les AAAA)\n\n4️⃣ TTL recommandé : 3600\n\n5️⃣ Test propagation :\n   Allez sur https://www.whatsmydns.net\n   Entrez votre domaine\n   Type : A\n   Vérifiez que @ et www → 102.211.211.10 dans plusieurs pays\n\n⏱️ Si modifié il y a moins de 24h : patienter, c'est normal que ça ne fonctionne pas encore partout.\n\nPouvez-vous envoyer une capture de vos DNS (@, www, AAAA) depuis votre registraire ?",
+      "actions": [
+        "verify_dns_records",
+        "test_propagation_whatsmydns"
+      ],
+      "success_indicator": "WhatsMyDNS montre 102.211.211.10 pour @ et www dans la majorité des serveurs",
+      "time_estimate": "Propagation progressive sur 2-24h",
+      "condition": "dns_age_less_than_24h",
+      "step_id": "SOLVE_04_MODIFICATION_DNS_R_9D7AF7"
+    },
+    {
+      "kind": "solve",
+      "response": "Domaine configuré depuis >24h mais ne fonctionne toujours pas :\n\n🔍 DIAGNOSTIC APPROFONDI :\n\n1️⃣ Vérifiez les Nameservers (NS) :\n   • Doivent pointer vers votre registraire (ou Cloudflare si utilisé)\n   • Exemple correct chez OXAHOST : ns1.oxahost.com, ns2.oxahost.com\n   • Si vous avez changé les NS vers TikTak : vérifiez qu'ils sont exacts\n   • Test : https://mxtoolbox.com/SuperTool.aspx → entrez domaine → vérifiez NS\n\n2️⃣ Vérifiez TOUS les enregistrements :\n   @ : A → 102.211.211.10 (pas d'autre A)\n   www : A → 102.211.211.10 (ou CNAME → @, mais pas les deux)\n   AAAA : AUCUN (supprimez tous)\n\n3️⃣ Test depuis plusieurs endroits :\n   • Navigation privée\n   • Réseau 4G (pas WiFi)\n   • https://www.whatsmydns.net\n   • https://dnschecker.org\n\n4️⃣ Vérifiez que la page TikTak s'affiche :\n   • Si AUCUNE page → DNS incorrect\n   • Si page TikTak (logo) → DNS OK, continuez configuration site\n   • Si ancien site → cache DNS (videz cache ou attendez)\n\nRésultat : le domaine affiche quoi exactement (erreur, ancien site, rien, page TikTak) ?",
+      "actions": [
+        "verify_nameservers",
+        "check_all_dns_records",
+        "test_multiple_locations"
+      ],
+      "success_indicator": "Page TikTak visible = DNS OK, problème ailleurs. Rien visible = DNS incorrect.",
+      "condition": "dns_age_more_than_24h",
+      "step_id": "SOLVE_05_DOMAINE_CONFIGUR_D_E3C053"
+    },
+    {
+      "kind": "solve",
+      "response": "Cloudflare / CDN actif - Configuration spéciale :\n\n⚠️ IMPORTANT : Cloudflare peut causer des erreurs 522/525/526\n\n🔧 ÉTAPES CLOUDFLARE :\n\n1️⃣ Configuration DNS Cloudflare :\n   @ : Type A → 102.211.211.10\n   www : Type A → 102.211.211.10 (ou CNAME → @)\n   AAAA : AUCUN (supprimez)\n\n2️⃣ Proxy Cloudflare (CRITIQUE) :\n   • Pendant les tests : mettez le nuage en GRIS (DNS only)\n   • Cliquez sur le nuage orange pour le rendre gris\n   • Ceci désactive le proxy Cloudflare temporairement\n   • Testez si le site fonctionne\n\n3️⃣ Si ça fonctionne en gris :\n   • Attendez que le SSL TikTak soit actif (24-48h)\n   • Réactivez le proxy orange après\n   • Réglez SSL mode dans Cloudflare : 'Flexible' ou 'Full' (pas Full Strict)\n\n4️⃣ Si erreur 522/525 persiste en gris :\n   • Vérifiez DNS (@ et www → 102.211.211.10, pas de AAAA)\n   • Escaladez le cas\n\nCloudflare est-il activé (nuage orange) ? Quel code d'erreur exact (522/525/526/autre) ?",
+      "actions": [
+        "cloudflare_dns_only_check",
+        "configure_cloudflare_ssl_mode",
+        "test_without_proxy"
+      ],
+      "success_indicator": "Site fonctionne en DNS only (gris), puis fonctionne aussi avec proxy orange après SSL actif",
+      "condition": "cloudflare_detected",
+      "step_id": "SOLVE_06_CLOUDFLARE_CDN_ACT_1333FA"
     },
     {
       "kind": "escalate",
-      "condition": "dns_age >= 72h AND dns_records_confirmed",
-      "reason": "Toujours invisible après +72h malgré DNS OK → investigation côté liaison domaine / routage / compte."
+      "reason": "DNS correctement configurés (@ et www → 102.211.211.10, pas de AAAA, NS corrects) depuis >24h mais page TikTak n'apparaît toujours pas, OU Cloudflare en DNS only avec erreur persistante",
+      "required_info": [
+        "Nom de domaine exact",
+        "Captures écran DNS complets (@, www, AAAA, NS) depuis le registraire",
+        "Résultat WhatsMyDNS ou DNSChecker (capture ou lien)",
+        "Ce qui s'affiche exactement (erreur, ancien site, rien, code erreur)",
+        "Cloudflare oui/non, proxy orange/gris",
+        "Date de modification DNS",
+        "Registraire utilisé"
+      ],
+      "step_id": "ESCALATE_07_ESCALATE_E042DA",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "DNS correctement configurés (@ et www → 102.211.211.10, pas de AAAA, NS corrects) depuis >24h mais page TikTak n'apparaît toujours pas, OU Cloudflare en DNS only avec erreur persistante",
+        "repro_steps": [],
+        "evidence": [
+          "Nom de domaine exact",
+          "Captures écran DNS complets (@, www, AAAA, NS) depuis le registraire",
+          "Résultat WhatsMyDNS ou DNSChecker (capture ou lien)",
+          "Ce qui s'affiche exactement (erreur, ancien site, rien, code erreur)",
+          "Cloudflare oui/non, proxy orange/gris",
+          "Date de modification DNS",
+          "Registraire utilisé"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
     },
     {
-      "kind": "ask",
-      "question": "Vous avez modifié les DNS quand exactement ? (ex: il y a 2h, hier, 48h, 4 jours)"
+      "kind": "verify",
+      "question": "Après ces étapes, est-ce que ça a marché ? Si non, envoyez une capture + le message exact.",
+      "step_id": "VERIFY_08_APR_S_CES_TAPES_ES_02B92D"
+    },
+    {
+      "kind": "escalate",
+      "question": "Pour escalader : domaine + captures DNS (@, www, AAAA, NS) + résultat WhatsMyDNS + ce qui s'affiche + Cloudflare (oui/non, orange/gris) + date modif DNS + registraire.",
+      "escalation_payload_keys": [
+        "module",
+        "summary",
+        "steps_tried",
+        "evidence",
+        "impact"
+      ],
+      "step_id": "ESCALATE_09_POUR_ESCALADER_DOM_22E59E",
+      "when": [
+        "needs_human_review"
+      ],
+      "handoff_template": {
+        "summary": "Escalade requise pour Domaine — DNS / liaison / achat / propagation",
+        "repro_steps": [],
+        "evidence": [
+          "domain_or_url",
+          "error_message",
+          "dns_change_time",
+          "screenshot"
+        ],
+        "suspected_component": "settings",
+        "priority": "P2"
+      }
     }
-  ]
+  ],
+  "related_docs": [
+    "/domains - Module domaines",
+    "Achat : SSL et sécurité inclus, propagation 24h",
+    "Liaison : DNS A (102.211.211.10) pour @ et www, supprimer AAAA, frais 29 TND"
+  ],
+  "diagnostic_checklist": {
+    "dns_essentials": [
+      "@ : A → 102.211.211.10",
+      "www : A → 102.211.211.10 (ou CNAME → @)",
+      "AAAA : AUCUN (supprimer tous)",
+      "NS : corrects pour votre provider"
+    ],
+    "success_indicators": [
+      "Page TikTak (logo) s'affiche = DNS OK",
+      "Aucune page = DNS incorrect",
+      "Cadenas SSL = certificat actif"
+    ],
+    "tools": [
+      "https://www.whatsmydns.net - test propagation mondiale",
+      "https://dnschecker.org - vérification DNS",
+      "https://mxtoolbox.com/SuperTool.aspx - vérification NS et diagnostics"
+    ]
+  },
+  "common_errors": [
+    {
+      "symptom": "Rien ne marche juste après achat TikTak",
+      "cause": "Propagation DNS/SSL en cours",
+      "solution": "Attendre 24h, c'est normal"
+    },
+    {
+      "symptom": "Page TikTak n'apparaît pas",
+      "cause": "DNS incorrect (@ ou www ne pointe pas vers 102.211.211.10, ou AAAA actif)",
+      "solution": "Vérifier/corriger DNS selon checklist"
+    },
+    {
+      "symptom": "Fonctionne sans www mais pas avec www (ou inverse)",
+      "cause": "Enregistrement manquant",
+      "solution": "Ajouter A www → 102.211.211.10"
+    },
+    {
+      "symptom": "Erreur 522/525 Cloudflare",
+      "cause": "Proxy orange actif avant SSL prêt",
+      "solution": "Nuage gris (DNS only) temporairement"
+    }
+  ],
+  "time_expectations": {
+    "dns_propagation": "2-24h après modification",
+    "ssl_issuance": "Automatique après DNS propagé (peut prendre 24-48h)",
+    "full_activation": "24-48h max après achat ou liaison"
+  },
+  "canonical_scope": "domains",
+  "required_fields": [
+    {
+      "key": "domain_or_url",
+      "question": "Quel est le domaine ou l’URL exact ?"
+    },
+    {
+      "key": "error_message",
+      "question": "Quel est le message d’erreur exact (ou code) ?"
+    },
+    {
+      "key": "dns_change_time",
+      "question": "Quand avez-vous changé les DNS / nameservers (date/heure) ?"
+    }
+  ],
+  "schema_version": "v2_deterministic_steps"
 }
